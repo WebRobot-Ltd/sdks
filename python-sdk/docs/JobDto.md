@@ -11,12 +11,15 @@ Name | Type | Description | Notes
 **project_id** | **str** |  | [optional] 
 **agent_id** | **str** |  | [optional] 
 **input_dataset_id** | **str** |  | [optional] 
+**cloud_credential_id** | **str** |  | [optional] 
+**cloud_credential_ids** | **List[str]** |  | [optional] 
 **execution_status** | **str** |  | [optional] 
 **scheduled_time** | **datetime** |  | [optional] 
 **enabled** | **bool** |  | [optional] 
 **task_ids** | **List[str]** |  | [optional] 
 **created_at** | **datetime** |  | [optional] 
 **updated_at** | **datetime** |  | [optional] 
+**job_type** | **str** |  | [optional] 
 
 ## Example
 

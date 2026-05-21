@@ -61,8 +61,8 @@ class TaskDto(BaseModel):
         if value is None:
             return value
 
-        if value not in set(['PENDING', 'RUNNING', 'COMPLETED', 'FAILED']):
-            raise ValueError("must be one of enum values ('PENDING', 'RUNNING', 'COMPLETED', 'FAILED')")
+        if value not in set(['CREATED', 'PENDING', 'RUNNING', 'COMPLETED', 'FAILED']):
+            raise ValueError("must be one of enum values ('CREATED', 'PENDING', 'RUNNING', 'COMPLETED', 'FAILED')")
         return value
 
     @field_validator('execution_mode')

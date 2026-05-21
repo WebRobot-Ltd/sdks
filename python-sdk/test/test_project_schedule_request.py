@@ -37,7 +37,9 @@ class TestProjectScheduleRequest(unittest.TestCase):
             return ProjectScheduleRequest(
                 cron_schedule = '',
                 enabled = True,
-                timezone = ''
+                timezone = '',
+                job_id = '',
+                execution_request_json = ''
             )
         else:
             return ProjectScheduleRequest(

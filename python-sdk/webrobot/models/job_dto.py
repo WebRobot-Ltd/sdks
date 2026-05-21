@@ -33,13 +33,16 @@ class JobDto(BaseModel):
     project_id: Optional[StrictStr] = Field(default=None, alias="projectId")
     agent_id: Optional[StrictStr] = Field(default=None, alias="agentId")
     input_dataset_id: Optional[StrictStr] = Field(default=None, alias="inputDatasetId")
+    cloud_credential_id: Optional[StrictStr] = Field(default=None, alias="cloudCredentialId")
+    cloud_credential_ids: Optional[List[StrictStr]] = Field(default=None, alias="cloudCredentialIds")
     execution_status: Optional[StrictStr] = Field(default=None, alias="executionStatus")
     scheduled_time: Optional[datetime] = Field(default=None, alias="scheduledTime")
     enabled: Optional[StrictBool] = None
     task_ids: Optional[List[StrictStr]] = Field(default=None, alias="taskIds")
     created_at: Optional[datetime] = Field(default=None, alias="createdAt")
     updated_at: Optional[datetime] = Field(default=None, alias="updatedAt")
-    __properties: ClassVar[List[str]] = ["id", "name", "description", "projectId", "agentId", "inputDatasetId", "executionStatus", "scheduledTime", "enabled", "taskIds", "createdAt", "updatedAt"]
+    job_type: Optional[StrictStr] = Field(default=None, alias="jobType")
+    __properties: ClassVar[List[str]] = ["id", "name", "description", "projectId", "agentId", "inputDatasetId", "cloudCredentialId", "cloudCredentialIds", "executionStatus", "scheduledTime", "enabled", "taskIds", "createdAt", "updatedAt", "jobType"]
 
     @field_validator('execution_status')
     def execution_status_validate_enum(cls, value):
@@ -47,8 +50,18 @@ class JobDto(BaseModel):
         if value is None:
             return value
 
-        if value not in set(['PENDING', 'RUNNING', 'COMPLETED', 'FAILED']):
-            raise ValueError("must be one of enum values ('PENDING', 'RUNNING', 'COMPLETED', 'FAILED')")
+        if value not in set(['CREATED', 'PENDING', 'RUNNING', 'COMPLETED', 'FAILED']):
+            raise ValueError("must be one of enum values ('CREATED', 'PENDING', 'RUNNING', 'COMPLETED', 'FAILED')")
+        return value
+
+    @field_validator('job_type')
+    def job_type_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(['BATCH', 'STREAMING']):
+            raise ValueError("must be one of enum values ('BATCH', 'STREAMING')")
         return value
 
     model_config = ConfigDict(
@@ -108,12 +121,15 @@ class JobDto(BaseModel):
             "projectId": obj.get("projectId"),
             "agentId": obj.get("agentId"),
             "inputDatasetId": obj.get("inputDatasetId"),
+            "cloudCredentialId": obj.get("cloudCredentialId"),
+            "cloudCredentialIds": obj.get("cloudCredentialIds"),
             "executionStatus": obj.get("executionStatus"),
             "scheduledTime": obj.get("scheduledTime"),
             "enabled": obj.get("enabled"),
             "taskIds": obj.get("taskIds"),
             "createdAt": obj.get("createdAt"),
-            "updatedAt": obj.get("updatedAt")
+            "updatedAt": obj.get("updatedAt"),
+            "jobType": obj.get("jobType")
         })
         return _obj
 

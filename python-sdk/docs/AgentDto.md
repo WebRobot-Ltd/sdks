@@ -22,6 +22,7 @@ Name | Type | Description | Notes
 **code_type_id** | **str** |  | [optional] 
 **pyspark_code** | **str** |  | [optional] 
 **python_extensions** | **str** |  | [optional] 
+**stack_type** | **str** |  | [optional] 
 **generated_at** | **datetime** |  | [optional] 
 **tool_ids** | **List[str]** |  | [optional] 
 **created_at** | **datetime** |  | [optional] 

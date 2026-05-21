@@ -18,9 +18,9 @@ def test_python_sdk():
     
     # Configurazione
     configuration = Configuration(
-        host='https://api.webrobot.eu'
+        host='https://api.webrobot.eu/api/webrobot'
     )
-    configuration.api_key['X-API-Key'] = 'test:secret'
+    configuration.api_key['X-API-Key'] = 'dev-key-12345:dev-secret-67890'
     
     # Test counter
     passed = 0
@@ -30,9 +30,9 @@ def test_python_sdk():
         api = default_api.DefaultApi(api_client)
         
         tests = [
-            ("List Projects", lambda: api.get_projects()),
-            ("List Categories", lambda: api.get_categories()),
-            ("Create Category", lambda: api.create_category(body={'name': 'Test Category'})),
+            ("List Projects", lambda: api.get_all_projects()),
+            ("List Categories", lambda: api.get_all_categories()),
+            ("Create Category", lambda: api.create_category()),
         ]
         
         for name, test_func in tests:

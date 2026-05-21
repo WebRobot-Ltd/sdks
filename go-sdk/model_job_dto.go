@@ -26,12 +26,15 @@ type JobDto struct {
 	ProjectId *string `json:"projectId,omitempty"`
 	AgentId *string `json:"agentId,omitempty"`
 	InputDatasetId *string `json:"inputDatasetId,omitempty"`
+	CloudCredentialId *string `json:"cloudCredentialId,omitempty"`
+	CloudCredentialIds []string `json:"cloudCredentialIds,omitempty"`
 	ExecutionStatus *string `json:"executionStatus,omitempty"`
 	ScheduledTime *time.Time `json:"scheduledTime,omitempty"`
 	Enabled *bool `json:"enabled,omitempty"`
 	TaskIds []string `json:"taskIds,omitempty"`
 	CreatedAt *time.Time `json:"createdAt,omitempty"`
 	UpdatedAt *time.Time `json:"updatedAt,omitempty"`
+	JobType *string `json:"jobType,omitempty"`
 }
 
 // NewJobDto instantiates a new JobDto object
@@ -243,6 +246,70 @@ func (o *JobDto) SetInputDatasetId(v string) {
 	o.InputDatasetId = &v
 }
 
+// GetCloudCredentialId returns the CloudCredentialId field value if set, zero value otherwise.
+func (o *JobDto) GetCloudCredentialId() string {
+	if o == nil || IsNil(o.CloudCredentialId) {
+		var ret string
+		return ret
+	}
+	return *o.CloudCredentialId
+}
+
+// GetCloudCredentialIdOk returns a tuple with the CloudCredentialId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *JobDto) GetCloudCredentialIdOk() (*string, bool) {
+	if o == nil || IsNil(o.CloudCredentialId) {
+		return nil, false
+	}
+	return o.CloudCredentialId, true
+}
+
+// HasCloudCredentialId returns a boolean if a field has been set.
+func (o *JobDto) HasCloudCredentialId() bool {
+	if o != nil && !IsNil(o.CloudCredentialId) {
+		return true
+	}
+
+	return false
+}
+
+// SetCloudCredentialId gets a reference to the given string and assigns it to the CloudCredentialId field.
+func (o *JobDto) SetCloudCredentialId(v string) {
+	o.CloudCredentialId = &v
+}
+
+// GetCloudCredentialIds returns the CloudCredentialIds field value if set, zero value otherwise.
+func (o *JobDto) GetCloudCredentialIds() []string {
+	if o == nil || IsNil(o.CloudCredentialIds) {
+		var ret []string
+		return ret
+	}
+	return o.CloudCredentialIds
+}
+
+// GetCloudCredentialIdsOk returns a tuple with the CloudCredentialIds field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *JobDto) GetCloudCredentialIdsOk() ([]string, bool) {
+	if o == nil || IsNil(o.CloudCredentialIds) {
+		return nil, false
+	}
+	return o.CloudCredentialIds, true
+}
+
+// HasCloudCredentialIds returns a boolean if a field has been set.
+func (o *JobDto) HasCloudCredentialIds() bool {
+	if o != nil && !IsNil(o.CloudCredentialIds) {
+		return true
+	}
+
+	return false
+}
+
+// SetCloudCredentialIds gets a reference to the given []string and assigns it to the CloudCredentialIds field.
+func (o *JobDto) SetCloudCredentialIds(v []string) {
+	o.CloudCredentialIds = v
+}
+
 // GetExecutionStatus returns the ExecutionStatus field value if set, zero value otherwise.
 func (o *JobDto) GetExecutionStatus() string {
 	if o == nil || IsNil(o.ExecutionStatus) {
@@ -435,6 +502,38 @@ func (o *JobDto) SetUpdatedAt(v time.Time) {
 	o.UpdatedAt = &v
 }
 
+// GetJobType returns the JobType field value if set, zero value otherwise.
+func (o *JobDto) GetJobType() string {
+	if o == nil || IsNil(o.JobType) {
+		var ret string
+		return ret
+	}
+	return *o.JobType
+}
+
+// GetJobTypeOk returns a tuple with the JobType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *JobDto) GetJobTypeOk() (*string, bool) {
+	if o == nil || IsNil(o.JobType) {
+		return nil, false
+	}
+	return o.JobType, true
+}
+
+// HasJobType returns a boolean if a field has been set.
+func (o *JobDto) HasJobType() bool {
+	if o != nil && !IsNil(o.JobType) {
+		return true
+	}
+
+	return false
+}
+
+// SetJobType gets a reference to the given string and assigns it to the JobType field.
+func (o *JobDto) SetJobType(v string) {
+	o.JobType = &v
+}
+
 func (o JobDto) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -463,6 +562,12 @@ func (o JobDto) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.InputDatasetId) {
 		toSerialize["inputDatasetId"] = o.InputDatasetId
 	}
+	if !IsNil(o.CloudCredentialId) {
+		toSerialize["cloudCredentialId"] = o.CloudCredentialId
+	}
+	if !IsNil(o.CloudCredentialIds) {
+		toSerialize["cloudCredentialIds"] = o.CloudCredentialIds
+	}
 	if !IsNil(o.ExecutionStatus) {
 		toSerialize["executionStatus"] = o.ExecutionStatus
 	}
@@ -480,6 +585,9 @@ func (o JobDto) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.UpdatedAt) {
 		toSerialize["updatedAt"] = o.UpdatedAt
+	}
+	if !IsNil(o.JobType) {
+		toSerialize["jobType"] = o.JobType
 	}
 	return toSerialize, nil
 }

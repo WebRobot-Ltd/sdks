@@ -52,6 +52,7 @@ class TestAgentDto(unittest.TestCase):
                 code_type_id = '',
                 pyspark_code = '',
                 python_extensions = '',
+                stack_type = '',
                 generated_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
                 tool_ids = [
                     ''

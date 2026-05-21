@@ -35,6 +35,110 @@ func Test_webrobot_DefaultAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultAPIService Apply", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.Apply(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService ApplyMigrations", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int64
+
+		httpRes, err := apiClient.DefaultAPI.ApplyMigrations(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService ApproveBundle", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int64
+
+		httpRes, err := apiClient.DefaultAPI.ApproveBundle(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService AssignUserToOrganization", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id string
+
+		httpRes, err := apiClient.DefaultAPI.AssignUserToOrganization(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService BootstrapForOrganization", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var organizationId string
+
+		httpRes, err := apiClient.DefaultAPI.BootstrapForOrganization(context.Background(), organizationId).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService Cancel", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var eid string
+
+		httpRes, err := apiClient.DefaultAPI.Cancel(context.Background(), eid).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService CancelExecution", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var executionId string
+
+		httpRes, err := apiClient.DefaultAPI.CancelExecution(context.Background(), executionId).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService CancelExecution1", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var projectId string
+		var jobId string
+		var executionId string
+
+		httpRes, err := apiClient.DefaultAPI.CancelExecution1(context.Background(), projectId, jobId, executionId).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultAPIService CancelTraining", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -43,6 +147,67 @@ func Test_webrobot_DefaultAPIService(t *testing.T) {
 		var jobId string
 
 		httpRes, err := apiClient.DefaultAPI.CancelTraining(context.Background(), provider, jobId).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService CmfClose", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var sessionId string
+
+		httpRes, err := apiClient.DefaultAPI.CmfClose(context.Background(), sessionId).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService CmfOpen", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.CmfOpen(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService CmfStep", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.CmfStep(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService Completion", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var eid string
+
+		httpRes, err := apiClient.DefaultAPI.Completion(context.Background(), eid).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService CopyAgent", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var agentId string
+
+		httpRes, err := apiClient.DefaultAPI.CopyAgent(context.Background(), agentId).Execute()
 
 		require.Nil(t, err)
 		assert.Equal(t, 200, httpRes.StatusCode)
@@ -60,11 +225,110 @@ func Test_webrobot_DefaultAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultAPIService CreateApiKey", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.CreateApiKey(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService CreateBillingPlan", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.CreateBillingPlan(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultAPIService CreateCategory", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		httpRes, err := apiClient.DefaultAPI.CreateCategory(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService CreateCloudCredential", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.CreateCloudCredential(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService CreateCronJob", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.CreateCronJob(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService CreateCustomPlan", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.CreateCustomPlan(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService CreateDataset", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.CreateDataset(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService CreateOrUpdateVersion", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.CreateOrUpdateVersion(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService CreateOrganization", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.CreateOrganization(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService CreateProfile", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.CreateProfile(context.Background()).Execute()
 
 		require.Nil(t, err)
 		assert.Equal(t, 200, httpRes.StatusCode)
@@ -90,6 +354,19 @@ func Test_webrobot_DefaultAPIService(t *testing.T) {
 		var jobId string
 
 		httpRes, err := apiClient.DefaultAPI.CreateTask(context.Background(), projectId, jobId).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService DecryptField", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var credentialId string
+
+		httpRes, err := apiClient.DefaultAPI.DecryptField(context.Background(), credentialId).Execute()
 
 		require.Nil(t, err)
 		assert.Equal(t, 200, httpRes.StatusCode)
@@ -123,6 +400,32 @@ func Test_webrobot_DefaultAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultAPIService DeleteApiKey", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var keyId string
+
+		httpRes, err := apiClient.DefaultAPI.DeleteApiKey(context.Background(), keyId).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService DeleteBillingPlan", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int32
+
+		httpRes, err := apiClient.DefaultAPI.DeleteBillingPlan(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultAPIService DeleteCategory", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -130,6 +433,32 @@ func Test_webrobot_DefaultAPIService(t *testing.T) {
 		var categoryId string
 
 		httpRes, err := apiClient.DefaultAPI.DeleteCategory(context.Background(), categoryId).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService DeleteCloudCredential", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var credentialId string
+
+		httpRes, err := apiClient.DefaultAPI.DeleteCloudCredential(context.Background(), credentialId).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService DeleteCronJob", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var name string
+
+		httpRes, err := apiClient.DefaultAPI.DeleteCronJob(context.Background(), name).Execute()
 
 		require.Nil(t, err)
 		assert.Equal(t, 200, httpRes.StatusCode)
@@ -149,6 +478,19 @@ func Test_webrobot_DefaultAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultAPIService DeleteDataset1", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var datasetId string
+
+		httpRes, err := apiClient.DefaultAPI.DeleteDataset1(context.Background(), datasetId).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultAPIService DeleteDatasetVersion", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -162,6 +504,32 @@ func Test_webrobot_DefaultAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultAPIService DeleteInstallation", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int64
+
+		httpRes, err := apiClient.DefaultAPI.DeleteInstallation(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService DeleteProfile", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int32
+
+		httpRes, err := apiClient.DefaultAPI.DeleteProfile(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultAPIService DeleteProject", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -169,6 +537,19 @@ func Test_webrobot_DefaultAPIService(t *testing.T) {
 		var projectId string
 
 		httpRes, err := apiClient.DefaultAPI.DeleteProject(context.Background(), projectId).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService DeletePythonExtension", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var extensionId string
+
+		httpRes, err := apiClient.DefaultAPI.DeletePythonExtension(context.Background(), extensionId).Execute()
 
 		require.Nil(t, err)
 		assert.Equal(t, 200, httpRes.StatusCode)
@@ -190,6 +571,111 @@ func Test_webrobot_DefaultAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultAPIService DeleteUserInvite", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id string
+
+		httpRes, err := apiClient.DefaultAPI.DeleteUserInvite(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService DeleteVersion", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int64
+
+		httpRes, err := apiClient.DefaultAPI.DeleteVersion(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService DeprecateBundle", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int64
+
+		httpRes, err := apiClient.DefaultAPI.DeprecateBundle(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService DisablePlugin", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var pluginId string
+
+		httpRes, err := apiClient.DefaultAPI.DisablePlugin(context.Background(), pluginId).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService DisablePlugin1", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int64
+
+		httpRes, err := apiClient.DefaultAPI.DisablePlugin1(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService DisablePluginForOrganization", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var pluginInstallationId int64
+		var organizationId string
+
+		httpRes, err := apiClient.DefaultAPI.DisablePluginForOrganization(context.Background(), pluginInstallationId, organizationId).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService DownloadBundle", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int64
+
+		httpRes, err := apiClient.DefaultAPI.DownloadBundle(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService DownloadCliPlugin", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var pluginId string
+
+		httpRes, err := apiClient.DefaultAPI.DownloadCliPlugin(context.Background(), pluginId).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultAPIService DownloadModel", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -198,6 +684,73 @@ func Test_webrobot_DefaultAPIService(t *testing.T) {
 		var jobId string
 
 		httpRes, err := apiClient.DefaultAPI.DownloadModel(context.Background(), provider, jobId).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService DownloadUiZip", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var pluginId string
+
+		httpRes, err := apiClient.DefaultAPI.DownloadUiZip(context.Background(), pluginId).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService EnableByPluginIdForOrganization", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var pluginId string
+		var organizationId string
+
+		httpRes, err := apiClient.DefaultAPI.EnableByPluginIdForOrganization(context.Background(), pluginId, organizationId).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService EnablePlugin", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var pluginId string
+
+		httpRes, err := apiClient.DefaultAPI.EnablePlugin(context.Background(), pluginId).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService EnablePlugin1", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int64
+
+		httpRes, err := apiClient.DefaultAPI.EnablePlugin1(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService EnablePluginForOrganization", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var pluginInstallationId int64
+		var organizationId string
+
+		httpRes, err := apiClient.DefaultAPI.EnablePluginForOrganization(context.Background(), pluginInstallationId, organizationId).Execute()
 
 		require.Nil(t, err)
 		assert.Equal(t, 200, httpRes.StatusCode)
@@ -217,6 +770,68 @@ func Test_webrobot_DefaultAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultAPIService ExecuteDemo", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var pipelineName string
+
+		httpRes, err := apiClient.DefaultAPI.ExecuteDemo(context.Background(), pipelineName).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService ExecuteJob", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var country string
+
+		httpRes, err := apiClient.DefaultAPI.ExecuteJob(context.Background(), country).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService ExecuteJob1", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var projectId string
+		var jobId string
+
+		httpRes, err := apiClient.DefaultAPI.ExecuteJob1(context.Background(), projectId, jobId).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService ExecuteQuery", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.ExecuteQuery(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService ExtractDirect", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.ExtractDirect(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultAPIService FindAll", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -224,6 +839,30 @@ func Test_webrobot_DefaultAPIService(t *testing.T) {
 		var table string
 
 		httpRes, err := apiClient.DefaultAPI.FindAll(context.Background(), table).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService GeneratePipeline", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.GeneratePipeline(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService GeneratePysparkCode", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var extensionId string
+
+		httpRes, err := apiClient.DefaultAPI.GeneratePysparkCode(context.Background(), extensionId).Execute()
 
 		require.Nil(t, err)
 		assert.Equal(t, 200, httpRes.StatusCode)
@@ -244,6 +883,19 @@ func Test_webrobot_DefaultAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultAPIService GetAgentExtensions", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var agentId string
+
+		httpRes, err := apiClient.DefaultAPI.GetAgentExtensions(context.Background(), agentId).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultAPIService GetAgentFromName", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -252,6 +904,19 @@ func Test_webrobot_DefaultAPIService(t *testing.T) {
 		var agentName string
 
 		httpRes, err := apiClient.DefaultAPI.GetAgentFromName(context.Background(), categoryId, agentName).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService GetAgentPythonExtensions", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var agentId string
+
+		httpRes, err := apiClient.DefaultAPI.GetAgentPythonExtensions(context.Background(), agentId).Execute()
 
 		require.Nil(t, err)
 		assert.Equal(t, 200, httpRes.StatusCode)
@@ -282,6 +947,17 @@ func Test_webrobot_DefaultAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultAPIService GetAllCloudCredentials", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.GetAllCloudCredentials(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultAPIService GetAllDatasetVersions", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -298,6 +974,28 @@ func Test_webrobot_DefaultAPIService(t *testing.T) {
 		t.Skip("skip test")  // remove to run test
 
 		httpRes, err := apiClient.DefaultAPI.GetAllDatasets(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService GetAllDatasets1", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.GetAllDatasets1(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService GetAllInstallations", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.GetAllInstallations(context.Background()).Execute()
 
 		require.Nil(t, err)
 		assert.Equal(t, 200, httpRes.StatusCode)
@@ -329,6 +1027,17 @@ func Test_webrobot_DefaultAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultAPIService GetAllVersions", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.GetAllVersions(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultAPIService GetAllVersionsets", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -336,6 +1045,41 @@ func Test_webrobot_DefaultAPIService(t *testing.T) {
 		var datasetId string
 
 		httpRes, err := apiClient.DefaultAPI.GetAllVersionsets(context.Background(), datasetId).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService GetBillingPlans", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.GetBillingPlans(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService GetBootstrapStatus", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.GetBootstrapStatus(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService GetBundleScan", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int64
+
+		httpRes, err := apiClient.DefaultAPI.GetBundleScan(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		assert.Equal(t, 200, httpRes.StatusCode)
@@ -350,6 +1094,28 @@ func Test_webrobot_DefaultAPIService(t *testing.T) {
 		var id string
 
 		httpRes, err := apiClient.DefaultAPI.GetById(context.Background(), table, id).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService GetCapabilities", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.GetCapabilities(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService GetCatalogStages", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.GetCatalogStages(context.Background()).Execute()
 
 		require.Nil(t, err)
 		assert.Equal(t, 200, httpRes.StatusCode)
@@ -382,6 +1148,56 @@ func Test_webrobot_DefaultAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultAPIService GetCloudCredentialById", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var credentialId string
+
+		httpRes, err := apiClient.DefaultAPI.GetCloudCredentialById(context.Background(), credentialId).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService GetCloudCredentialsByProvider", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var provider string
+
+		httpRes, err := apiClient.DefaultAPI.GetCloudCredentialsByProvider(context.Background(), provider).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService GetCronJob", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var name string
+
+		httpRes, err := apiClient.DefaultAPI.GetCronJob(context.Background(), name).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService GetCurrentUser", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.GetCurrentUser(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultAPIService GetDataset", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -389,6 +1205,45 @@ func Test_webrobot_DefaultAPIService(t *testing.T) {
 		var datasetId string
 
 		httpRes, err := apiClient.DefaultAPI.GetDataset(context.Background(), datasetId).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService GetDataset1", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var datasetId string
+
+		httpRes, err := apiClient.DefaultAPI.GetDataset1(context.Background(), datasetId).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService GetDatasetFields", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var datasetId string
+
+		httpRes, err := apiClient.DefaultAPI.GetDatasetFields(context.Background(), datasetId).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService GetDatasetInfoByTask", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var taskId string
+
+		httpRes, err := apiClient.DefaultAPI.GetDatasetInfoByTask(context.Background(), taskId).Execute()
 
 		require.Nil(t, err)
 		assert.Equal(t, 200, httpRes.StatusCode)
@@ -483,6 +1338,86 @@ func Test_webrobot_DefaultAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultAPIService GetEffectiveEntitlements", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.GetEffectiveEntitlements(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService GetExecutionLogs", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var executionId string
+
+		httpRes, err := apiClient.DefaultAPI.GetExecutionLogs(context.Background(), executionId).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService GetExecutionLogs1", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var projectId string
+		var jobId string
+		var executionId string
+
+		httpRes, err := apiClient.DefaultAPI.GetExecutionLogs1(context.Background(), projectId, jobId, executionId).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService GetExecutionOutput", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var executionId string
+
+		httpRes, err := apiClient.DefaultAPI.GetExecutionOutput(context.Background(), executionId).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService GetExecutionStatus", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var executionId string
+
+		httpRes, err := apiClient.DefaultAPI.GetExecutionStatus(context.Background(), executionId).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService GetExecutionStatus1", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var projectId string
+		var jobId string
+		var executionId string
+
+		httpRes, err := apiClient.DefaultAPI.GetExecutionStatus1(context.Background(), projectId, jobId, executionId).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultAPIService GetHealth", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -502,6 +1437,220 @@ func Test_webrobot_DefaultAPIService(t *testing.T) {
 		var url string
 
 		httpRes, err := apiClient.DefaultAPI.GetHtml(context.Background(), protocol, url).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService GetImagesSimplified", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var country string
+
+		httpRes, err := apiClient.DefaultAPI.GetImagesSimplified(context.Background(), country).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService GetInfo", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.GetInfo(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService GetInfo1", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.GetInfo1(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService GetInstallationById", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int64
+
+		httpRes, err := apiClient.DefaultAPI.GetInstallationById(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService GetJob", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var projectId string
+		var jobId string
+
+		httpRes, err := apiClient.DefaultAPI.GetJob(context.Background(), projectId, jobId).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService GetJobLogs", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var projectId string
+		var jobId string
+
+		httpRes, err := apiClient.DefaultAPI.GetJobLogs(context.Background(), projectId, jobId).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService GetJobMetrics", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var projectId string
+		var jobId string
+
+		httpRes, err := apiClient.DefaultAPI.GetJobMetrics(context.Background(), projectId, jobId).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService GetOrganization", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id string
+
+		httpRes, err := apiClient.DefaultAPI.GetOrganization(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService GetOrganizationPlugins", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var organizationId string
+
+		httpRes, err := apiClient.DefaultAPI.GetOrganizationPlugins(context.Background(), organizationId).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService GetOrganizationUsers", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id string
+
+		httpRes, err := apiClient.DefaultAPI.GetOrganizationUsers(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService GetPartnersByType", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var type_ string
+
+		httpRes, err := apiClient.DefaultAPI.GetPartnersByType(context.Background(), type_).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService GetPluginInfo", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.GetPluginInfo(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService GetPluginInfo1", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.GetPluginInfo1(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService GetPluginInfo2", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.GetPluginInfo2(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService GetPluginOrganizations", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var pluginInstallationId int64
+
+		httpRes, err := apiClient.DefaultAPI.GetPluginOrganizations(context.Background(), pluginInstallationId).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService GetPluginUsage", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var pluginId string
+
+		httpRes, err := apiClient.DefaultAPI.GetPluginUsage(context.Background(), pluginId).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService GetProfile", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int32
+
+		httpRes, err := apiClient.DefaultAPI.GetProfile(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		assert.Equal(t, 200, httpRes.StatusCode)
@@ -547,6 +1696,19 @@ func Test_webrobot_DefaultAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultAPIService GetProjectMetrics", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var projectId string
+
+		httpRes, err := apiClient.DefaultAPI.GetProjectMetrics(context.Background(), projectId).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultAPIService GetProjectSchedule", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -554,6 +1716,43 @@ func Test_webrobot_DefaultAPIService(t *testing.T) {
 		var projectId string
 
 		httpRes, err := apiClient.DefaultAPI.GetProjectSchedule(context.Background(), projectId).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService GetStage", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var name string
+
+		httpRes, err := apiClient.DefaultAPI.GetStage(context.Background(), name).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService GetStatus", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var country string
+
+		httpRes, err := apiClient.DefaultAPI.GetStatus(context.Background(), country).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService GetSupportedExtensionTypes", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.GetSupportedExtensionTypes(context.Background()).Execute()
 
 		require.Nil(t, err)
 		assert.Equal(t, 200, httpRes.StatusCode)
@@ -584,6 +1783,28 @@ func Test_webrobot_DefaultAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultAPIService GetSystemLogs", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.GetSystemLogs(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService GetTableColumns", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.GetTableColumns(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultAPIService GetTask", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -593,6 +1814,34 @@ func Test_webrobot_DefaultAPIService(t *testing.T) {
 		var taskId string
 
 		httpRes, err := apiClient.DefaultAPI.GetTask(context.Background(), projectId, jobId, taskId).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService GetTaskByOutputDataset", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var datasetId string
+
+		httpRes, err := apiClient.DefaultAPI.GetTaskByOutputDataset(context.Background(), datasetId).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService GetTaskMetrics", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var projectId string
+		var jobId string
+		var taskId string
+
+		httpRes, err := apiClient.DefaultAPI.GetTaskMetrics(context.Background(), projectId, jobId, taskId).Execute()
 
 		require.Nil(t, err)
 		assert.Equal(t, 200, httpRes.StatusCode)
@@ -642,6 +1891,17 @@ func Test_webrobot_DefaultAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultAPIService GetUiDefinitions", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.GetUiDefinitions(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultAPIService GetUploadFileUrl", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -673,6 +1933,44 @@ func Test_webrobot_DefaultAPIService(t *testing.T) {
 		t.Skip("skip test")  // remove to run test
 
 		httpRes, err := apiClient.DefaultAPI.GetUrlUpload(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService GetUserInvites", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.GetUserInvites(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService GetVersionByBuildTypeAndBuildNumber", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var buildType string
+		var buildNumber int32
+
+		httpRes, err := apiClient.DefaultAPI.GetVersionByBuildTypeAndBuildNumber(context.Background(), buildType, buildNumber).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService GetVersionById", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int64
+
+		httpRes, err := apiClient.DefaultAPI.GetVersionById(context.Background(), id).Execute()
 
 		require.Nil(t, err)
 		assert.Equal(t, 200, httpRes.StatusCode)
@@ -720,6 +2018,52 @@ func Test_webrobot_DefaultAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultAPIService HealthCheck", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.HealthCheck(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService HealthCheck1", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.HealthCheck1(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService IndexDataset", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var datasetId string
+
+		httpRes, err := apiClient.DefaultAPI.IndexDataset(context.Background(), datasetId).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService Infer", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.Infer(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultAPIService Insert", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -733,11 +2077,402 @@ func Test_webrobot_DefaultAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultAPIService InstallBundle", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.InstallBundle(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService JobCompletionWebhook", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var projectId string
+		var jobId string
+
+		httpRes, err := apiClient.DefaultAPI.JobCompletionWebhook(context.Background(), projectId, jobId).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService ListAdapters", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.ListAdapters(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService ListApiKeys", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.ListApiKeys(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService ListAvailable", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.ListAvailable(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService ListBundles", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.ListBundles(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService ListCharges", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.ListCharges(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService ListCliPlugins", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.ListCliPlugins(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService ListCronJobs", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.ListCronJobs(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService ListDemos", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.ListDemos(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService ListExecutions", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.ListExecutions(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService ListMyAdapters", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.ListMyAdapters(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService ListPayouts", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.ListPayouts(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService ListPlugins", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.ListPlugins(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService ListProfiles", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.ListProfiles(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService ListProviders", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.ListProviders(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService ListRevenueShare", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.ListRevenueShare(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService ListStages", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.ListStages(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService ListStages1", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.ListStages1(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService ListTables", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.ListTables(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService MarkFailed", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var invoiceId string
+
+		httpRes, err := apiClient.DefaultAPI.MarkFailed(context.Background(), invoiceId).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService MarkPaid", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var invoiceId string
+
+		httpRes, err := apiClient.DefaultAPI.MarkPaid(context.Background(), invoiceId).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService MarkZombieTasks", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.MarkZombieTasks(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService ProbeAdapter", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var providerKey string
+
+		httpRes, err := apiClient.DefaultAPI.ProbeAdapter(context.Background(), providerKey).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService ProcessYamlExtensions", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.ProcessYamlExtensions(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultAPIService PublishModel", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		httpRes, err := apiClient.DefaultAPI.PublishModel(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService QueryDatasetByTask", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var taskId string
+
+		httpRes, err := apiClient.DefaultAPI.QueryDatasetByTask(context.Background(), taskId).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService QueryImages", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var country string
+
+		httpRes, err := apiClient.DefaultAPI.QueryImages(context.Background(), country).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService RefreshOrganizationsBillingStatus", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.RefreshOrganizationsBillingStatus(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService Refund", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int64
+
+		httpRes, err := apiClient.DefaultAPI.Refund(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService RegisterPlugin", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.RegisterPlugin(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService RegisterPythonExtension", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.RegisterPythonExtension(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService RejectBundle", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int64
+
+		httpRes, err := apiClient.DefaultAPI.RejectBundle(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService ReloadPipelines", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.ReloadPipelines(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService ReloadPlugins", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.ReloadPlugins(context.Background()).Execute()
 
 		require.Nil(t, err)
 		assert.Equal(t, 200, httpRes.StatusCode)
@@ -758,6 +2493,155 @@ func Test_webrobot_DefaultAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultAPIService ReportHealth", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var providerKey string
+
+		httpRes, err := apiClient.DefaultAPI.ReportHealth(context.Background(), providerKey).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService RescheduleEvents", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.RescheduleEvents(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService Rollup", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.Rollup(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService RunCharges", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.RunCharges(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService RunHealthCheck", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.RunHealthCheck(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService RunOrchestrationCharges", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.RunOrchestrationCharges(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService RunPayouts", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.RunPayouts(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService RunProviderEndpointCharges", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.RunProviderEndpointCharges(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService RunRevenueShare", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.RunRevenueShare(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService SaveGeneratedPipeline", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.SaveGeneratedPipeline(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService ScheduleJob", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var country string
+
+		httpRes, err := apiClient.DefaultAPI.ScheduleJob(context.Background(), country).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService ServeDemoApp", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.ServeDemoApp(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService ServeStaticFile", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var filename string
+
+		httpRes, err := apiClient.DefaultAPI.ServeStaticFile(context.Background(), filename).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultAPIService SetProjectSchedule", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -771,11 +2655,48 @@ func Test_webrobot_DefaultAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultAPIService Start", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.Start(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultAPIService StartExportAll", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		httpRes, err := apiClient.DefaultAPI.StartExportAll(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService StartExportOrganization", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var organizationId string
+
+		httpRes, err := apiClient.DefaultAPI.StartExportOrganization(context.Background(), organizationId).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService StartExportOrganizationWithOptions", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var organizationId string
+
+		httpRes, err := apiClient.DefaultAPI.StartExportOrganizationWithOptions(context.Background(), organizationId).Execute()
 
 		require.Nil(t, err)
 		assert.Equal(t, 200, httpRes.StatusCode)
@@ -806,6 +2727,43 @@ func Test_webrobot_DefaultAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultAPIService StartImportAllWithOptions", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.StartImportAllWithOptions(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService StartImportOrganization", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var organizationId string
+
+		httpRes, err := apiClient.DefaultAPI.StartImportOrganization(context.Background(), organizationId).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService StartImportOrganizationWithOptions", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var organizationId string
+
+		httpRes, err := apiClient.DefaultAPI.StartImportOrganizationWithOptions(context.Background(), organizationId).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultAPIService StartImportProject", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -813,6 +2771,19 @@ func Test_webrobot_DefaultAPIService(t *testing.T) {
 		var projectId string
 
 		httpRes, err := apiClient.DefaultAPI.StartImportProject(context.Background(), projectId).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService StartImportProjectWithOptions", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var projectId string
+
+		httpRes, err := apiClient.DefaultAPI.StartImportProjectWithOptions(context.Background(), projectId).Execute()
 
 		require.Nil(t, err)
 		assert.Equal(t, 200, httpRes.StatusCode)
@@ -847,6 +2818,33 @@ func Test_webrobot_DefaultAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultAPIService Status", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var eid string
+
+		httpRes, err := apiClient.DefaultAPI.Status(context.Background(), eid).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService StopJob", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var projectId string
+		var jobId string
+
+		httpRes, err := apiClient.DefaultAPI.StopJob(context.Background(), projectId, jobId).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultAPIService StopTask", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -856,6 +2854,17 @@ func Test_webrobot_DefaultAPIService(t *testing.T) {
 		var taskId string
 
 		httpRes, err := apiClient.DefaultAPI.StopTask(context.Background(), projectId, jobId, taskId).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService SuggestStages", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.SuggestStages(context.Background()).Execute()
 
 		require.Nil(t, err)
 		assert.Equal(t, 200, httpRes.StatusCode)
@@ -884,6 +2893,17 @@ func Test_webrobot_DefaultAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultAPIService TestCloudCredential", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.TestCloudCredential(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultAPIService Update", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -892,6 +2912,19 @@ func Test_webrobot_DefaultAPIService(t *testing.T) {
 		var id string
 
 		httpRes, err := apiClient.DefaultAPI.Update(context.Background(), table, id).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService UpdateAdapter", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var providerKey string
+
+		httpRes, err := apiClient.DefaultAPI.UpdateAdapter(context.Background(), providerKey).Execute()
 
 		require.Nil(t, err)
 		assert.Equal(t, 200, httpRes.StatusCode)
@@ -912,6 +2945,32 @@ func Test_webrobot_DefaultAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultAPIService UpdateAgentPythonExtensions", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var agentId string
+
+		httpRes, err := apiClient.DefaultAPI.UpdateAgentPythonExtensions(context.Background(), agentId).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService UpdateBillingPlan", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int32
+
+		httpRes, err := apiClient.DefaultAPI.UpdateBillingPlan(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultAPIService UpdateCategory", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -925,6 +2984,85 @@ func Test_webrobot_DefaultAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultAPIService UpdateCloudCredential", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var credentialId string
+
+		httpRes, err := apiClient.DefaultAPI.UpdateCloudCredential(context.Background(), credentialId).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService UpdateDataset", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var datasetId string
+
+		httpRes, err := apiClient.DefaultAPI.UpdateDataset(context.Background(), datasetId).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService UpdateInstallation", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int64
+
+		httpRes, err := apiClient.DefaultAPI.UpdateInstallation(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService UpdateJob", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var projectId string
+		var jobId string
+
+		httpRes, err := apiClient.DefaultAPI.UpdateJob(context.Background(), projectId, jobId).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService UpdateOrganization", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id string
+
+		httpRes, err := apiClient.DefaultAPI.UpdateOrganization(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService UpdateProfile", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int32
+
+		httpRes, err := apiClient.DefaultAPI.UpdateProfile(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultAPIService UpdateProject", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -932,6 +3070,19 @@ func Test_webrobot_DefaultAPIService(t *testing.T) {
 		var projectId string
 
 		httpRes, err := apiClient.DefaultAPI.UpdateProject(context.Background(), projectId).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService UpdatePythonExtension", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var extensionId string
+
+		httpRes, err := apiClient.DefaultAPI.UpdatePythonExtension(context.Background(), extensionId).Execute()
 
 		require.Nil(t, err)
 		assert.Equal(t, 200, httpRes.StatusCode)
@@ -953,13 +3104,39 @@ func Test_webrobot_DefaultAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultAPIService UpdateVersion", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id int64
+
+		httpRes, err := apiClient.DefaultAPI.UpdateVersion(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService UploadCsv", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var country string
+
+		httpRes, err := apiClient.DefaultAPI.UploadCsv(context.Background(), country).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultAPIService UploadDataset", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		var provider string
+		var pipelineName string
 
-		httpRes, err := apiClient.DefaultAPI.UploadDataset(context.Background(), provider).Execute()
+		httpRes, err := apiClient.DefaultAPI.UploadDataset(context.Background(), pipelineName).Execute()
 
 		require.Nil(t, err)
 		assert.Equal(t, 200, httpRes.StatusCode)
@@ -970,7 +3147,152 @@ func Test_webrobot_DefaultAPIService(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		httpRes, err := apiClient.DefaultAPI.UploadDataset1(context.Background()).Execute()
+		var provider string
+
+		httpRes, err := apiClient.DefaultAPI.UploadDataset1(context.Background(), provider).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService UploadDataset2", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.UploadDataset2(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService UploadDatasetFile", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.UploadDatasetFile(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService UploadFile", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.UploadFile(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService UploadPlugin", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.UploadPlugin(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService Validate", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.Validate(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService ValidatePythonExtension", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.ValidatePythonExtension(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService WizardInferActions", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.WizardInferActions(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService WizardInferFields", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.WizardInferFields(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService WizardInferSegment", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.WizardInferSegment(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService WizardInferSelector", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.WizardInferSelector(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService WizardProxy", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.WizardProxy(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService WizardSuggestFieldNames", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.WizardSuggestFieldNames(context.Background()).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService WizardValidate", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		httpRes, err := apiClient.DefaultAPI.WizardValidate(context.Background()).Execute()
 
 		require.Nil(t, err)
 		assert.Equal(t, 200, httpRes.StatusCode)

@@ -10,12 +10,15 @@ Name | Type | Description | Notes
 **ProjectId** | Pointer to **string** |  | [optional] 
 **AgentId** | Pointer to **string** |  | [optional] 
 **InputDatasetId** | Pointer to **string** |  | [optional] 
+**CloudCredentialId** | Pointer to **string** |  | [optional] 
+**CloudCredentialIds** | Pointer to **[]string** |  | [optional] 
 **ExecutionStatus** | Pointer to **string** |  | [optional] 
 **ScheduledTime** | Pointer to **time.Time** |  | [optional] 
 **Enabled** | Pointer to **bool** |  | [optional] 
 **TaskIds** | Pointer to **[]string** |  | [optional] 
 **CreatedAt** | Pointer to **time.Time** |  | [optional] 
 **UpdatedAt** | Pointer to **time.Time** |  | [optional] 
+**JobType** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
@@ -186,6 +189,56 @@ SetInputDatasetId sets InputDatasetId field to given value.
 
 HasInputDatasetId returns a boolean if a field has been set.
 
+### GetCloudCredentialId
+
+`func (o *JobDto) GetCloudCredentialId() string`
+
+GetCloudCredentialId returns the CloudCredentialId field if non-nil, zero value otherwise.
+
+### GetCloudCredentialIdOk
+
+`func (o *JobDto) GetCloudCredentialIdOk() (*string, bool)`
+
+GetCloudCredentialIdOk returns a tuple with the CloudCredentialId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCloudCredentialId
+
+`func (o *JobDto) SetCloudCredentialId(v string)`
+
+SetCloudCredentialId sets CloudCredentialId field to given value.
+
+### HasCloudCredentialId
+
+`func (o *JobDto) HasCloudCredentialId() bool`
+
+HasCloudCredentialId returns a boolean if a field has been set.
+
+### GetCloudCredentialIds
+
+`func (o *JobDto) GetCloudCredentialIds() []string`
+
+GetCloudCredentialIds returns the CloudCredentialIds field if non-nil, zero value otherwise.
+
+### GetCloudCredentialIdsOk
+
+`func (o *JobDto) GetCloudCredentialIdsOk() (*[]string, bool)`
+
+GetCloudCredentialIdsOk returns a tuple with the CloudCredentialIds field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCloudCredentialIds
+
+`func (o *JobDto) SetCloudCredentialIds(v []string)`
+
+SetCloudCredentialIds sets CloudCredentialIds field to given value.
+
+### HasCloudCredentialIds
+
+`func (o *JobDto) HasCloudCredentialIds() bool`
+
+HasCloudCredentialIds returns a boolean if a field has been set.
+
 ### GetExecutionStatus
 
 `func (o *JobDto) GetExecutionStatus() string`
@@ -335,6 +388,31 @@ SetUpdatedAt sets UpdatedAt field to given value.
 `func (o *JobDto) HasUpdatedAt() bool`
 
 HasUpdatedAt returns a boolean if a field has been set.
+
+### GetJobType
+
+`func (o *JobDto) GetJobType() string`
+
+GetJobType returns the JobType field if non-nil, zero value otherwise.
+
+### GetJobTypeOk
+
+`func (o *JobDto) GetJobTypeOk() (*string, bool)`
+
+GetJobTypeOk returns a tuple with the JobType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetJobType
+
+`func (o *JobDto) SetJobType(v string)`
+
+SetJobType sets JobType field to given value.
+
+### HasJobType
+
+`func (o *JobDto) HasJobType() bool`
+
+HasJobType returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

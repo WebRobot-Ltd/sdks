@@ -32,8 +32,86 @@ class TestDefaultApi(unittest.TestCase):
         """
         pass
 
+    def test_apply(self) -> None:
+        """Test case for apply
+
+        """
+        pass
+
+    def test_apply_migrations(self) -> None:
+        """Test case for apply_migrations
+
+        """
+        pass
+
+    def test_approve_bundle(self) -> None:
+        """Test case for approve_bundle
+
+        """
+        pass
+
+    def test_assign_user_to_organization(self) -> None:
+        """Test case for assign_user_to_organization
+
+        """
+        pass
+
+    def test_bootstrap_for_organization(self) -> None:
+        """Test case for bootstrap_for_organization
+
+        """
+        pass
+
+    def test_cancel(self) -> None:
+        """Test case for cancel
+
+        """
+        pass
+
+    def test_cancel_execution(self) -> None:
+        """Test case for cancel_execution
+
+        """
+        pass
+
+    def test_cancel_execution1(self) -> None:
+        """Test case for cancel_execution1
+
+        """
+        pass
+
     def test_cancel_training(self) -> None:
         """Test case for cancel_training
+
+        """
+        pass
+
+    def test_cmf_close(self) -> None:
+        """Test case for cmf_close
+
+        """
+        pass
+
+    def test_cmf_open(self) -> None:
+        """Test case for cmf_open
+
+        """
+        pass
+
+    def test_cmf_step(self) -> None:
+        """Test case for cmf_step
+
+        """
+        pass
+
+    def test_completion(self) -> None:
+        """Test case for completion
+
+        """
+        pass
+
+    def test_copy_agent(self) -> None:
+        """Test case for copy_agent
 
         """
         pass
@@ -44,8 +122,62 @@ class TestDefaultApi(unittest.TestCase):
         """
         pass
 
+    def test_create_api_key(self) -> None:
+        """Test case for create_api_key
+
+        """
+        pass
+
+    def test_create_billing_plan(self) -> None:
+        """Test case for create_billing_plan
+
+        """
+        pass
+
     def test_create_category(self) -> None:
         """Test case for create_category
+
+        """
+        pass
+
+    def test_create_cloud_credential(self) -> None:
+        """Test case for create_cloud_credential
+
+        """
+        pass
+
+    def test_create_cron_job(self) -> None:
+        """Test case for create_cron_job
+
+        """
+        pass
+
+    def test_create_custom_plan(self) -> None:
+        """Test case for create_custom_plan
+
+        """
+        pass
+
+    def test_create_dataset(self) -> None:
+        """Test case for create_dataset
+
+        """
+        pass
+
+    def test_create_or_update_version(self) -> None:
+        """Test case for create_or_update_version
+
+        """
+        pass
+
+    def test_create_organization(self) -> None:
+        """Test case for create_organization
+
+        """
+        pass
+
+    def test_create_profile(self) -> None:
+        """Test case for create_profile
 
         """
         pass
@@ -62,6 +194,12 @@ class TestDefaultApi(unittest.TestCase):
         """
         pass
 
+    def test_decrypt_field(self) -> None:
+        """Test case for decrypt_field
+
+        """
+        pass
+
     def test_delete(self) -> None:
         """Test case for delete
 
@@ -74,8 +212,32 @@ class TestDefaultApi(unittest.TestCase):
         """
         pass
 
+    def test_delete_api_key(self) -> None:
+        """Test case for delete_api_key
+
+        """
+        pass
+
+    def test_delete_billing_plan(self) -> None:
+        """Test case for delete_billing_plan
+
+        """
+        pass
+
     def test_delete_category(self) -> None:
         """Test case for delete_category
+
+        """
+        pass
+
+    def test_delete_cloud_credential(self) -> None:
+        """Test case for delete_cloud_credential
+
+        """
+        pass
+
+    def test_delete_cron_job(self) -> None:
+        """Test case for delete_cron_job
 
         """
         pass
@@ -86,8 +248,26 @@ class TestDefaultApi(unittest.TestCase):
         """
         pass
 
+    def test_delete_dataset1(self) -> None:
+        """Test case for delete_dataset1
+
+        """
+        pass
+
     def test_delete_dataset_version(self) -> None:
         """Test case for delete_dataset_version
+
+        """
+        pass
+
+    def test_delete_installation(self) -> None:
+        """Test case for delete_installation
+
+        """
+        pass
+
+    def test_delete_profile(self) -> None:
+        """Test case for delete_profile
 
         """
         pass
@@ -98,8 +278,62 @@ class TestDefaultApi(unittest.TestCase):
         """
         pass
 
+    def test_delete_python_extension(self) -> None:
+        """Test case for delete_python_extension
+
+        """
+        pass
+
     def test_delete_task(self) -> None:
         """Test case for delete_task
+
+        """
+        pass
+
+    def test_delete_user_invite(self) -> None:
+        """Test case for delete_user_invite
+
+        """
+        pass
+
+    def test_delete_version(self) -> None:
+        """Test case for delete_version
+
+        """
+        pass
+
+    def test_deprecate_bundle(self) -> None:
+        """Test case for deprecate_bundle
+
+        """
+        pass
+
+    def test_disable_plugin(self) -> None:
+        """Test case for disable_plugin
+
+        """
+        pass
+
+    def test_disable_plugin1(self) -> None:
+        """Test case for disable_plugin1
+
+        """
+        pass
+
+    def test_disable_plugin_for_organization(self) -> None:
+        """Test case for disable_plugin_for_organization
+
+        """
+        pass
+
+    def test_download_bundle(self) -> None:
+        """Test case for download_bundle
+
+        """
+        pass
+
+    def test_download_cli_plugin(self) -> None:
+        """Test case for download_cli_plugin
 
         """
         pass
@@ -110,8 +344,68 @@ class TestDefaultApi(unittest.TestCase):
         """
         pass
 
+    def test_download_ui_zip(self) -> None:
+        """Test case for download_ui_zip
+
+        """
+        pass
+
+    def test_enable_by_plugin_id_for_organization(self) -> None:
+        """Test case for enable_by_plugin_id_for_organization
+
+        """
+        pass
+
+    def test_enable_plugin(self) -> None:
+        """Test case for enable_plugin
+
+        """
+        pass
+
+    def test_enable_plugin1(self) -> None:
+        """Test case for enable_plugin1
+
+        """
+        pass
+
+    def test_enable_plugin_for_organization(self) -> None:
+        """Test case for enable_plugin_for_organization
+
+        """
+        pass
+
     def test_estimate_cost(self) -> None:
         """Test case for estimate_cost
+
+        """
+        pass
+
+    def test_execute_demo(self) -> None:
+        """Test case for execute_demo
+
+        """
+        pass
+
+    def test_execute_job(self) -> None:
+        """Test case for execute_job
+
+        """
+        pass
+
+    def test_execute_job1(self) -> None:
+        """Test case for execute_job1
+
+        """
+        pass
+
+    def test_execute_query(self) -> None:
+        """Test case for execute_query
+
+        """
+        pass
+
+    def test_extract_direct(self) -> None:
+        """Test case for extract_direct
 
         """
         pass
@@ -122,14 +416,38 @@ class TestDefaultApi(unittest.TestCase):
         """
         pass
 
+    def test_generate_pipeline(self) -> None:
+        """Test case for generate_pipeline
+
+        """
+        pass
+
+    def test_generate_pyspark_code(self) -> None:
+        """Test case for generate_pyspark_code
+
+        """
+        pass
+
     def test_get_agent(self) -> None:
         """Test case for get_agent
 
         """
         pass
 
+    def test_get_agent_extensions(self) -> None:
+        """Test case for get_agent_extensions
+
+        """
+        pass
+
     def test_get_agent_from_name(self) -> None:
         """Test case for get_agent_from_name
+
+        """
+        pass
+
+    def test_get_agent_python_extensions(self) -> None:
+        """Test case for get_agent_python_extensions
 
         """
         pass
@@ -146,6 +464,12 @@ class TestDefaultApi(unittest.TestCase):
         """
         pass
 
+    def test_get_all_cloud_credentials(self) -> None:
+        """Test case for get_all_cloud_credentials
+
+        """
+        pass
+
     def test_get_all_dataset_versions(self) -> None:
         """Test case for get_all_dataset_versions
 
@@ -154,6 +478,18 @@ class TestDefaultApi(unittest.TestCase):
 
     def test_get_all_datasets(self) -> None:
         """Test case for get_all_datasets
+
+        """
+        pass
+
+    def test_get_all_datasets1(self) -> None:
+        """Test case for get_all_datasets1
+
+        """
+        pass
+
+    def test_get_all_installations(self) -> None:
+        """Test case for get_all_installations
 
         """
         pass
@@ -170,14 +506,50 @@ class TestDefaultApi(unittest.TestCase):
         """
         pass
 
+    def test_get_all_versions(self) -> None:
+        """Test case for get_all_versions
+
+        """
+        pass
+
     def test_get_all_versionsets(self) -> None:
         """Test case for get_all_versionsets
 
         """
         pass
 
+    def test_get_billing_plans(self) -> None:
+        """Test case for get_billing_plans
+
+        """
+        pass
+
+    def test_get_bootstrap_status(self) -> None:
+        """Test case for get_bootstrap_status
+
+        """
+        pass
+
+    def test_get_bundle_scan(self) -> None:
+        """Test case for get_bundle_scan
+
+        """
+        pass
+
     def test_get_by_id(self) -> None:
         """Test case for get_by_id
+
+        """
+        pass
+
+    def test_get_capabilities(self) -> None:
+        """Test case for get_capabilities
+
+        """
+        pass
+
+    def test_get_catalog_stages(self) -> None:
+        """Test case for get_catalog_stages
 
         """
         pass
@@ -194,8 +566,50 @@ class TestDefaultApi(unittest.TestCase):
         """
         pass
 
+    def test_get_cloud_credential_by_id(self) -> None:
+        """Test case for get_cloud_credential_by_id
+
+        """
+        pass
+
+    def test_get_cloud_credentials_by_provider(self) -> None:
+        """Test case for get_cloud_credentials_by_provider
+
+        """
+        pass
+
+    def test_get_cron_job(self) -> None:
+        """Test case for get_cron_job
+
+        """
+        pass
+
+    def test_get_current_user(self) -> None:
+        """Test case for get_current_user
+
+        """
+        pass
+
     def test_get_dataset(self) -> None:
         """Test case for get_dataset
+
+        """
+        pass
+
+    def test_get_dataset1(self) -> None:
+        """Test case for get_dataset1
+
+        """
+        pass
+
+    def test_get_dataset_fields(self) -> None:
+        """Test case for get_dataset_fields
+
+        """
+        pass
+
+    def test_get_dataset_info_by_task(self) -> None:
+        """Test case for get_dataset_info_by_task
 
         """
         pass
@@ -236,6 +650,42 @@ class TestDefaultApi(unittest.TestCase):
         """
         pass
 
+    def test_get_effective_entitlements(self) -> None:
+        """Test case for get_effective_entitlements
+
+        """
+        pass
+
+    def test_get_execution_logs(self) -> None:
+        """Test case for get_execution_logs
+
+        """
+        pass
+
+    def test_get_execution_logs1(self) -> None:
+        """Test case for get_execution_logs1
+
+        """
+        pass
+
+    def test_get_execution_output(self) -> None:
+        """Test case for get_execution_output
+
+        """
+        pass
+
+    def test_get_execution_status(self) -> None:
+        """Test case for get_execution_status
+
+        """
+        pass
+
+    def test_get_execution_status1(self) -> None:
+        """Test case for get_execution_status1
+
+        """
+        pass
+
     def test_get_health(self) -> None:
         """Test case for get_health
 
@@ -244,6 +694,108 @@ class TestDefaultApi(unittest.TestCase):
 
     def test_get_html(self) -> None:
         """Test case for get_html
+
+        """
+        pass
+
+    def test_get_images_simplified(self) -> None:
+        """Test case for get_images_simplified
+
+        """
+        pass
+
+    def test_get_info(self) -> None:
+        """Test case for get_info
+
+        """
+        pass
+
+    def test_get_info1(self) -> None:
+        """Test case for get_info1
+
+        """
+        pass
+
+    def test_get_installation_by_id(self) -> None:
+        """Test case for get_installation_by_id
+
+        """
+        pass
+
+    def test_get_job(self) -> None:
+        """Test case for get_job
+
+        """
+        pass
+
+    def test_get_job_logs(self) -> None:
+        """Test case for get_job_logs
+
+        """
+        pass
+
+    def test_get_job_metrics(self) -> None:
+        """Test case for get_job_metrics
+
+        """
+        pass
+
+    def test_get_organization(self) -> None:
+        """Test case for get_organization
+
+        """
+        pass
+
+    def test_get_organization_plugins(self) -> None:
+        """Test case for get_organization_plugins
+
+        """
+        pass
+
+    def test_get_organization_users(self) -> None:
+        """Test case for get_organization_users
+
+        """
+        pass
+
+    def test_get_partners_by_type(self) -> None:
+        """Test case for get_partners_by_type
+
+        """
+        pass
+
+    def test_get_plugin_info(self) -> None:
+        """Test case for get_plugin_info
+
+        """
+        pass
+
+    def test_get_plugin_info1(self) -> None:
+        """Test case for get_plugin_info1
+
+        """
+        pass
+
+    def test_get_plugin_info2(self) -> None:
+        """Test case for get_plugin_info2
+
+        """
+        pass
+
+    def test_get_plugin_organizations(self) -> None:
+        """Test case for get_plugin_organizations
+
+        """
+        pass
+
+    def test_get_plugin_usage(self) -> None:
+        """Test case for get_plugin_usage
+
+        """
+        pass
+
+    def test_get_profile(self) -> None:
+        """Test case for get_profile
 
         """
         pass
@@ -266,8 +818,32 @@ class TestDefaultApi(unittest.TestCase):
         """
         pass
 
+    def test_get_project_metrics(self) -> None:
+        """Test case for get_project_metrics
+
+        """
+        pass
+
     def test_get_project_schedule(self) -> None:
         """Test case for get_project_schedule
+
+        """
+        pass
+
+    def test_get_stage(self) -> None:
+        """Test case for get_stage
+
+        """
+        pass
+
+    def test_get_status(self) -> None:
+        """Test case for get_status
+
+        """
+        pass
+
+    def test_get_supported_extension_types(self) -> None:
+        """Test case for get_supported_extension_types
 
         """
         pass
@@ -284,8 +860,32 @@ class TestDefaultApi(unittest.TestCase):
         """
         pass
 
+    def test_get_system_logs(self) -> None:
+        """Test case for get_system_logs
+
+        """
+        pass
+
+    def test_get_table_columns(self) -> None:
+        """Test case for get_table_columns
+
+        """
+        pass
+
     def test_get_task(self) -> None:
         """Test case for get_task
+
+        """
+        pass
+
+    def test_get_task_by_output_dataset(self) -> None:
+        """Test case for get_task_by_output_dataset
+
+        """
+        pass
+
+    def test_get_task_metrics(self) -> None:
+        """Test case for get_task_metrics
 
         """
         pass
@@ -308,6 +908,12 @@ class TestDefaultApi(unittest.TestCase):
         """
         pass
 
+    def test_get_ui_definitions(self) -> None:
+        """Test case for get_ui_definitions
+
+        """
+        pass
+
     def test_get_upload_file_url(self) -> None:
         """Test case for get_upload_file_url
 
@@ -322,6 +928,24 @@ class TestDefaultApi(unittest.TestCase):
 
     def test_get_url_upload(self) -> None:
         """Test case for get_url_upload
+
+        """
+        pass
+
+    def test_get_user_invites(self) -> None:
+        """Test case for get_user_invites
+
+        """
+        pass
+
+    def test_get_version_by_build_type_and_build_number(self) -> None:
+        """Test case for get_version_by_build_type_and_build_number
+
+        """
+        pass
+
+    def test_get_version_by_id(self) -> None:
+        """Test case for get_version_by_id
 
         """
         pass
@@ -344,8 +968,182 @@ class TestDefaultApi(unittest.TestCase):
         """
         pass
 
+    def test_health_check(self) -> None:
+        """Test case for health_check
+
+        """
+        pass
+
+    def test_health_check1(self) -> None:
+        """Test case for health_check1
+
+        """
+        pass
+
+    def test_index_dataset(self) -> None:
+        """Test case for index_dataset
+
+        """
+        pass
+
+    def test_infer(self) -> None:
+        """Test case for infer
+
+        """
+        pass
+
     def test_insert(self) -> None:
         """Test case for insert
+
+        """
+        pass
+
+    def test_install_bundle(self) -> None:
+        """Test case for install_bundle
+
+        """
+        pass
+
+    def test_job_completion_webhook(self) -> None:
+        """Test case for job_completion_webhook
+
+        """
+        pass
+
+    def test_list_adapters(self) -> None:
+        """Test case for list_adapters
+
+        """
+        pass
+
+    def test_list_api_keys(self) -> None:
+        """Test case for list_api_keys
+
+        """
+        pass
+
+    def test_list_available(self) -> None:
+        """Test case for list_available
+
+        """
+        pass
+
+    def test_list_bundles(self) -> None:
+        """Test case for list_bundles
+
+        """
+        pass
+
+    def test_list_charges(self) -> None:
+        """Test case for list_charges
+
+        """
+        pass
+
+    def test_list_cli_plugins(self) -> None:
+        """Test case for list_cli_plugins
+
+        """
+        pass
+
+    def test_list_cron_jobs(self) -> None:
+        """Test case for list_cron_jobs
+
+        """
+        pass
+
+    def test_list_demos(self) -> None:
+        """Test case for list_demos
+
+        """
+        pass
+
+    def test_list_executions(self) -> None:
+        """Test case for list_executions
+
+        """
+        pass
+
+    def test_list_my_adapters(self) -> None:
+        """Test case for list_my_adapters
+
+        """
+        pass
+
+    def test_list_payouts(self) -> None:
+        """Test case for list_payouts
+
+        """
+        pass
+
+    def test_list_plugins(self) -> None:
+        """Test case for list_plugins
+
+        """
+        pass
+
+    def test_list_profiles(self) -> None:
+        """Test case for list_profiles
+
+        """
+        pass
+
+    def test_list_providers(self) -> None:
+        """Test case for list_providers
+
+        """
+        pass
+
+    def test_list_revenue_share(self) -> None:
+        """Test case for list_revenue_share
+
+        """
+        pass
+
+    def test_list_stages(self) -> None:
+        """Test case for list_stages
+
+        """
+        pass
+
+    def test_list_stages1(self) -> None:
+        """Test case for list_stages1
+
+        """
+        pass
+
+    def test_list_tables(self) -> None:
+        """Test case for list_tables
+
+        """
+        pass
+
+    def test_mark_failed(self) -> None:
+        """Test case for mark_failed
+
+        """
+        pass
+
+    def test_mark_paid(self) -> None:
+        """Test case for mark_paid
+
+        """
+        pass
+
+    def test_mark_zombie_tasks(self) -> None:
+        """Test case for mark_zombie_tasks
+
+        """
+        pass
+
+    def test_probe_adapter(self) -> None:
+        """Test case for probe_adapter
+
+        """
+        pass
+
+    def test_process_yaml_extensions(self) -> None:
+        """Test case for process_yaml_extensions
 
         """
         pass
@@ -356,8 +1154,140 @@ class TestDefaultApi(unittest.TestCase):
         """
         pass
 
+    def test_query_dataset_by_task(self) -> None:
+        """Test case for query_dataset_by_task
+
+        """
+        pass
+
+    def test_query_images(self) -> None:
+        """Test case for query_images
+
+        """
+        pass
+
+    def test_refresh_organizations_billing_status(self) -> None:
+        """Test case for refresh_organizations_billing_status
+
+        """
+        pass
+
+    def test_refund(self) -> None:
+        """Test case for refund
+
+        """
+        pass
+
+    def test_register_plugin(self) -> None:
+        """Test case for register_plugin
+
+        """
+        pass
+
+    def test_register_python_extension(self) -> None:
+        """Test case for register_python_extension
+
+        """
+        pass
+
+    def test_reject_bundle(self) -> None:
+        """Test case for reject_bundle
+
+        """
+        pass
+
+    def test_reload_pipelines(self) -> None:
+        """Test case for reload_pipelines
+
+        """
+        pass
+
+    def test_reload_plugins(self) -> None:
+        """Test case for reload_plugins
+
+        """
+        pass
+
     def test_remove_job_from_project(self) -> None:
         """Test case for remove_job_from_project
+
+        """
+        pass
+
+    def test_report_health(self) -> None:
+        """Test case for report_health
+
+        """
+        pass
+
+    def test_reschedule_events(self) -> None:
+        """Test case for reschedule_events
+
+        """
+        pass
+
+    def test_rollup(self) -> None:
+        """Test case for rollup
+
+        """
+        pass
+
+    def test_run_charges(self) -> None:
+        """Test case for run_charges
+
+        """
+        pass
+
+    def test_run_health_check(self) -> None:
+        """Test case for run_health_check
+
+        """
+        pass
+
+    def test_run_orchestration_charges(self) -> None:
+        """Test case for run_orchestration_charges
+
+        """
+        pass
+
+    def test_run_payouts(self) -> None:
+        """Test case for run_payouts
+
+        """
+        pass
+
+    def test_run_provider_endpoint_charges(self) -> None:
+        """Test case for run_provider_endpoint_charges
+
+        """
+        pass
+
+    def test_run_revenue_share(self) -> None:
+        """Test case for run_revenue_share
+
+        """
+        pass
+
+    def test_save_generated_pipeline(self) -> None:
+        """Test case for save_generated_pipeline
+
+        """
+        pass
+
+    def test_schedule_job(self) -> None:
+        """Test case for schedule_job
+
+        """
+        pass
+
+    def test_serve_demo_app(self) -> None:
+        """Test case for serve_demo_app
+
+        """
+        pass
+
+    def test_serve_static_file(self) -> None:
+        """Test case for serve_static_file
 
         """
         pass
@@ -368,8 +1298,26 @@ class TestDefaultApi(unittest.TestCase):
         """
         pass
 
+    def test_start(self) -> None:
+        """Test case for start
+
+        """
+        pass
+
     def test_start_export_all(self) -> None:
         """Test case for start_export_all
+
+        """
+        pass
+
+    def test_start_export_organization(self) -> None:
+        """Test case for start_export_organization
+
+        """
+        pass
+
+    def test_start_export_organization_with_options(self) -> None:
+        """Test case for start_export_organization_with_options
 
         """
         pass
@@ -386,8 +1334,32 @@ class TestDefaultApi(unittest.TestCase):
         """
         pass
 
+    def test_start_import_all_with_options(self) -> None:
+        """Test case for start_import_all_with_options
+
+        """
+        pass
+
+    def test_start_import_organization(self) -> None:
+        """Test case for start_import_organization
+
+        """
+        pass
+
+    def test_start_import_organization_with_options(self) -> None:
+        """Test case for start_import_organization_with_options
+
+        """
+        pass
+
     def test_start_import_project(self) -> None:
         """Test case for start_import_project
+
+        """
+        pass
+
+    def test_start_import_project_with_options(self) -> None:
+        """Test case for start_import_project_with_options
 
         """
         pass
@@ -404,8 +1376,26 @@ class TestDefaultApi(unittest.TestCase):
         """
         pass
 
+    def test_status(self) -> None:
+        """Test case for status
+
+        """
+        pass
+
+    def test_stop_job(self) -> None:
+        """Test case for stop_job
+
+        """
+        pass
+
     def test_stop_task(self) -> None:
         """Test case for stop_task
+
+        """
+        pass
+
+    def test_suggest_stages(self) -> None:
+        """Test case for suggest_stages
 
         """
         pass
@@ -422,8 +1412,20 @@ class TestDefaultApi(unittest.TestCase):
         """
         pass
 
+    def test_test_cloud_credential(self) -> None:
+        """Test case for test_cloud_credential
+
+        """
+        pass
+
     def test_update(self) -> None:
         """Test case for update
+
+        """
+        pass
+
+    def test_update_adapter(self) -> None:
+        """Test case for update_adapter
 
         """
         pass
@@ -434,8 +1436,56 @@ class TestDefaultApi(unittest.TestCase):
         """
         pass
 
+    def test_update_agent_python_extensions(self) -> None:
+        """Test case for update_agent_python_extensions
+
+        """
+        pass
+
+    def test_update_billing_plan(self) -> None:
+        """Test case for update_billing_plan
+
+        """
+        pass
+
     def test_update_category(self) -> None:
         """Test case for update_category
+
+        """
+        pass
+
+    def test_update_cloud_credential(self) -> None:
+        """Test case for update_cloud_credential
+
+        """
+        pass
+
+    def test_update_dataset(self) -> None:
+        """Test case for update_dataset
+
+        """
+        pass
+
+    def test_update_installation(self) -> None:
+        """Test case for update_installation
+
+        """
+        pass
+
+    def test_update_job(self) -> None:
+        """Test case for update_job
+
+        """
+        pass
+
+    def test_update_organization(self) -> None:
+        """Test case for update_organization
+
+        """
+        pass
+
+    def test_update_profile(self) -> None:
+        """Test case for update_profile
 
         """
         pass
@@ -446,8 +1496,26 @@ class TestDefaultApi(unittest.TestCase):
         """
         pass
 
+    def test_update_python_extension(self) -> None:
+        """Test case for update_python_extension
+
+        """
+        pass
+
     def test_update_task(self) -> None:
         """Test case for update_task
+
+        """
+        pass
+
+    def test_update_version(self) -> None:
+        """Test case for update_version
+
+        """
+        pass
+
+    def test_upload_csv(self) -> None:
+        """Test case for upload_csv
 
         """
         pass
@@ -460,6 +1528,84 @@ class TestDefaultApi(unittest.TestCase):
 
     def test_upload_dataset1(self) -> None:
         """Test case for upload_dataset1
+
+        """
+        pass
+
+    def test_upload_dataset2(self) -> None:
+        """Test case for upload_dataset2
+
+        """
+        pass
+
+    def test_upload_dataset_file(self) -> None:
+        """Test case for upload_dataset_file
+
+        """
+        pass
+
+    def test_upload_file(self) -> None:
+        """Test case for upload_file
+
+        """
+        pass
+
+    def test_upload_plugin(self) -> None:
+        """Test case for upload_plugin
+
+        """
+        pass
+
+    def test_validate(self) -> None:
+        """Test case for validate
+
+        """
+        pass
+
+    def test_validate_python_extension(self) -> None:
+        """Test case for validate_python_extension
+
+        """
+        pass
+
+    def test_wizard_infer_actions(self) -> None:
+        """Test case for wizard_infer_actions
+
+        """
+        pass
+
+    def test_wizard_infer_fields(self) -> None:
+        """Test case for wizard_infer_fields
+
+        """
+        pass
+
+    def test_wizard_infer_segment(self) -> None:
+        """Test case for wizard_infer_segment
+
+        """
+        pass
+
+    def test_wizard_infer_selector(self) -> None:
+        """Test case for wizard_infer_selector
+
+        """
+        pass
+
+    def test_wizard_proxy(self) -> None:
+        """Test case for wizard_proxy
+
+        """
+        pass
+
+    def test_wizard_suggest_field_names(self) -> None:
+        """Test case for wizard_suggest_field_names
+
+        """
+        pass
+
+    def test_wizard_validate(self) -> None:
+        """Test case for wizard_validate
 
         """
         pass

@@ -8,6 +8,8 @@ Name | Type | Description | Notes
 **cron_schedule** | **str** |  | [optional] 
 **enabled** | **bool** |  | [optional] 
 **timezone** | **str** |  | [optional] 
+**job_id** | **str** |  | [optional] 
+**execution_request_json** | **str** |  | [optional] 
 
 ## Example
 

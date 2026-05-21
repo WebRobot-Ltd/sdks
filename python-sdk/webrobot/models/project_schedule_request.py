@@ -29,7 +29,9 @@ class ProjectScheduleRequest(BaseModel):
     cron_schedule: Optional[StrictStr] = Field(default=None, alias="cronSchedule")
     enabled: Optional[StrictBool] = None
     timezone: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["cronSchedule", "enabled", "timezone"]
+    job_id: Optional[StrictStr] = Field(default=None, alias="jobId")
+    execution_request_json: Optional[StrictStr] = Field(default=None, alias="executionRequestJson")
+    __properties: ClassVar[List[str]] = ["cronSchedule", "enabled", "timezone", "jobId", "executionRequestJson"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -84,7 +86,9 @@ class ProjectScheduleRequest(BaseModel):
         _obj = cls.model_validate({
             "cronSchedule": obj.get("cronSchedule"),
             "enabled": obj.get("enabled"),
-            "timezone": obj.get("timezone")
+            "timezone": obj.get("timezone"),
+            "jobId": obj.get("jobId"),
+            "executionRequestJson": obj.get("executionRequestJson")
         })
         return _obj
 

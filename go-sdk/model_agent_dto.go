@@ -37,6 +37,7 @@ type AgentDto struct {
 	CodeTypeId *string `json:"codeTypeId,omitempty"`
 	PysparkCode *string `json:"pysparkCode,omitempty"`
 	PythonExtensions *string `json:"pythonExtensions,omitempty"`
+	StackType *string `json:"stackType,omitempty"`
 	GeneratedAt *time.Time `json:"generatedAt,omitempty"`
 	ToolIds []string `json:"toolIds,omitempty"`
 	CreatedAt *time.Time `json:"createdAt,omitempty"`
@@ -604,6 +605,38 @@ func (o *AgentDto) SetPythonExtensions(v string) {
 	o.PythonExtensions = &v
 }
 
+// GetStackType returns the StackType field value if set, zero value otherwise.
+func (o *AgentDto) GetStackType() string {
+	if o == nil || IsNil(o.StackType) {
+		var ret string
+		return ret
+	}
+	return *o.StackType
+}
+
+// GetStackTypeOk returns a tuple with the StackType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AgentDto) GetStackTypeOk() (*string, bool) {
+	if o == nil || IsNil(o.StackType) {
+		return nil, false
+	}
+	return o.StackType, true
+}
+
+// HasStackType returns a boolean if a field has been set.
+func (o *AgentDto) HasStackType() bool {
+	if o != nil && !IsNil(o.StackType) {
+		return true
+	}
+
+	return false
+}
+
+// SetStackType gets a reference to the given string and assigns it to the StackType field.
+func (o *AgentDto) SetStackType(v string) {
+	o.StackType = &v
+}
+
 // GetGeneratedAt returns the GeneratedAt field value if set, zero value otherwise.
 func (o *AgentDto) GetGeneratedAt() time.Time {
 	if o == nil || IsNil(o.GeneratedAt) {
@@ -792,6 +825,9 @@ func (o AgentDto) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.PythonExtensions) {
 		toSerialize["pythonExtensions"] = o.PythonExtensions
+	}
+	if !IsNil(o.StackType) {
+		toSerialize["stackType"] = o.StackType
 	}
 	if !IsNil(o.GeneratedAt) {
 		toSerialize["generatedAt"] = o.GeneratedAt

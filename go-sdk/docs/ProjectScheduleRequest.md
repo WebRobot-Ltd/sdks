@@ -7,6 +7,8 @@ Name | Type | Description | Notes
 **CronSchedule** | Pointer to **string** |  | [optional] 
 **Enabled** | Pointer to **bool** |  | [optional] 
 **Timezone** | Pointer to **string** |  | [optional] 
+**JobId** | Pointer to **string** |  | [optional] 
+**ExecutionRequestJson** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
@@ -101,6 +103,56 @@ SetTimezone sets Timezone field to given value.
 `func (o *ProjectScheduleRequest) HasTimezone() bool`
 
 HasTimezone returns a boolean if a field has been set.
+
+### GetJobId
+
+`func (o *ProjectScheduleRequest) GetJobId() string`
+
+GetJobId returns the JobId field if non-nil, zero value otherwise.
+
+### GetJobIdOk
+
+`func (o *ProjectScheduleRequest) GetJobIdOk() (*string, bool)`
+
+GetJobIdOk returns a tuple with the JobId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetJobId
+
+`func (o *ProjectScheduleRequest) SetJobId(v string)`
+
+SetJobId sets JobId field to given value.
+
+### HasJobId
+
+`func (o *ProjectScheduleRequest) HasJobId() bool`
+
+HasJobId returns a boolean if a field has been set.
+
+### GetExecutionRequestJson
+
+`func (o *ProjectScheduleRequest) GetExecutionRequestJson() string`
+
+GetExecutionRequestJson returns the ExecutionRequestJson field if non-nil, zero value otherwise.
+
+### GetExecutionRequestJsonOk
+
+`func (o *ProjectScheduleRequest) GetExecutionRequestJsonOk() (*string, bool)`
+
+GetExecutionRequestJsonOk returns a tuple with the ExecutionRequestJson field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetExecutionRequestJson
+
+`func (o *ProjectScheduleRequest) SetExecutionRequestJson(v string)`
+
+SetExecutionRequestJson sets ExecutionRequestJson field to given value.
+
+### HasExecutionRequestJson
+
+`func (o *ProjectScheduleRequest) HasExecutionRequestJson() bool`
+
+HasExecutionRequestJson returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

@@ -21,6 +21,7 @@ Name | Type | Description | Notes
 **CodeTypeId** | Pointer to **string** |  | [optional] 
 **PysparkCode** | Pointer to **string** |  | [optional] 
 **PythonExtensions** | Pointer to **string** |  | [optional] 
+**StackType** | Pointer to **string** |  | [optional] 
 **GeneratedAt** | Pointer to **time.Time** |  | [optional] 
 **ToolIds** | Pointer to **[]string** |  | [optional] 
 **CreatedAt** | Pointer to **time.Time** |  | [optional] 
@@ -469,6 +470,31 @@ SetPythonExtensions sets PythonExtensions field to given value.
 `func (o *AgentDto) HasPythonExtensions() bool`
 
 HasPythonExtensions returns a boolean if a field has been set.
+
+### GetStackType
+
+`func (o *AgentDto) GetStackType() string`
+
+GetStackType returns the StackType field if non-nil, zero value otherwise.
+
+### GetStackTypeOk
+
+`func (o *AgentDto) GetStackTypeOk() (*string, bool)`
+
+GetStackTypeOk returns a tuple with the StackType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetStackType
+
+`func (o *AgentDto) SetStackType(v string)`
+
+SetStackType sets StackType field to given value.
+
+### HasStackType
+
+`func (o *AgentDto) HasStackType() bool`
+
+HasStackType returns a boolean if a field has been set.
 
 ### GetGeneratedAt
 

@@ -41,14 +41,19 @@ class TestJobDto(unittest.TestCase):
                 project_id = '',
                 agent_id = '',
                 input_dataset_id = '',
-                execution_status = 'PENDING',
+                cloud_credential_id = '',
+                cloud_credential_ids = [
+                    ''
+                    ],
+                execution_status = 'CREATED',
                 scheduled_time = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
                 enabled = True,
                 task_ids = [
                     ''
                     ],
                 created_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
-                updated_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f')
+                updated_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
+                job_type = 'BATCH'
             )
         else:
             return JobDto(

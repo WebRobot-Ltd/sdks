@@ -27,13 +27,7 @@ type ApiAddJobToProjectRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
 	projectId string
-	xRapidAPIUser *string
 	jobDto *JobDto
-}
-
-func (r ApiAddJobToProjectRequest) XRapidAPIUser(xRapidAPIUser string) ApiAddJobToProjectRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiAddJobToProjectRequest) JobDto(jobDto JobDto) ApiAddJobToProjectRequest {
@@ -97,11 +91,756 @@ func (a *DefaultAPIService) AddJobToProjectExecute(r ApiAddJobToProjectRequest) 
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
-	}
 	// body params
 	localVarPostBody = r.jobDto
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiApplyRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	requestBody *map[string]map[string]interface{}
+}
+
+func (r ApiApplyRequest) RequestBody(requestBody map[string]map[string]interface{}) ApiApplyRequest {
+	r.requestBody = &requestBody
+	return r
+}
+
+func (r ApiApplyRequest) Execute() (*http.Response, error) {
+	return r.ApiService.ApplyExecute(r)
+}
+
+/*
+Apply Method for Apply
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiApplyRequest
+*/
+func (a *DefaultAPIService) Apply(ctx context.Context) ApiApplyRequest {
+	return ApiApplyRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) ApplyExecute(r ApiApplyRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.Apply")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/manifest/apply"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.requestBody
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiApplyMigrationsRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	id int64
+}
+
+func (r ApiApplyMigrationsRequest) Execute() (*http.Response, error) {
+	return r.ApiService.ApplyMigrationsExecute(r)
+}
+
+/*
+ApplyMigrations Method for ApplyMigrations
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id
+ @return ApiApplyMigrationsRequest
+*/
+func (a *DefaultAPIService) ApplyMigrations(ctx context.Context, id int64) ApiApplyMigrationsRequest {
+	return ApiApplyMigrationsRequest{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) ApplyMigrationsExecute(r ApiApplyMigrationsRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.ApplyMigrations")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/admin/bundles/{id}/apply-migrations"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiApproveBundleRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	id int64
+}
+
+func (r ApiApproveBundleRequest) Execute() (*http.Response, error) {
+	return r.ApiService.ApproveBundleExecute(r)
+}
+
+/*
+ApproveBundle Method for ApproveBundle
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id
+ @return ApiApproveBundleRequest
+*/
+func (a *DefaultAPIService) ApproveBundle(ctx context.Context, id int64) ApiApproveBundleRequest {
+	return ApiApproveBundleRequest{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) ApproveBundleExecute(r ApiApproveBundleRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.ApproveBundle")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/admin/bundles/{id}/approve"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiAssignUserToOrganizationRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	id string
+	requestBody *map[string]map[string]interface{}
+}
+
+func (r ApiAssignUserToOrganizationRequest) RequestBody(requestBody map[string]map[string]interface{}) ApiAssignUserToOrganizationRequest {
+	r.requestBody = &requestBody
+	return r
+}
+
+func (r ApiAssignUserToOrganizationRequest) Execute() (*http.Response, error) {
+	return r.ApiService.AssignUserToOrganizationExecute(r)
+}
+
+/*
+AssignUserToOrganization Method for AssignUserToOrganization
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id
+ @return ApiAssignUserToOrganizationRequest
+*/
+func (a *DefaultAPIService) AssignUserToOrganization(ctx context.Context, id string) ApiAssignUserToOrganizationRequest {
+	return ApiAssignUserToOrganizationRequest{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) AssignUserToOrganizationExecute(r ApiAssignUserToOrganizationRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.AssignUserToOrganization")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/auth/organizations/{id}/assign-user"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.requestBody
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiBootstrapForOrganizationRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	organizationId string
+	requestBody *map[string]map[string]interface{}
+}
+
+func (r ApiBootstrapForOrganizationRequest) RequestBody(requestBody map[string]map[string]interface{}) ApiBootstrapForOrganizationRequest {
+	r.requestBody = &requestBody
+	return r
+}
+
+func (r ApiBootstrapForOrganizationRequest) Execute() (*http.Response, error) {
+	return r.ApiService.BootstrapForOrganizationExecute(r)
+}
+
+/*
+BootstrapForOrganization Method for BootstrapForOrganization
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param organizationId
+ @return ApiBootstrapForOrganizationRequest
+*/
+func (a *DefaultAPIService) BootstrapForOrganization(ctx context.Context, organizationId string) ApiBootstrapForOrganizationRequest {
+	return ApiBootstrapForOrganizationRequest{
+		ApiService: a,
+		ctx: ctx,
+		organizationId: organizationId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) BootstrapForOrganizationExecute(r ApiBootstrapForOrganizationRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.BootstrapForOrganization")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/ean-image-sourcing/bootstrap/organization/{organizationId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"organizationId"+"}", url.PathEscape(parameterValueToString(r.organizationId, "organizationId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.requestBody
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiCancelRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	eid string
+}
+
+func (r ApiCancelRequest) Execute() (*http.Response, error) {
+	return r.ApiService.CancelExecute(r)
+}
+
+/*
+Cancel Method for Cancel
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param eid
+ @return ApiCancelRequest
+*/
+func (a *DefaultAPIService) Cancel(ctx context.Context, eid string) ApiCancelRequest {
+	return ApiCancelRequest{
+		ApiService: a,
+		ctx: ctx,
+		eid: eid,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) CancelExecute(r ApiCancelRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodDelete
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.Cancel")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/agentic/{eid}"
+	localVarPath = strings.Replace(localVarPath, "{"+"eid"+"}", url.PathEscape(parameterValueToString(r.eid, "eid")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiCancelExecutionRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	executionId string
+}
+
+func (r ApiCancelExecutionRequest) Execute() (*http.Response, error) {
+	return r.ApiService.CancelExecutionExecute(r)
+}
+
+/*
+CancelExecution Method for CancelExecution
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param executionId
+ @return ApiCancelExecutionRequest
+*/
+func (a *DefaultAPIService) CancelExecution(ctx context.Context, executionId string) ApiCancelExecutionRequest {
+	return ApiCancelExecutionRequest{
+		ApiService: a,
+		ctx: ctx,
+		executionId: executionId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) CancelExecutionExecute(r ApiCancelExecutionRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodDelete
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.CancelExecution")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/demo/executions/{executionId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"executionId"+"}", url.PathEscape(parameterValueToString(r.executionId, "executionId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiCancelExecution1Request struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	projectId string
+	jobId string
+	executionId string
+}
+
+func (r ApiCancelExecution1Request) Execute() (*http.Response, error) {
+	return r.ApiService.CancelExecution1Execute(r)
+}
+
+/*
+CancelExecution1 Method for CancelExecution1
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param projectId
+ @param jobId
+ @param executionId
+ @return ApiCancelExecution1Request
+*/
+func (a *DefaultAPIService) CancelExecution1(ctx context.Context, projectId string, jobId string, executionId string) ApiCancelExecution1Request {
+	return ApiCancelExecution1Request{
+		ApiService: a,
+		ctx: ctx,
+		projectId: projectId,
+		jobId: jobId,
+		executionId: executionId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) CancelExecution1Execute(r ApiCancelExecution1Request) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodDelete
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.CancelExecution1")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/projects/id/{projectId}/jobs/{jobId}/executions/{executionId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"projectId"+"}", url.PathEscape(parameterValueToString(r.projectId, "projectId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"jobId"+"}", url.PathEscape(parameterValueToString(r.jobId, "jobId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"executionId"+"}", url.PathEscape(parameterValueToString(r.executionId, "executionId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -135,12 +874,6 @@ type ApiCancelTrainingRequest struct {
 	ApiService *DefaultAPIService
 	provider string
 	jobId string
-	xRapidAPIUser *string
-}
-
-func (r ApiCancelTrainingRequest) XRapidAPIUser(xRapidAPIUser string) ApiCancelTrainingRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiCancelTrainingRequest) Execute() (*http.Response, error) {
@@ -202,9 +935,480 @@ func (a *DefaultAPIService) CancelTrainingExecute(r ApiCancelTrainingRequest) (*
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
 	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiCmfCloseRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	sessionId string
+}
+
+func (r ApiCmfCloseRequest) Execute() (*http.Response, error) {
+	return r.ApiService.CmfCloseExecute(r)
+}
+
+/*
+CmfClose Method for CmfClose
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param sessionId
+ @return ApiCmfCloseRequest
+*/
+func (a *DefaultAPIService) CmfClose(ctx context.Context, sessionId string) ApiCmfCloseRequest {
+	return ApiCmfCloseRequest{
+		ApiService: a,
+		ctx: ctx,
+		sessionId: sessionId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) CmfCloseExecute(r ApiCmfCloseRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodDelete
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.CmfClose")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/demo/wizard/cmf/{sessionId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"sessionId"+"}", url.PathEscape(parameterValueToString(r.sessionId, "sessionId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiCmfOpenRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	requestBody *map[string]map[string]interface{}
+}
+
+func (r ApiCmfOpenRequest) RequestBody(requestBody map[string]map[string]interface{}) ApiCmfOpenRequest {
+	r.requestBody = &requestBody
+	return r
+}
+
+func (r ApiCmfOpenRequest) Execute() (*http.Response, error) {
+	return r.ApiService.CmfOpenExecute(r)
+}
+
+/*
+CmfOpen Method for CmfOpen
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiCmfOpenRequest
+*/
+func (a *DefaultAPIService) CmfOpen(ctx context.Context) ApiCmfOpenRequest {
+	return ApiCmfOpenRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) CmfOpenExecute(r ApiCmfOpenRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.CmfOpen")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/demo/wizard/cmf/open"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.requestBody
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiCmfStepRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	requestBody *map[string]map[string]interface{}
+}
+
+func (r ApiCmfStepRequest) RequestBody(requestBody map[string]map[string]interface{}) ApiCmfStepRequest {
+	r.requestBody = &requestBody
+	return r
+}
+
+func (r ApiCmfStepRequest) Execute() (*http.Response, error) {
+	return r.ApiService.CmfStepExecute(r)
+}
+
+/*
+CmfStep Method for CmfStep
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiCmfStepRequest
+*/
+func (a *DefaultAPIService) CmfStep(ctx context.Context) ApiCmfStepRequest {
+	return ApiCmfStepRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) CmfStepExecute(r ApiCmfStepRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.CmfStep")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/demo/wizard/cmf/step"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.requestBody
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiCompletionRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	eid string
+	completionRequest *CompletionRequest
+}
+
+func (r ApiCompletionRequest) CompletionRequest(completionRequest CompletionRequest) ApiCompletionRequest {
+	r.completionRequest = &completionRequest
+	return r
+}
+
+func (r ApiCompletionRequest) Execute() (*http.Response, error) {
+	return r.ApiService.CompletionExecute(r)
+}
+
+/*
+Completion Method for Completion
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param eid
+ @return ApiCompletionRequest
+*/
+func (a *DefaultAPIService) Completion(ctx context.Context, eid string) ApiCompletionRequest {
+	return ApiCompletionRequest{
+		ApiService: a,
+		ctx: ctx,
+		eid: eid,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) CompletionExecute(r ApiCompletionRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.Completion")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/agentic/{eid}/completion"
+	localVarPath = strings.Replace(localVarPath, "{"+"eid"+"}", url.PathEscape(parameterValueToString(r.eid, "eid")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.completionRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiCopyAgentRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	agentId string
+	copyToOrganizationsDto *CopyToOrganizationsDto
+}
+
+func (r ApiCopyAgentRequest) CopyToOrganizationsDto(copyToOrganizationsDto CopyToOrganizationsDto) ApiCopyAgentRequest {
+	r.copyToOrganizationsDto = &copyToOrganizationsDto
+	return r
+}
+
+func (r ApiCopyAgentRequest) Execute() (*http.Response, error) {
+	return r.ApiService.CopyAgentExecute(r)
+}
+
+/*
+CopyAgent Method for CopyAgent
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param agentId
+ @return ApiCopyAgentRequest
+*/
+func (a *DefaultAPIService) CopyAgent(ctx context.Context, agentId string) ApiCopyAgentRequest {
+	return ApiCopyAgentRequest{
+		ApiService: a,
+		ctx: ctx,
+		agentId: agentId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) CopyAgentExecute(r ApiCopyAgentRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.CopyAgent")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/agents/{agentId}/copy"
+	localVarPath = strings.Replace(localVarPath, "{"+"agentId"+"}", url.PathEscape(parameterValueToString(r.agentId, "agentId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.copyToOrganizationsDto
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -236,13 +1440,7 @@ func (a *DefaultAPIService) CancelTrainingExecute(r ApiCancelTrainingRequest) (*
 type ApiCreateAgentRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
-	xRapidAPIUser *string
 	agentDto *AgentDto
-}
-
-func (r ApiCreateAgentRequest) XRapidAPIUser(xRapidAPIUser string) ApiCreateAgentRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiCreateAgentRequest) AgentDto(agentDto AgentDto) ApiCreateAgentRequest {
@@ -303,11 +1501,196 @@ func (a *DefaultAPIService) CreateAgentExecute(r ApiCreateAgentRequest) (*http.R
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
-	}
 	// body params
 	localVarPostBody = r.agentDto
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiCreateApiKeyRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	requestBody *map[string]map[string]interface{}
+}
+
+func (r ApiCreateApiKeyRequest) RequestBody(requestBody map[string]map[string]interface{}) ApiCreateApiKeyRequest {
+	r.requestBody = &requestBody
+	return r
+}
+
+func (r ApiCreateApiKeyRequest) Execute() (*http.Response, error) {
+	return r.ApiService.CreateApiKeyExecute(r)
+}
+
+/*
+CreateApiKey Method for CreateApiKey
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiCreateApiKeyRequest
+*/
+func (a *DefaultAPIService) CreateApiKey(ctx context.Context) ApiCreateApiKeyRequest {
+	return ApiCreateApiKeyRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) CreateApiKeyExecute(r ApiCreateApiKeyRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.CreateApiKey")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/auth/api-keys"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.requestBody
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiCreateBillingPlanRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	requestBody *map[string]map[string]interface{}
+}
+
+func (r ApiCreateBillingPlanRequest) RequestBody(requestBody map[string]map[string]interface{}) ApiCreateBillingPlanRequest {
+	r.requestBody = &requestBody
+	return r
+}
+
+func (r ApiCreateBillingPlanRequest) Execute() (*http.Response, error) {
+	return r.ApiService.CreateBillingPlanExecute(r)
+}
+
+/*
+CreateBillingPlan Method for CreateBillingPlan
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiCreateBillingPlanRequest
+*/
+func (a *DefaultAPIService) CreateBillingPlan(ctx context.Context) ApiCreateBillingPlanRequest {
+	return ApiCreateBillingPlanRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) CreateBillingPlanExecute(r ApiCreateBillingPlanRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.CreateBillingPlan")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/billing/plans"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.requestBody
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -339,13 +1722,7 @@ func (a *DefaultAPIService) CreateAgentExecute(r ApiCreateAgentRequest) (*http.R
 type ApiCreateCategoryRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
-	xRapidAPIUser *string
 	jobCategoryDto *JobCategoryDto
-}
-
-func (r ApiCreateCategoryRequest) XRapidAPIUser(xRapidAPIUser string) ApiCreateCategoryRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiCreateCategoryRequest) JobCategoryDto(jobCategoryDto JobCategoryDto) ApiCreateCategoryRequest {
@@ -406,11 +1783,666 @@ func (a *DefaultAPIService) CreateCategoryExecute(r ApiCreateCategoryRequest) (*
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
-	}
 	// body params
 	localVarPostBody = r.jobCategoryDto
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiCreateCloudCredentialRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	cloudCredential *CloudCredential
+}
+
+func (r ApiCreateCloudCredentialRequest) CloudCredential(cloudCredential CloudCredential) ApiCreateCloudCredentialRequest {
+	r.cloudCredential = &cloudCredential
+	return r
+}
+
+func (r ApiCreateCloudCredentialRequest) Execute() (*http.Response, error) {
+	return r.ApiService.CreateCloudCredentialExecute(r)
+}
+
+/*
+CreateCloudCredential Method for CreateCloudCredential
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiCreateCloudCredentialRequest
+*/
+func (a *DefaultAPIService) CreateCloudCredential(ctx context.Context) ApiCreateCloudCredentialRequest {
+	return ApiCreateCloudCredentialRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) CreateCloudCredentialExecute(r ApiCreateCloudCredentialRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.CreateCloudCredential")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/cloud-credentials"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.cloudCredential
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiCreateCronJobRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	cronJobRequest *CronJobRequest
+}
+
+func (r ApiCreateCronJobRequest) CronJobRequest(cronJobRequest CronJobRequest) ApiCreateCronJobRequest {
+	r.cronJobRequest = &cronJobRequest
+	return r
+}
+
+func (r ApiCreateCronJobRequest) Execute() (*http.Response, error) {
+	return r.ApiService.CreateCronJobExecute(r)
+}
+
+/*
+CreateCronJob Method for CreateCronJob
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiCreateCronJobRequest
+*/
+func (a *DefaultAPIService) CreateCronJob(ctx context.Context) ApiCreateCronJobRequest {
+	return ApiCreateCronJobRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) CreateCronJobExecute(r ApiCreateCronJobRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.CreateCronJob")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/cloud/scheduler/cronjobs"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.cronJobRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiCreateCustomPlanRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	requestBody *map[string]map[string]interface{}
+}
+
+func (r ApiCreateCustomPlanRequest) RequestBody(requestBody map[string]map[string]interface{}) ApiCreateCustomPlanRequest {
+	r.requestBody = &requestBody
+	return r
+}
+
+func (r ApiCreateCustomPlanRequest) Execute() (*http.Response, error) {
+	return r.ApiService.CreateCustomPlanExecute(r)
+}
+
+/*
+CreateCustomPlan Method for CreateCustomPlan
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiCreateCustomPlanRequest
+*/
+func (a *DefaultAPIService) CreateCustomPlan(ctx context.Context) ApiCreateCustomPlanRequest {
+	return ApiCreateCustomPlanRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) CreateCustomPlanExecute(r ApiCreateCustomPlanRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.CreateCustomPlan")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/billing/custom-plan"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.requestBody
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiCreateDatasetRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	datasetDto *DatasetDto
+}
+
+func (r ApiCreateDatasetRequest) DatasetDto(datasetDto DatasetDto) ApiCreateDatasetRequest {
+	r.datasetDto = &datasetDto
+	return r
+}
+
+func (r ApiCreateDatasetRequest) Execute() (*http.Response, error) {
+	return r.ApiService.CreateDatasetExecute(r)
+}
+
+/*
+CreateDataset Method for CreateDataset
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiCreateDatasetRequest
+*/
+func (a *DefaultAPIService) CreateDataset(ctx context.Context) ApiCreateDatasetRequest {
+	return ApiCreateDatasetRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) CreateDatasetExecute(r ApiCreateDatasetRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.CreateDataset")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/datasets"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.datasetDto
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiCreateOrUpdateVersionRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	etlLibraryVersionApiDto *EtlLibraryVersionApiDto
+}
+
+func (r ApiCreateOrUpdateVersionRequest) EtlLibraryVersionApiDto(etlLibraryVersionApiDto EtlLibraryVersionApiDto) ApiCreateOrUpdateVersionRequest {
+	r.etlLibraryVersionApiDto = &etlLibraryVersionApiDto
+	return r
+}
+
+func (r ApiCreateOrUpdateVersionRequest) Execute() (*http.Response, error) {
+	return r.ApiService.CreateOrUpdateVersionExecute(r)
+}
+
+/*
+CreateOrUpdateVersion Method for CreateOrUpdateVersion
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiCreateOrUpdateVersionRequest
+*/
+func (a *DefaultAPIService) CreateOrUpdateVersion(ctx context.Context) ApiCreateOrUpdateVersionRequest {
+	return ApiCreateOrUpdateVersionRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) CreateOrUpdateVersionExecute(r ApiCreateOrUpdateVersionRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.CreateOrUpdateVersion")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/admin/etl-library-versions"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.etlLibraryVersionApiDto
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiCreateOrganizationRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	requestBody *map[string]map[string]interface{}
+}
+
+func (r ApiCreateOrganizationRequest) RequestBody(requestBody map[string]map[string]interface{}) ApiCreateOrganizationRequest {
+	r.requestBody = &requestBody
+	return r
+}
+
+func (r ApiCreateOrganizationRequest) Execute() (*http.Response, error) {
+	return r.ApiService.CreateOrganizationExecute(r)
+}
+
+/*
+CreateOrganization Method for CreateOrganization
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiCreateOrganizationRequest
+*/
+func (a *DefaultAPIService) CreateOrganization(ctx context.Context) ApiCreateOrganizationRequest {
+	return ApiCreateOrganizationRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) CreateOrganizationExecute(r ApiCreateOrganizationRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.CreateOrganization")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/auth/organizations"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.requestBody
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiCreateProfileRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	agenticProfile *AgenticProfile
+}
+
+func (r ApiCreateProfileRequest) AgenticProfile(agenticProfile AgenticProfile) ApiCreateProfileRequest {
+	r.agenticProfile = &agenticProfile
+	return r
+}
+
+func (r ApiCreateProfileRequest) Execute() (*http.Response, error) {
+	return r.ApiService.CreateProfileExecute(r)
+}
+
+/*
+CreateProfile Method for CreateProfile
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiCreateProfileRequest
+*/
+func (a *DefaultAPIService) CreateProfile(ctx context.Context) ApiCreateProfileRequest {
+	return ApiCreateProfileRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) CreateProfileExecute(r ApiCreateProfileRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.CreateProfile")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/agentic/profiles"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.agenticProfile
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -442,13 +2474,7 @@ func (a *DefaultAPIService) CreateCategoryExecute(r ApiCreateCategoryRequest) (*
 type ApiCreateProjectRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
-	xRapidAPIUser *string
 	jobProjectDto *JobProjectDto
-}
-
-func (r ApiCreateProjectRequest) XRapidAPIUser(xRapidAPIUser string) ApiCreateProjectRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiCreateProjectRequest) JobProjectDto(jobProjectDto JobProjectDto) ApiCreateProjectRequest {
@@ -509,9 +2535,6 @@ func (a *DefaultAPIService) CreateProjectExecute(r ApiCreateProjectRequest) (*ht
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
-	}
 	// body params
 	localVarPostBody = r.jobProjectDto
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -547,13 +2570,7 @@ type ApiCreateTaskRequest struct {
 	ApiService *DefaultAPIService
 	projectId string
 	jobId string
-	xRapidAPIUser *string
 	taskDto *TaskDto
-}
-
-func (r ApiCreateTaskRequest) XRapidAPIUser(xRapidAPIUser string) ApiCreateTaskRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiCreateTaskRequest) TaskDto(taskDto TaskDto) ApiCreateTaskRequest {
@@ -620,11 +2637,106 @@ func (a *DefaultAPIService) CreateTaskExecute(r ApiCreateTaskRequest) (*http.Res
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
-	}
 	// body params
 	localVarPostBody = r.taskDto
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiDecryptFieldRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	credentialId string
+	requestBody *map[string]string
+}
+
+func (r ApiDecryptFieldRequest) RequestBody(requestBody map[string]string) ApiDecryptFieldRequest {
+	r.requestBody = &requestBody
+	return r
+}
+
+func (r ApiDecryptFieldRequest) Execute() (*http.Response, error) {
+	return r.ApiService.DecryptFieldExecute(r)
+}
+
+/*
+DecryptField Method for DecryptField
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param credentialId
+ @return ApiDecryptFieldRequest
+*/
+func (a *DefaultAPIService) DecryptField(ctx context.Context, credentialId string) ApiDecryptFieldRequest {
+	return ApiDecryptFieldRequest{
+		ApiService: a,
+		ctx: ctx,
+		credentialId: credentialId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) DecryptFieldExecute(r ApiDecryptFieldRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.DecryptField")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/cloud-credentials/id/{credentialId}/decrypt-field"
+	localVarPath = strings.Replace(localVarPath, "{"+"credentialId"+"}", url.PathEscape(parameterValueToString(r.credentialId, "credentialId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.requestBody
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -751,12 +2863,6 @@ type ApiDeleteAgentRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
 	agentId string
-	xRapidAPIUser *string
-}
-
-func (r ApiDeleteAgentRequest) XRapidAPIUser(xRapidAPIUser string) ApiDeleteAgentRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiDeleteAgentRequest) Execute() (*http.Response, error) {
@@ -815,8 +2921,185 @@ func (a *DefaultAPIService) DeleteAgentExecute(r ApiDeleteAgentRequest) (*http.R
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiDeleteApiKeyRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	keyId string
+}
+
+func (r ApiDeleteApiKeyRequest) Execute() (*http.Response, error) {
+	return r.ApiService.DeleteApiKeyExecute(r)
+}
+
+/*
+DeleteApiKey Method for DeleteApiKey
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param keyId
+ @return ApiDeleteApiKeyRequest
+*/
+func (a *DefaultAPIService) DeleteApiKey(ctx context.Context, keyId string) ApiDeleteApiKeyRequest {
+	return ApiDeleteApiKeyRequest{
+		ApiService: a,
+		ctx: ctx,
+		keyId: keyId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) DeleteApiKeyExecute(r ApiDeleteApiKeyRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodDelete
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.DeleteApiKey")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/auth/api-keys/{key_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"key_id"+"}", url.PathEscape(parameterValueToString(r.keyId, "keyId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiDeleteBillingPlanRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	id int32
+}
+
+func (r ApiDeleteBillingPlanRequest) Execute() (*http.Response, error) {
+	return r.ApiService.DeleteBillingPlanExecute(r)
+}
+
+/*
+DeleteBillingPlan Method for DeleteBillingPlan
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id
+ @return ApiDeleteBillingPlanRequest
+*/
+func (a *DefaultAPIService) DeleteBillingPlan(ctx context.Context, id int32) ApiDeleteBillingPlanRequest {
+	return ApiDeleteBillingPlanRequest{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) DeleteBillingPlanExecute(r ApiDeleteBillingPlanRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodDelete
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.DeleteBillingPlan")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/billing/plans/{id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -850,12 +3133,6 @@ type ApiDeleteCategoryRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
 	categoryId string
-	xRapidAPIUser *string
-}
-
-func (r ApiDeleteCategoryRequest) XRapidAPIUser(xRapidAPIUser string) ApiDeleteCategoryRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiDeleteCategoryRequest) Execute() (*http.Response, error) {
@@ -914,8 +3191,194 @@ func (a *DefaultAPIService) DeleteCategoryExecute(r ApiDeleteCategoryRequest) (*
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiDeleteCloudCredentialRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	credentialId string
+}
+
+func (r ApiDeleteCloudCredentialRequest) Execute() (*http.Response, error) {
+	return r.ApiService.DeleteCloudCredentialExecute(r)
+}
+
+/*
+DeleteCloudCredential Method for DeleteCloudCredential
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param credentialId
+ @return ApiDeleteCloudCredentialRequest
+*/
+func (a *DefaultAPIService) DeleteCloudCredential(ctx context.Context, credentialId string) ApiDeleteCloudCredentialRequest {
+	return ApiDeleteCloudCredentialRequest{
+		ApiService: a,
+		ctx: ctx,
+		credentialId: credentialId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) DeleteCloudCredentialExecute(r ApiDeleteCloudCredentialRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodDelete
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.DeleteCloudCredential")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/cloud-credentials/id/{credentialId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"credentialId"+"}", url.PathEscape(parameterValueToString(r.credentialId, "credentialId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiDeleteCronJobRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	name string
+	namespace *string
+}
+
+func (r ApiDeleteCronJobRequest) Namespace(namespace string) ApiDeleteCronJobRequest {
+	r.namespace = &namespace
+	return r
+}
+
+func (r ApiDeleteCronJobRequest) Execute() (*http.Response, error) {
+	return r.ApiService.DeleteCronJobExecute(r)
+}
+
+/*
+DeleteCronJob Method for DeleteCronJob
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param name
+ @return ApiDeleteCronJobRequest
+*/
+func (a *DefaultAPIService) DeleteCronJob(ctx context.Context, name string) ApiDeleteCronJobRequest {
+	return ApiDeleteCronJobRequest{
+		ApiService: a,
+		ctx: ctx,
+		name: name,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) DeleteCronJobExecute(r ApiDeleteCronJobRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodDelete
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.DeleteCronJob")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/cloud/scheduler/cronjobs/{name}"
+	localVarPath = strings.Replace(localVarPath, "{"+"name"+"}", url.PathEscape(parameterValueToString(r.name, "name")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.namespace != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "namespace", r.namespace, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -949,12 +3412,6 @@ type ApiDeleteDatasetRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
 	datasetId string
-	xRapidAPIUser *string
-}
-
-func (r ApiDeleteDatasetRequest) XRapidAPIUser(xRapidAPIUser string) ApiDeleteDatasetRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiDeleteDatasetRequest) Execute() (*http.Response, error) {
@@ -989,7 +3446,7 @@ func (a *DefaultAPIService) DeleteDatasetExecute(r ApiDeleteDatasetRequest) (*ht
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/webrobot/api/datasets/{projectId}/{botId}/{datasetId}"
+	localVarPath := localBasePath + "/webrobot/api/datasets-legacy/{projectId}/{botId}/{datasetId}"
 	localVarPath = strings.Replace(localVarPath, "{"+"datasetId"+"}", url.PathEscape(parameterValueToString(r.datasetId, "datasetId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -1013,8 +3470,95 @@ func (a *DefaultAPIService) DeleteDatasetExecute(r ApiDeleteDatasetRequest) (*ht
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiDeleteDataset1Request struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	datasetId string
+}
+
+func (r ApiDeleteDataset1Request) Execute() (*http.Response, error) {
+	return r.ApiService.DeleteDataset1Execute(r)
+}
+
+/*
+DeleteDataset1 Method for DeleteDataset1
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param datasetId
+ @return ApiDeleteDataset1Request
+*/
+func (a *DefaultAPIService) DeleteDataset1(ctx context.Context, datasetId string) ApiDeleteDataset1Request {
+	return ApiDeleteDataset1Request{
+		ApiService: a,
+		ctx: ctx,
+		datasetId: datasetId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) DeleteDataset1Execute(r ApiDeleteDataset1Request) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodDelete
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.DeleteDataset1")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/datasets/{datasetId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"datasetId"+"}", url.PathEscape(parameterValueToString(r.datasetId, "datasetId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -1048,12 +3592,6 @@ type ApiDeleteDatasetVersionRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
 	versionsetId string
-	xRapidAPIUser *string
-}
-
-func (r ApiDeleteDatasetVersionRequest) XRapidAPIUser(xRapidAPIUser string) ApiDeleteDatasetVersionRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiDeleteDatasetVersionRequest) Execute() (*http.Response, error) {
@@ -1088,7 +3626,7 @@ func (a *DefaultAPIService) DeleteDatasetVersionExecute(r ApiDeleteDatasetVersio
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/webrobot/api/datasets/version/id/{versionsetId}"
+	localVarPath := localBasePath + "/webrobot/api/datasets-legacy/version/id/{versionsetId}"
 	localVarPath = strings.Replace(localVarPath, "{"+"versionsetId"+"}", url.PathEscape(parameterValueToString(r.versionsetId, "versionsetId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -1112,8 +3650,185 @@ func (a *DefaultAPIService) DeleteDatasetVersionExecute(r ApiDeleteDatasetVersio
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiDeleteInstallationRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	id int64
+}
+
+func (r ApiDeleteInstallationRequest) Execute() (*http.Response, error) {
+	return r.ApiService.DeleteInstallationExecute(r)
+}
+
+/*
+DeleteInstallation Method for DeleteInstallation
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id
+ @return ApiDeleteInstallationRequest
+*/
+func (a *DefaultAPIService) DeleteInstallation(ctx context.Context, id int64) ApiDeleteInstallationRequest {
+	return ApiDeleteInstallationRequest{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) DeleteInstallationExecute(r ApiDeleteInstallationRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodDelete
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.DeleteInstallation")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/admin/plugin-installations/{id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiDeleteProfileRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	id int32
+}
+
+func (r ApiDeleteProfileRequest) Execute() (*http.Response, error) {
+	return r.ApiService.DeleteProfileExecute(r)
+}
+
+/*
+DeleteProfile Method for DeleteProfile
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id
+ @return ApiDeleteProfileRequest
+*/
+func (a *DefaultAPIService) DeleteProfile(ctx context.Context, id int32) ApiDeleteProfileRequest {
+	return ApiDeleteProfileRequest{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) DeleteProfileExecute(r ApiDeleteProfileRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodDelete
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.DeleteProfile")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/agentic/profiles/{id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -1147,12 +3862,6 @@ type ApiDeleteProjectRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
 	projectId string
-	xRapidAPIUser *string
-}
-
-func (r ApiDeleteProjectRequest) XRapidAPIUser(xRapidAPIUser string) ApiDeleteProjectRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiDeleteProjectRequest) Execute() (*http.Response, error) {
@@ -1211,8 +3920,95 @@ func (a *DefaultAPIService) DeleteProjectExecute(r ApiDeleteProjectRequest) (*ht
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiDeletePythonExtensionRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	extensionId string
+}
+
+func (r ApiDeletePythonExtensionRequest) Execute() (*http.Response, error) {
+	return r.ApiService.DeletePythonExtensionExecute(r)
+}
+
+/*
+DeletePythonExtension Method for DeletePythonExtension
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param extensionId
+ @return ApiDeletePythonExtensionRequest
+*/
+func (a *DefaultAPIService) DeletePythonExtension(ctx context.Context, extensionId string) ApiDeletePythonExtensionRequest {
+	return ApiDeletePythonExtensionRequest{
+		ApiService: a,
+		ctx: ctx,
+		extensionId: extensionId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) DeletePythonExtensionExecute(r ApiDeletePythonExtensionRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodDelete
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.DeletePythonExtension")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/python-extensions/python-extensions/{extensionId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"extensionId"+"}", url.PathEscape(parameterValueToString(r.extensionId, "extensionId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -1248,12 +4044,6 @@ type ApiDeleteTaskRequest struct {
 	projectId string
 	jobId string
 	taskId string
-	xRapidAPIUser *string
-}
-
-func (r ApiDeleteTaskRequest) XRapidAPIUser(xRapidAPIUser string) ApiDeleteTaskRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiDeleteTaskRequest) Execute() (*http.Response, error) {
@@ -1318,8 +4108,751 @@ func (a *DefaultAPIService) DeleteTaskExecute(r ApiDeleteTaskRequest) (*http.Res
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiDeleteUserInviteRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	id string
+}
+
+func (r ApiDeleteUserInviteRequest) Execute() (*http.Response, error) {
+	return r.ApiService.DeleteUserInviteExecute(r)
+}
+
+/*
+DeleteUserInvite Method for DeleteUserInvite
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id
+ @return ApiDeleteUserInviteRequest
+*/
+func (a *DefaultAPIService) DeleteUserInvite(ctx context.Context, id string) ApiDeleteUserInviteRequest {
+	return ApiDeleteUserInviteRequest{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) DeleteUserInviteExecute(r ApiDeleteUserInviteRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodDelete
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.DeleteUserInvite")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/auth/user-invites/{id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiDeleteVersionRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	id int64
+}
+
+func (r ApiDeleteVersionRequest) Execute() (*http.Response, error) {
+	return r.ApiService.DeleteVersionExecute(r)
+}
+
+/*
+DeleteVersion Method for DeleteVersion
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id
+ @return ApiDeleteVersionRequest
+*/
+func (a *DefaultAPIService) DeleteVersion(ctx context.Context, id int64) ApiDeleteVersionRequest {
+	return ApiDeleteVersionRequest{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) DeleteVersionExecute(r ApiDeleteVersionRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodDelete
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.DeleteVersion")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/admin/etl-library-versions/id/{id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiDeprecateBundleRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	id int64
+}
+
+func (r ApiDeprecateBundleRequest) Execute() (*http.Response, error) {
+	return r.ApiService.DeprecateBundleExecute(r)
+}
+
+/*
+DeprecateBundle Method for DeprecateBundle
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id
+ @return ApiDeprecateBundleRequest
+*/
+func (a *DefaultAPIService) DeprecateBundle(ctx context.Context, id int64) ApiDeprecateBundleRequest {
+	return ApiDeprecateBundleRequest{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) DeprecateBundleExecute(r ApiDeprecateBundleRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.DeprecateBundle")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/admin/bundles/{id}/deprecate"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiDisablePluginRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	pluginId string
+	buildType *string
+}
+
+func (r ApiDisablePluginRequest) BuildType(buildType string) ApiDisablePluginRequest {
+	r.buildType = &buildType
+	return r
+}
+
+func (r ApiDisablePluginRequest) Execute() (*http.Response, error) {
+	return r.ApiService.DisablePluginExecute(r)
+}
+
+/*
+DisablePlugin Method for DisablePlugin
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param pluginId
+ @return ApiDisablePluginRequest
+*/
+func (a *DefaultAPIService) DisablePlugin(ctx context.Context, pluginId string) ApiDisablePluginRequest {
+	return ApiDisablePluginRequest{
+		ApiService: a,
+		ctx: ctx,
+		pluginId: pluginId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) DisablePluginExecute(r ApiDisablePluginRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.DisablePlugin")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/admin/plugins/{pluginId}/disable"
+	localVarPath = strings.Replace(localVarPath, "{"+"pluginId"+"}", url.PathEscape(parameterValueToString(r.pluginId, "pluginId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.buildType != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "buildType", r.buildType, "form", "")
+	} else {
+        var defaultValue string = "development"
+        parameterAddToHeaderOrQuery(localVarQueryParams, "buildType", defaultValue, "form", "")
+        r.buildType = &defaultValue
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiDisablePlugin1Request struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	id int64
+}
+
+func (r ApiDisablePlugin1Request) Execute() (*http.Response, error) {
+	return r.ApiService.DisablePlugin1Execute(r)
+}
+
+/*
+DisablePlugin1 Method for DisablePlugin1
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id
+ @return ApiDisablePlugin1Request
+*/
+func (a *DefaultAPIService) DisablePlugin1(ctx context.Context, id int64) ApiDisablePlugin1Request {
+	return ApiDisablePlugin1Request{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) DisablePlugin1Execute(r ApiDisablePlugin1Request) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.DisablePlugin1")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/admin/plugin-installations/{id}/disable"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiDisablePluginForOrganizationRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	pluginInstallationId int64
+	organizationId string
+}
+
+func (r ApiDisablePluginForOrganizationRequest) Execute() (*http.Response, error) {
+	return r.ApiService.DisablePluginForOrganizationExecute(r)
+}
+
+/*
+DisablePluginForOrganization Method for DisablePluginForOrganization
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param pluginInstallationId
+ @param organizationId
+ @return ApiDisablePluginForOrganizationRequest
+*/
+func (a *DefaultAPIService) DisablePluginForOrganization(ctx context.Context, pluginInstallationId int64, organizationId string) ApiDisablePluginForOrganizationRequest {
+	return ApiDisablePluginForOrganizationRequest{
+		ApiService: a,
+		ctx: ctx,
+		pluginInstallationId: pluginInstallationId,
+		organizationId: organizationId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) DisablePluginForOrganizationExecute(r ApiDisablePluginForOrganizationRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.DisablePluginForOrganization")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/admin/plugin-installations/{pluginInstallationId}/organizations/{organizationId}/disable"
+	localVarPath = strings.Replace(localVarPath, "{"+"pluginInstallationId"+"}", url.PathEscape(parameterValueToString(r.pluginInstallationId, "pluginInstallationId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"organizationId"+"}", url.PathEscape(parameterValueToString(r.organizationId, "organizationId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiDownloadBundleRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	id int64
+}
+
+func (r ApiDownloadBundleRequest) Execute() (*http.Response, error) {
+	return r.ApiService.DownloadBundleExecute(r)
+}
+
+/*
+DownloadBundle Method for DownloadBundle
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id
+ @return ApiDownloadBundleRequest
+*/
+func (a *DefaultAPIService) DownloadBundle(ctx context.Context, id int64) ApiDownloadBundleRequest {
+	return ApiDownloadBundleRequest{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) DownloadBundleExecute(r ApiDownloadBundleRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.DownloadBundle")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/admin/bundles/{id}/download"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/zip"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiDownloadCliPluginRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	pluginId string
+	version *string
+}
+
+func (r ApiDownloadCliPluginRequest) Version(version string) ApiDownloadCliPluginRequest {
+	r.version = &version
+	return r
+}
+
+func (r ApiDownloadCliPluginRequest) Execute() (*http.Response, error) {
+	return r.ApiService.DownloadCliPluginExecute(r)
+}
+
+/*
+DownloadCliPlugin Method for DownloadCliPlugin
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param pluginId
+ @return ApiDownloadCliPluginRequest
+*/
+func (a *DefaultAPIService) DownloadCliPlugin(ctx context.Context, pluginId string) ApiDownloadCliPluginRequest {
+	return ApiDownloadCliPluginRequest{
+		ApiService: a,
+		ctx: ctx,
+		pluginId: pluginId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) DownloadCliPluginExecute(r ApiDownloadCliPluginRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.DownloadCliPlugin")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/admin/bundles/cli-plugins/{pluginId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"pluginId"+"}", url.PathEscape(parameterValueToString(r.pluginId, "pluginId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.version != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "version", r.version, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/java-archive"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -1354,13 +4887,7 @@ type ApiDownloadModelRequest struct {
 	ApiService *DefaultAPIService
 	provider string
 	jobId string
-	xRapidAPIUser *string
 	outputPath *string
-}
-
-func (r ApiDownloadModelRequest) XRapidAPIUser(xRapidAPIUser string) ApiDownloadModelRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiDownloadModelRequest) OutputPath(outputPath string) ApiDownloadModelRequest {
@@ -1430,8 +4957,485 @@ func (a *DefaultAPIService) DownloadModelExecute(r ApiDownloadModelRequest) (*ht
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiDownloadUiZipRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	pluginId string
+	buildType *string
+}
+
+func (r ApiDownloadUiZipRequest) BuildType(buildType string) ApiDownloadUiZipRequest {
+	r.buildType = &buildType
+	return r
+}
+
+func (r ApiDownloadUiZipRequest) Execute() (*http.Response, error) {
+	return r.ApiService.DownloadUiZipExecute(r)
+}
+
+/*
+DownloadUiZip Method for DownloadUiZip
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param pluginId
+ @return ApiDownloadUiZipRequest
+*/
+func (a *DefaultAPIService) DownloadUiZip(ctx context.Context, pluginId string) ApiDownloadUiZipRequest {
+	return ApiDownloadUiZipRequest{
+		ApiService: a,
+		ctx: ctx,
+		pluginId: pluginId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) DownloadUiZipExecute(r ApiDownloadUiZipRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.DownloadUiZip")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/admin/plugin-installations/{pluginId}/ui/download"
+	localVarPath = strings.Replace(localVarPath, "{"+"pluginId"+"}", url.PathEscape(parameterValueToString(r.pluginId, "pluginId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.buildType != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "buildType", r.buildType, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/zip"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiEnableByPluginIdForOrganizationRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	pluginId string
+	organizationId string
+}
+
+func (r ApiEnableByPluginIdForOrganizationRequest) Execute() (*http.Response, error) {
+	return r.ApiService.EnableByPluginIdForOrganizationExecute(r)
+}
+
+/*
+EnableByPluginIdForOrganization Method for EnableByPluginIdForOrganization
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param pluginId
+ @param organizationId
+ @return ApiEnableByPluginIdForOrganizationRequest
+*/
+func (a *DefaultAPIService) EnableByPluginIdForOrganization(ctx context.Context, pluginId string, organizationId string) ApiEnableByPluginIdForOrganizationRequest {
+	return ApiEnableByPluginIdForOrganizationRequest{
+		ApiService: a,
+		ctx: ctx,
+		pluginId: pluginId,
+		organizationId: organizationId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) EnableByPluginIdForOrganizationExecute(r ApiEnableByPluginIdForOrganizationRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.EnableByPluginIdForOrganization")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/admin/plugin-installations/by-plugin-id/{pluginId}/organizations/{organizationId}/enable"
+	localVarPath = strings.Replace(localVarPath, "{"+"pluginId"+"}", url.PathEscape(parameterValueToString(r.pluginId, "pluginId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"organizationId"+"}", url.PathEscape(parameterValueToString(r.organizationId, "organizationId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiEnablePluginRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	pluginId string
+	buildType *string
+}
+
+func (r ApiEnablePluginRequest) BuildType(buildType string) ApiEnablePluginRequest {
+	r.buildType = &buildType
+	return r
+}
+
+func (r ApiEnablePluginRequest) Execute() (*http.Response, error) {
+	return r.ApiService.EnablePluginExecute(r)
+}
+
+/*
+EnablePlugin Method for EnablePlugin
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param pluginId
+ @return ApiEnablePluginRequest
+*/
+func (a *DefaultAPIService) EnablePlugin(ctx context.Context, pluginId string) ApiEnablePluginRequest {
+	return ApiEnablePluginRequest{
+		ApiService: a,
+		ctx: ctx,
+		pluginId: pluginId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) EnablePluginExecute(r ApiEnablePluginRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.EnablePlugin")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/admin/plugins/{pluginId}/enable"
+	localVarPath = strings.Replace(localVarPath, "{"+"pluginId"+"}", url.PathEscape(parameterValueToString(r.pluginId, "pluginId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.buildType != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "buildType", r.buildType, "form", "")
+	} else {
+        var defaultValue string = "development"
+        parameterAddToHeaderOrQuery(localVarQueryParams, "buildType", defaultValue, "form", "")
+        r.buildType = &defaultValue
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiEnablePlugin1Request struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	id int64
+}
+
+func (r ApiEnablePlugin1Request) Execute() (*http.Response, error) {
+	return r.ApiService.EnablePlugin1Execute(r)
+}
+
+/*
+EnablePlugin1 Method for EnablePlugin1
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id
+ @return ApiEnablePlugin1Request
+*/
+func (a *DefaultAPIService) EnablePlugin1(ctx context.Context, id int64) ApiEnablePlugin1Request {
+	return ApiEnablePlugin1Request{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) EnablePlugin1Execute(r ApiEnablePlugin1Request) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.EnablePlugin1")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/admin/plugin-installations/{id}/enable"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiEnablePluginForOrganizationRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	pluginInstallationId int64
+	organizationId string
+}
+
+func (r ApiEnablePluginForOrganizationRequest) Execute() (*http.Response, error) {
+	return r.ApiService.EnablePluginForOrganizationExecute(r)
+}
+
+/*
+EnablePluginForOrganization Method for EnablePluginForOrganization
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param pluginInstallationId
+ @param organizationId
+ @return ApiEnablePluginForOrganizationRequest
+*/
+func (a *DefaultAPIService) EnablePluginForOrganization(ctx context.Context, pluginInstallationId int64, organizationId string) ApiEnablePluginForOrganizationRequest {
+	return ApiEnablePluginForOrganizationRequest{
+		ApiService: a,
+		ctx: ctx,
+		pluginInstallationId: pluginInstallationId,
+		organizationId: organizationId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) EnablePluginForOrganizationExecute(r ApiEnablePluginForOrganizationRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.EnablePluginForOrganization")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/admin/plugin-installations/{pluginInstallationId}/organizations/{organizationId}/enable"
+	localVarPath = strings.Replace(localVarPath, "{"+"pluginInstallationId"+"}", url.PathEscape(parameterValueToString(r.pluginInstallationId, "pluginInstallationId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"organizationId"+"}", url.PathEscape(parameterValueToString(r.organizationId, "organizationId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -1465,13 +5469,7 @@ type ApiEstimateCostRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
 	provider string
-	xRapidAPIUser *string
 	trainingRequestBean *TrainingRequestBean
-}
-
-func (r ApiEstimateCostRequest) XRapidAPIUser(xRapidAPIUser string) ApiEstimateCostRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiEstimateCostRequest) TrainingRequestBean(trainingRequestBean TrainingRequestBean) ApiEstimateCostRequest {
@@ -1535,11 +5533,494 @@ func (a *DefaultAPIService) EstimateCostExecute(r ApiEstimateCostRequest) (*http
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
-	}
 	// body params
 	localVarPostBody = r.trainingRequestBean
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiExecuteDemoRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	pipelineName string
+	requestBody *map[string]map[string]interface{}
+}
+
+func (r ApiExecuteDemoRequest) RequestBody(requestBody map[string]map[string]interface{}) ApiExecuteDemoRequest {
+	r.requestBody = &requestBody
+	return r
+}
+
+func (r ApiExecuteDemoRequest) Execute() (*http.Response, error) {
+	return r.ApiService.ExecuteDemoExecute(r)
+}
+
+/*
+ExecuteDemo Method for ExecuteDemo
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param pipelineName
+ @return ApiExecuteDemoRequest
+*/
+func (a *DefaultAPIService) ExecuteDemo(ctx context.Context, pipelineName string) ApiExecuteDemoRequest {
+	return ApiExecuteDemoRequest{
+		ApiService: a,
+		ctx: ctx,
+		pipelineName: pipelineName,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) ExecuteDemoExecute(r ApiExecuteDemoRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.ExecuteDemo")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/demo/execute/{pipeline-name}"
+	localVarPath = strings.Replace(localVarPath, "{"+"pipeline-name"+"}", url.PathEscape(parameterValueToString(r.pipelineName, "pipelineName")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.requestBody
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiExecuteJobRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	country string
+	requestBody *map[string]map[string]interface{}
+}
+
+func (r ApiExecuteJobRequest) RequestBody(requestBody map[string]map[string]interface{}) ApiExecuteJobRequest {
+	r.requestBody = &requestBody
+	return r
+}
+
+func (r ApiExecuteJobRequest) Execute() (*http.Response, error) {
+	return r.ApiService.ExecuteJobExecute(r)
+}
+
+/*
+ExecuteJob Method for ExecuteJob
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param country
+ @return ApiExecuteJobRequest
+*/
+func (a *DefaultAPIService) ExecuteJob(ctx context.Context, country string) ApiExecuteJobRequest {
+	return ApiExecuteJobRequest{
+		ApiService: a,
+		ctx: ctx,
+		country: country,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) ExecuteJobExecute(r ApiExecuteJobRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.ExecuteJob")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/ean-image-sourcing/{country}/execute"
+	localVarPath = strings.Replace(localVarPath, "{"+"country"+"}", url.PathEscape(parameterValueToString(r.country, "country")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.requestBody
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiExecuteJob1Request struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	projectId string
+	jobId string
+	requestBody *map[string]map[string]interface{}
+}
+
+func (r ApiExecuteJob1Request) RequestBody(requestBody map[string]map[string]interface{}) ApiExecuteJob1Request {
+	r.requestBody = &requestBody
+	return r
+}
+
+func (r ApiExecuteJob1Request) Execute() (*http.Response, error) {
+	return r.ApiService.ExecuteJob1Execute(r)
+}
+
+/*
+ExecuteJob1 Method for ExecuteJob1
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param projectId
+ @param jobId
+ @return ApiExecuteJob1Request
+*/
+func (a *DefaultAPIService) ExecuteJob1(ctx context.Context, projectId string, jobId string) ApiExecuteJob1Request {
+	return ApiExecuteJob1Request{
+		ApiService: a,
+		ctx: ctx,
+		projectId: projectId,
+		jobId: jobId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) ExecuteJob1Execute(r ApiExecuteJob1Request) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.ExecuteJob1")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/projects/id/{projectId}/jobs/{jobId}/execute"
+	localVarPath = strings.Replace(localVarPath, "{"+"projectId"+"}", url.PathEscape(parameterValueToString(r.projectId, "projectId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"jobId"+"}", url.PathEscape(parameterValueToString(r.jobId, "jobId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.requestBody
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiExecuteQueryRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	prestoQueryRequest *PrestoQueryRequest
+}
+
+func (r ApiExecuteQueryRequest) PrestoQueryRequest(prestoQueryRequest PrestoQueryRequest) ApiExecuteQueryRequest {
+	r.prestoQueryRequest = &prestoQueryRequest
+	return r
+}
+
+func (r ApiExecuteQueryRequest) Execute() (*http.Response, error) {
+	return r.ApiService.ExecuteQueryExecute(r)
+}
+
+/*
+ExecuteQuery Method for ExecuteQuery
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiExecuteQueryRequest
+*/
+func (a *DefaultAPIService) ExecuteQuery(ctx context.Context) ApiExecuteQueryRequest {
+	return ApiExecuteQueryRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) ExecuteQueryExecute(r ApiExecuteQueryRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.ExecuteQuery")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/datasets/query"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.prestoQueryRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiExtractDirectRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	requestBody *map[string]map[string]interface{}
+}
+
+func (r ApiExtractDirectRequest) RequestBody(requestBody map[string]map[string]interface{}) ApiExtractDirectRequest {
+	r.requestBody = &requestBody
+	return r
+}
+
+func (r ApiExtractDirectRequest) Execute() (*http.Response, error) {
+	return r.ApiService.ExtractDirectExecute(r)
+}
+
+/*
+ExtractDirect Method for ExtractDirect
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiExtractDirectRequest
+*/
+func (a *DefaultAPIService) ExtractDirect(ctx context.Context) ApiExtractDirectRequest {
+	return ApiExtractDirectRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) ExtractDirectExecute(r ApiExtractDirectRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.ExtractDirect")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/extract/direct"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.requestBody
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -1628,15 +6109,201 @@ func (a *DefaultAPIService) FindAllExecute(r ApiFindAllRequest) (*http.Response,
 	if r.page != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "page", r.page, "form", "")
 	} else {
-		var defaultValue int32 = 0
-		r.page = &defaultValue
+        var defaultValue int32 = 0
+        parameterAddToHeaderOrQuery(localVarQueryParams, "page", defaultValue, "form", "")
+        r.page = &defaultValue
 	}
 	if r.pageSize != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "pageSize", r.pageSize, "form", "")
 	} else {
-		var defaultValue int32 = 50
-		r.pageSize = &defaultValue
+        var defaultValue int32 = 50
+        parameterAddToHeaderOrQuery(localVarQueryParams, "pageSize", defaultValue, "form", "")
+        r.pageSize = &defaultValue
 	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiGeneratePipelineRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	requestBody *map[string]map[string]interface{}
+}
+
+func (r ApiGeneratePipelineRequest) RequestBody(requestBody map[string]map[string]interface{}) ApiGeneratePipelineRequest {
+	r.requestBody = &requestBody
+	return r
+}
+
+func (r ApiGeneratePipelineRequest) Execute() (*http.Response, error) {
+	return r.ApiService.GeneratePipelineExecute(r)
+}
+
+/*
+GeneratePipeline Method for GeneratePipeline
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiGeneratePipelineRequest
+*/
+func (a *DefaultAPIService) GeneratePipeline(ctx context.Context) ApiGeneratePipelineRequest {
+	return ApiGeneratePipelineRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) GeneratePipelineExecute(r ApiGeneratePipelineRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GeneratePipeline")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/demo/generate-pipeline"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.requestBody
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiGeneratePysparkCodeRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	extensionId string
+}
+
+func (r ApiGeneratePysparkCodeRequest) Execute() (*http.Response, error) {
+	return r.ApiService.GeneratePysparkCodeExecute(r)
+}
+
+/*
+GeneratePysparkCode Method for GeneratePysparkCode
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param extensionId
+ @return ApiGeneratePysparkCodeRequest
+*/
+func (a *DefaultAPIService) GeneratePysparkCode(ctx context.Context, extensionId string) ApiGeneratePysparkCodeRequest {
+	return ApiGeneratePysparkCodeRequest{
+		ApiService: a,
+		ctx: ctx,
+		extensionId: extensionId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) GeneratePysparkCodeExecute(r ApiGeneratePysparkCodeRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GeneratePysparkCode")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/python-extensions/python-extensions/{extensionId}/generate-pyspark"
+	localVarPath = strings.Replace(localVarPath, "{"+"extensionId"+"}", url.PathEscape(parameterValueToString(r.extensionId, "extensionId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -1687,12 +6354,6 @@ type ApiGetAgentRequest struct {
 	ApiService *DefaultAPIService
 	categoryId string
 	agentId string
-	xRapidAPIUser *string
-}
-
-func (r ApiGetAgentRequest) XRapidAPIUser(xRapidAPIUser string) ApiGetAgentRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiGetAgentRequest) Execute() (*http.Response, error) {
@@ -1754,8 +6415,95 @@ func (a *DefaultAPIService) GetAgentExecute(r ApiGetAgentRequest) (*http.Respons
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiGetAgentExtensionsRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	agentId string
+}
+
+func (r ApiGetAgentExtensionsRequest) Execute() (*http.Response, error) {
+	return r.ApiService.GetAgentExtensionsExecute(r)
+}
+
+/*
+GetAgentExtensions Method for GetAgentExtensions
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param agentId
+ @return ApiGetAgentExtensionsRequest
+*/
+func (a *DefaultAPIService) GetAgentExtensions(ctx context.Context, agentId string) ApiGetAgentExtensionsRequest {
+	return ApiGetAgentExtensionsRequest{
+		ApiService: a,
+		ctx: ctx,
+		agentId: agentId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) GetAgentExtensionsExecute(r ApiGetAgentExtensionsRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetAgentExtensions")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/python-extensions/agents/{agentId}/extensions"
+	localVarPath = strings.Replace(localVarPath, "{"+"agentId"+"}", url.PathEscape(parameterValueToString(r.agentId, "agentId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -1790,12 +6538,6 @@ type ApiGetAgentFromNameRequest struct {
 	ApiService *DefaultAPIService
 	categoryId string
 	agentName string
-	xRapidAPIUser *string
-}
-
-func (r ApiGetAgentFromNameRequest) XRapidAPIUser(xRapidAPIUser string) ApiGetAgentFromNameRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiGetAgentFromNameRequest) Execute() (*http.Response, error) {
@@ -1857,8 +6599,95 @@ func (a *DefaultAPIService) GetAgentFromNameExecute(r ApiGetAgentFromNameRequest
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiGetAgentPythonExtensionsRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	agentId string
+}
+
+func (r ApiGetAgentPythonExtensionsRequest) Execute() (*http.Response, error) {
+	return r.ApiService.GetAgentPythonExtensionsExecute(r)
+}
+
+/*
+GetAgentPythonExtensions Method for GetAgentPythonExtensions
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param agentId
+ @return ApiGetAgentPythonExtensionsRequest
+*/
+func (a *DefaultAPIService) GetAgentPythonExtensions(ctx context.Context, agentId string) ApiGetAgentPythonExtensionsRequest {
+	return ApiGetAgentPythonExtensionsRequest{
+		ApiService: a,
+		ctx: ctx,
+		agentId: agentId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) GetAgentPythonExtensionsExecute(r ApiGetAgentPythonExtensionsRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetAgentPythonExtensions")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/python-extensions/agents/{agentId}/python-extensions"
+	localVarPath = strings.Replace(localVarPath, "{"+"agentId"+"}", url.PathEscape(parameterValueToString(r.agentId, "agentId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -1892,12 +6721,6 @@ type ApiGetAllAgentsRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
 	categoryId string
-	xRapidAPIUser *string
-}
-
-func (r ApiGetAllAgentsRequest) XRapidAPIUser(xRapidAPIUser string) ApiGetAllAgentsRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiGetAllAgentsRequest) Execute() (*http.Response, error) {
@@ -1956,9 +6779,6 @@ func (a *DefaultAPIService) GetAllAgentsExecute(r ApiGetAllAgentsRequest) (*http
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
-	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -1990,12 +6810,6 @@ func (a *DefaultAPIService) GetAllAgentsExecute(r ApiGetAllAgentsRequest) (*http
 type ApiGetAllCategoriesRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
-	xRapidAPIUser *string
-}
-
-func (r ApiGetAllCategoriesRequest) XRapidAPIUser(xRapidAPIUser string) ApiGetAllCategoriesRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiGetAllCategoriesRequest) Execute() (*http.Response, error) {
@@ -2051,8 +6865,126 @@ func (a *DefaultAPIService) GetAllCategoriesExecute(r ApiGetAllCategoriesRequest
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiGetAllCloudCredentialsRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	provider *string
+	page *int32
+	pageSize *int32
+}
+
+func (r ApiGetAllCloudCredentialsRequest) Provider(provider string) ApiGetAllCloudCredentialsRequest {
+	r.provider = &provider
+	return r
+}
+
+func (r ApiGetAllCloudCredentialsRequest) Page(page int32) ApiGetAllCloudCredentialsRequest {
+	r.page = &page
+	return r
+}
+
+func (r ApiGetAllCloudCredentialsRequest) PageSize(pageSize int32) ApiGetAllCloudCredentialsRequest {
+	r.pageSize = &pageSize
+	return r
+}
+
+func (r ApiGetAllCloudCredentialsRequest) Execute() (*http.Response, error) {
+	return r.ApiService.GetAllCloudCredentialsExecute(r)
+}
+
+/*
+GetAllCloudCredentials Method for GetAllCloudCredentials
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiGetAllCloudCredentialsRequest
+*/
+func (a *DefaultAPIService) GetAllCloudCredentials(ctx context.Context) ApiGetAllCloudCredentialsRequest {
+	return ApiGetAllCloudCredentialsRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) GetAllCloudCredentialsExecute(r ApiGetAllCloudCredentialsRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetAllCloudCredentials")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/cloud-credentials"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.provider != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "provider", r.provider, "form", "")
+	}
+	if r.page != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "page", r.page, "form", "")
+	} else {
+        var defaultValue int32 = 0
+        parameterAddToHeaderOrQuery(localVarQueryParams, "page", defaultValue, "form", "")
+        r.page = &defaultValue
+	}
+	if r.pageSize != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "pageSize", r.pageSize, "form", "")
+	} else {
+        var defaultValue int32 = 50
+        parameterAddToHeaderOrQuery(localVarQueryParams, "pageSize", defaultValue, "form", "")
+        r.pageSize = &defaultValue
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -2085,12 +7017,6 @@ func (a *DefaultAPIService) GetAllCategoriesExecute(r ApiGetAllCategoriesRequest
 type ApiGetAllDatasetVersionsRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
-	xRapidAPIUser *string
-}
-
-func (r ApiGetAllDatasetVersionsRequest) XRapidAPIUser(xRapidAPIUser string) ApiGetAllDatasetVersionsRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiGetAllDatasetVersionsRequest) Execute() (*http.Response, error) {
@@ -2123,7 +7049,7 @@ func (a *DefaultAPIService) GetAllDatasetVersionsExecute(r ApiGetAllDatasetVersi
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/webrobot/api/datasets/{projectId}/{botId}/versions"
+	localVarPath := localBasePath + "/webrobot/api/datasets-legacy/{projectId}/{botId}/versions"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -2145,9 +7071,6 @@ func (a *DefaultAPIService) GetAllDatasetVersionsExecute(r ApiGetAllDatasetVersi
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -2180,13 +7103,7 @@ func (a *DefaultAPIService) GetAllDatasetVersionsExecute(r ApiGetAllDatasetVersi
 type ApiGetAllDatasetsRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
-	xRapidAPIUser *string
 	status *string
-}
-
-func (r ApiGetAllDatasetsRequest) XRapidAPIUser(xRapidAPIUser string) ApiGetAllDatasetsRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiGetAllDatasetsRequest) Status(status string) ApiGetAllDatasetsRequest {
@@ -2224,7 +7141,7 @@ func (a *DefaultAPIService) GetAllDatasetsExecute(r ApiGetAllDatasetsRequest) (*
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/webrobot/api/datasets/datasets"
+	localVarPath := localBasePath + "/webrobot/api/datasets-legacy/datasets"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -2250,8 +7167,222 @@ func (a *DefaultAPIService) GetAllDatasetsExecute(r ApiGetAllDatasetsRequest) (*
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiGetAllDatasets1Request struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	type_ *string
+	indexed *string
+	format *string
+}
+
+func (r ApiGetAllDatasets1Request) Type_(type_ string) ApiGetAllDatasets1Request {
+	r.type_ = &type_
+	return r
+}
+
+func (r ApiGetAllDatasets1Request) Indexed(indexed string) ApiGetAllDatasets1Request {
+	r.indexed = &indexed
+	return r
+}
+
+func (r ApiGetAllDatasets1Request) Format(format string) ApiGetAllDatasets1Request {
+	r.format = &format
+	return r
+}
+
+func (r ApiGetAllDatasets1Request) Execute() (*http.Response, error) {
+	return r.ApiService.GetAllDatasets1Execute(r)
+}
+
+/*
+GetAllDatasets1 Method for GetAllDatasets1
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiGetAllDatasets1Request
+*/
+func (a *DefaultAPIService) GetAllDatasets1(ctx context.Context) ApiGetAllDatasets1Request {
+	return ApiGetAllDatasets1Request{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) GetAllDatasets1Execute(r ApiGetAllDatasets1Request) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetAllDatasets1")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/datasets"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.type_ != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "type", r.type_, "form", "")
+	}
+	if r.indexed != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "indexed", r.indexed, "form", "")
+	}
+	if r.format != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "format", r.format, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiGetAllInstallationsRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	organizationId *string
+	enabledOnly *bool
+}
+
+func (r ApiGetAllInstallationsRequest) OrganizationId(organizationId string) ApiGetAllInstallationsRequest {
+	r.organizationId = &organizationId
+	return r
+}
+
+func (r ApiGetAllInstallationsRequest) EnabledOnly(enabledOnly bool) ApiGetAllInstallationsRequest {
+	r.enabledOnly = &enabledOnly
+	return r
+}
+
+func (r ApiGetAllInstallationsRequest) Execute() (*http.Response, error) {
+	return r.ApiService.GetAllInstallationsExecute(r)
+}
+
+/*
+GetAllInstallations Method for GetAllInstallations
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiGetAllInstallationsRequest
+*/
+func (a *DefaultAPIService) GetAllInstallations(ctx context.Context) ApiGetAllInstallationsRequest {
+	return ApiGetAllInstallationsRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) GetAllInstallationsExecute(r ApiGetAllInstallationsRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetAllInstallations")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/admin/plugin-installations"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.organizationId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "organizationId", r.organizationId, "form", "")
+	}
+	if r.enabledOnly != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "enabledOnly", r.enabledOnly, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -2284,12 +7415,6 @@ func (a *DefaultAPIService) GetAllDatasetsExecute(r ApiGetAllDatasetsRequest) (*
 type ApiGetAllProjectsRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
-	xRapidAPIUser *string
-}
-
-func (r ApiGetAllProjectsRequest) XRapidAPIUser(xRapidAPIUser string) ApiGetAllProjectsRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiGetAllProjectsRequest) Execute() (*http.Response, error) {
@@ -2345,9 +7470,6 @@ func (a *DefaultAPIService) GetAllProjectsExecute(r ApiGetAllProjectsRequest) (*
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
-	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -2381,12 +7503,6 @@ type ApiGetAllTasksRequest struct {
 	ApiService *DefaultAPIService
 	projectId string
 	jobId string
-	xRapidAPIUser *string
-}
-
-func (r ApiGetAllTasksRequest) XRapidAPIUser(xRapidAPIUser string) ApiGetAllTasksRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiGetAllTasksRequest) Execute() (*http.Response, error) {
@@ -2448,8 +7564,109 @@ func (a *DefaultAPIService) GetAllTasksExecute(r ApiGetAllTasksRequest) (*http.R
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiGetAllVersionsRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	buildType *string
+	activeOnly *bool
+}
+
+func (r ApiGetAllVersionsRequest) BuildType(buildType string) ApiGetAllVersionsRequest {
+	r.buildType = &buildType
+	return r
+}
+
+func (r ApiGetAllVersionsRequest) ActiveOnly(activeOnly bool) ApiGetAllVersionsRequest {
+	r.activeOnly = &activeOnly
+	return r
+}
+
+func (r ApiGetAllVersionsRequest) Execute() (*http.Response, error) {
+	return r.ApiService.GetAllVersionsExecute(r)
+}
+
+/*
+GetAllVersions Method for GetAllVersions
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiGetAllVersionsRequest
+*/
+func (a *DefaultAPIService) GetAllVersions(ctx context.Context) ApiGetAllVersionsRequest {
+	return ApiGetAllVersionsRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) GetAllVersionsExecute(r ApiGetAllVersionsRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetAllVersions")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/admin/etl-library-versions"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.buildType != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "buildType", r.buildType, "form", "")
+	}
+	if r.activeOnly != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "activeOnly", r.activeOnly, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -2483,12 +7700,6 @@ type ApiGetAllVersionsetsRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
 	datasetId string
-	xRapidAPIUser *string
-}
-
-func (r ApiGetAllVersionsetsRequest) XRapidAPIUser(xRapidAPIUser string) ApiGetAllVersionsetsRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiGetAllVersionsetsRequest) Execute() (*http.Response, error) {
@@ -2523,7 +7734,7 @@ func (a *DefaultAPIService) GetAllVersionsetsExecute(r ApiGetAllVersionsetsReque
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/webrobot/api/datasets/{datasetId}/versions"
+	localVarPath := localBasePath + "/webrobot/api/datasets-legacy/{datasetId}/versions"
 	localVarPath = strings.Replace(localVarPath, "{"+"datasetId"+"}", url.PathEscape(parameterValueToString(r.datasetId, "datasetId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -2547,8 +7758,285 @@ func (a *DefaultAPIService) GetAllVersionsetsExecute(r ApiGetAllVersionsetsReque
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiGetBillingPlansRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	organizationId *int32
+	standard *bool
+}
+
+func (r ApiGetBillingPlansRequest) OrganizationId(organizationId int32) ApiGetBillingPlansRequest {
+	r.organizationId = &organizationId
+	return r
+}
+
+func (r ApiGetBillingPlansRequest) Standard(standard bool) ApiGetBillingPlansRequest {
+	r.standard = &standard
+	return r
+}
+
+func (r ApiGetBillingPlansRequest) Execute() (*http.Response, error) {
+	return r.ApiService.GetBillingPlansExecute(r)
+}
+
+/*
+GetBillingPlans Method for GetBillingPlans
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiGetBillingPlansRequest
+*/
+func (a *DefaultAPIService) GetBillingPlans(ctx context.Context) ApiGetBillingPlansRequest {
+	return ApiGetBillingPlansRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) GetBillingPlansExecute(r ApiGetBillingPlansRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetBillingPlans")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/billing/plans"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.organizationId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "organizationId", r.organizationId, "form", "")
+	}
+	if r.standard != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "standard", r.standard, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiGetBootstrapStatusRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+}
+
+func (r ApiGetBootstrapStatusRequest) Execute() (*http.Response, error) {
+	return r.ApiService.GetBootstrapStatusExecute(r)
+}
+
+/*
+GetBootstrapStatus Method for GetBootstrapStatus
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiGetBootstrapStatusRequest
+*/
+func (a *DefaultAPIService) GetBootstrapStatus(ctx context.Context) ApiGetBootstrapStatusRequest {
+	return ApiGetBootstrapStatusRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) GetBootstrapStatusExecute(r ApiGetBootstrapStatusRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetBootstrapStatus")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/ean-image-sourcing/bootstrap/status"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiGetBundleScanRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	id int64
+}
+
+func (r ApiGetBundleScanRequest) Execute() (*http.Response, error) {
+	return r.ApiService.GetBundleScanExecute(r)
+}
+
+/*
+GetBundleScan Method for GetBundleScan
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id
+ @return ApiGetBundleScanRequest
+*/
+func (a *DefaultAPIService) GetBundleScan(ctx context.Context, id int64) ApiGetBundleScanRequest {
+	return ApiGetBundleScanRequest{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) GetBundleScanExecute(r ApiGetBundleScanRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetBundleScan")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/admin/bundles/{id}/scan"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -2672,16 +8160,191 @@ func (a *DefaultAPIService) GetByIdExecute(r ApiGetByIdRequest) (*http.Response,
 	return localVarHTTPResponse, nil
 }
 
+type ApiGetCapabilitiesRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+}
+
+func (r ApiGetCapabilitiesRequest) Execute() (*http.Response, error) {
+	return r.ApiService.GetCapabilitiesExecute(r)
+}
+
+/*
+GetCapabilities Method for GetCapabilities
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiGetCapabilitiesRequest
+*/
+func (a *DefaultAPIService) GetCapabilities(ctx context.Context) ApiGetCapabilitiesRequest {
+	return ApiGetCapabilitiesRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) GetCapabilitiesExecute(r ApiGetCapabilitiesRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetCapabilities")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/cloud/spark/capabilities"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiGetCatalogStagesRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	search *string
+}
+
+func (r ApiGetCatalogStagesRequest) Search(search string) ApiGetCatalogStagesRequest {
+	r.search = &search
+	return r
+}
+
+func (r ApiGetCatalogStagesRequest) Execute() (*http.Response, error) {
+	return r.ApiService.GetCatalogStagesExecute(r)
+}
+
+/*
+GetCatalogStages Method for GetCatalogStages
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiGetCatalogStagesRequest
+*/
+func (a *DefaultAPIService) GetCatalogStages(ctx context.Context) ApiGetCatalogStagesRequest {
+	return ApiGetCatalogStagesRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) GetCatalogStagesExecute(r ApiGetCatalogStagesRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetCatalogStages")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/demo/catalog/stages"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.search != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "search", r.search, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
 type ApiGetCategoryRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
 	categoryId string
-	xRapidAPIUser *string
-}
-
-func (r ApiGetCategoryRequest) XRapidAPIUser(xRapidAPIUser string) ApiGetCategoryRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiGetCategoryRequest) Execute() (*http.Response, error) {
@@ -2740,9 +8403,6 @@ func (a *DefaultAPIService) GetCategoryExecute(r ApiGetCategoryRequest) (*http.R
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
-	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -2775,12 +8435,6 @@ type ApiGetCategoryFromNameRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
 	categoryName string
-	xRapidAPIUser *string
-}
-
-func (r ApiGetCategoryFromNameRequest) XRapidAPIUser(xRapidAPIUser string) ApiGetCategoryFromNameRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiGetCategoryFromNameRequest) Execute() (*http.Response, error) {
@@ -2839,8 +8493,370 @@ func (a *DefaultAPIService) GetCategoryFromNameExecute(r ApiGetCategoryFromNameR
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiGetCloudCredentialByIdRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	credentialId string
+}
+
+func (r ApiGetCloudCredentialByIdRequest) Execute() (*http.Response, error) {
+	return r.ApiService.GetCloudCredentialByIdExecute(r)
+}
+
+/*
+GetCloudCredentialById Method for GetCloudCredentialById
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param credentialId
+ @return ApiGetCloudCredentialByIdRequest
+*/
+func (a *DefaultAPIService) GetCloudCredentialById(ctx context.Context, credentialId string) ApiGetCloudCredentialByIdRequest {
+	return ApiGetCloudCredentialByIdRequest{
+		ApiService: a,
+		ctx: ctx,
+		credentialId: credentialId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) GetCloudCredentialByIdExecute(r ApiGetCloudCredentialByIdRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetCloudCredentialById")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/cloud-credentials/id/{credentialId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"credentialId"+"}", url.PathEscape(parameterValueToString(r.credentialId, "credentialId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiGetCloudCredentialsByProviderRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	provider string
+}
+
+func (r ApiGetCloudCredentialsByProviderRequest) Execute() (*http.Response, error) {
+	return r.ApiService.GetCloudCredentialsByProviderExecute(r)
+}
+
+/*
+GetCloudCredentialsByProvider Method for GetCloudCredentialsByProvider
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param provider
+ @return ApiGetCloudCredentialsByProviderRequest
+*/
+func (a *DefaultAPIService) GetCloudCredentialsByProvider(ctx context.Context, provider string) ApiGetCloudCredentialsByProviderRequest {
+	return ApiGetCloudCredentialsByProviderRequest{
+		ApiService: a,
+		ctx: ctx,
+		provider: provider,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) GetCloudCredentialsByProviderExecute(r ApiGetCloudCredentialsByProviderRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetCloudCredentialsByProvider")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/cloud-credentials/provider/{provider}"
+	localVarPath = strings.Replace(localVarPath, "{"+"provider"+"}", url.PathEscape(parameterValueToString(r.provider, "provider")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiGetCronJobRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	name string
+	namespace *string
+}
+
+func (r ApiGetCronJobRequest) Namespace(namespace string) ApiGetCronJobRequest {
+	r.namespace = &namespace
+	return r
+}
+
+func (r ApiGetCronJobRequest) Execute() (*http.Response, error) {
+	return r.ApiService.GetCronJobExecute(r)
+}
+
+/*
+GetCronJob Method for GetCronJob
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param name
+ @return ApiGetCronJobRequest
+*/
+func (a *DefaultAPIService) GetCronJob(ctx context.Context, name string) ApiGetCronJobRequest {
+	return ApiGetCronJobRequest{
+		ApiService: a,
+		ctx: ctx,
+		name: name,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) GetCronJobExecute(r ApiGetCronJobRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetCronJob")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/cloud/scheduler/cronjobs/{name}"
+	localVarPath = strings.Replace(localVarPath, "{"+"name"+"}", url.PathEscape(parameterValueToString(r.name, "name")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.namespace != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "namespace", r.namespace, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiGetCurrentUserRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+}
+
+func (r ApiGetCurrentUserRequest) Execute() (*http.Response, error) {
+	return r.ApiService.GetCurrentUserExecute(r)
+}
+
+/*
+GetCurrentUser Method for GetCurrentUser
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiGetCurrentUserRequest
+*/
+func (a *DefaultAPIService) GetCurrentUser(ctx context.Context) ApiGetCurrentUserRequest {
+	return ApiGetCurrentUserRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) GetCurrentUserExecute(r ApiGetCurrentUserRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetCurrentUser")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/auth/me"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -2874,12 +8890,6 @@ type ApiGetDatasetRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
 	datasetId string
-	xRapidAPIUser *string
-}
-
-func (r ApiGetDatasetRequest) XRapidAPIUser(xRapidAPIUser string) ApiGetDatasetRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiGetDatasetRequest) Execute() (*http.Response, error) {
@@ -2914,7 +8924,7 @@ func (a *DefaultAPIService) GetDatasetExecute(r ApiGetDatasetRequest) (*http.Res
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/webrobot/api/datasets/{projectId}/{botId}/{datasetId}"
+	localVarPath := localBasePath + "/webrobot/api/datasets-legacy/{projectId}/{botId}/{datasetId}"
 	localVarPath = strings.Replace(localVarPath, "{"+"datasetId"+"}", url.PathEscape(parameterValueToString(r.datasetId, "datasetId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -2938,8 +8948,275 @@ func (a *DefaultAPIService) GetDatasetExecute(r ApiGetDatasetRequest) (*http.Res
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiGetDataset1Request struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	datasetId string
+}
+
+func (r ApiGetDataset1Request) Execute() (*http.Response, error) {
+	return r.ApiService.GetDataset1Execute(r)
+}
+
+/*
+GetDataset1 Method for GetDataset1
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param datasetId
+ @return ApiGetDataset1Request
+*/
+func (a *DefaultAPIService) GetDataset1(ctx context.Context, datasetId string) ApiGetDataset1Request {
+	return ApiGetDataset1Request{
+		ApiService: a,
+		ctx: ctx,
+		datasetId: datasetId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) GetDataset1Execute(r ApiGetDataset1Request) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetDataset1")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/datasets/{datasetId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"datasetId"+"}", url.PathEscape(parameterValueToString(r.datasetId, "datasetId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiGetDatasetFieldsRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	datasetId string
+}
+
+func (r ApiGetDatasetFieldsRequest) Execute() (*http.Response, error) {
+	return r.ApiService.GetDatasetFieldsExecute(r)
+}
+
+/*
+GetDatasetFields Method for GetDatasetFields
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param datasetId
+ @return ApiGetDatasetFieldsRequest
+*/
+func (a *DefaultAPIService) GetDatasetFields(ctx context.Context, datasetId string) ApiGetDatasetFieldsRequest {
+	return ApiGetDatasetFieldsRequest{
+		ApiService: a,
+		ctx: ctx,
+		datasetId: datasetId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) GetDatasetFieldsExecute(r ApiGetDatasetFieldsRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetDatasetFields")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/datasets/{datasetId}/fields"
+	localVarPath = strings.Replace(localVarPath, "{"+"datasetId"+"}", url.PathEscape(parameterValueToString(r.datasetId, "datasetId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiGetDatasetInfoByTaskRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	taskId string
+}
+
+func (r ApiGetDatasetInfoByTaskRequest) Execute() (*http.Response, error) {
+	return r.ApiService.GetDatasetInfoByTaskExecute(r)
+}
+
+/*
+GetDatasetInfoByTask Method for GetDatasetInfoByTask
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param taskId
+ @return ApiGetDatasetInfoByTaskRequest
+*/
+func (a *DefaultAPIService) GetDatasetInfoByTask(ctx context.Context, taskId string) ApiGetDatasetInfoByTaskRequest {
+	return ApiGetDatasetInfoByTaskRequest{
+		ApiService: a,
+		ctx: ctx,
+		taskId: taskId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) GetDatasetInfoByTaskExecute(r ApiGetDatasetInfoByTaskRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetDatasetInfoByTask")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/datasets/query/task/{taskId}/info"
+	localVarPath = strings.Replace(localVarPath, "{"+"taskId"+"}", url.PathEscape(parameterValueToString(r.taskId, "taskId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -2973,12 +9250,6 @@ type ApiGetDatasetInputFileRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
 	datasetId string
-	xRapidAPIUser *string
-}
-
-func (r ApiGetDatasetInputFileRequest) XRapidAPIUser(xRapidAPIUser string) ApiGetDatasetInputFileRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiGetDatasetInputFileRequest) Execute() (*http.Response, error) {
@@ -3013,7 +9284,7 @@ func (a *DefaultAPIService) GetDatasetInputFileExecute(r ApiGetDatasetInputFileR
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/webrobot/api/datasets/{projectId}/{botId}/{datasetId}/input/url"
+	localVarPath := localBasePath + "/webrobot/api/datasets-legacy/{projectId}/{botId}/{datasetId}/input/url"
 	localVarPath = strings.Replace(localVarPath, "{"+"datasetId"+"}", url.PathEscape(parameterValueToString(r.datasetId, "datasetId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -3036,9 +9307,6 @@ func (a *DefaultAPIService) GetDatasetInputFileExecute(r ApiGetDatasetInputFileR
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -3074,12 +9342,6 @@ type ApiGetDatasetInputFilePaginationRequest struct {
 	offset int32
 	datasetId string
 	limit int32
-	xRapidAPIUser *string
-}
-
-func (r ApiGetDatasetInputFilePaginationRequest) XRapidAPIUser(xRapidAPIUser string) ApiGetDatasetInputFilePaginationRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiGetDatasetInputFilePaginationRequest) Execute() (*http.Response, error) {
@@ -3118,7 +9380,7 @@ func (a *DefaultAPIService) GetDatasetInputFilePaginationExecute(r ApiGetDataset
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/webrobot/api/datasets/{projectId}/{botId}/{datasetId}/input/{offset}/{limit}"
+	localVarPath := localBasePath + "/webrobot/api/datasets-legacy/{projectId}/{botId}/{datasetId}/input/{offset}/{limit}"
 	localVarPath = strings.Replace(localVarPath, "{"+"offset"+"}", url.PathEscape(parameterValueToString(r.offset, "offset")), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"datasetId"+"}", url.PathEscape(parameterValueToString(r.datasetId, "datasetId")), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"limit"+"}", url.PathEscape(parameterValueToString(r.limit, "limit")), -1)
@@ -3143,9 +9405,6 @@ func (a *DefaultAPIService) GetDatasetInputFilePaginationExecute(r ApiGetDataset
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -3179,12 +9438,6 @@ type ApiGetDatasetInputFileSizeRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
 	datasetId string
-	xRapidAPIUser *string
-}
-
-func (r ApiGetDatasetInputFileSizeRequest) XRapidAPIUser(xRapidAPIUser string) ApiGetDatasetInputFileSizeRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiGetDatasetInputFileSizeRequest) Execute() (*http.Response, error) {
@@ -3219,7 +9472,7 @@ func (a *DefaultAPIService) GetDatasetInputFileSizeExecute(r ApiGetDatasetInputF
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/webrobot/api/datasets/{datasetId}/input/size"
+	localVarPath := localBasePath + "/webrobot/api/datasets-legacy/{datasetId}/input/size"
 	localVarPath = strings.Replace(localVarPath, "{"+"datasetId"+"}", url.PathEscape(parameterValueToString(r.datasetId, "datasetId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -3242,9 +9495,6 @@ func (a *DefaultAPIService) GetDatasetInputFileSizeExecute(r ApiGetDatasetInputF
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -3278,12 +9528,6 @@ type ApiGetDatasetStatusRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
 	datasetId string
-	xRapidAPIUser *string
-}
-
-func (r ApiGetDatasetStatusRequest) XRapidAPIUser(xRapidAPIUser string) ApiGetDatasetStatusRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiGetDatasetStatusRequest) Execute() (*http.Response, error) {
@@ -3318,7 +9562,7 @@ func (a *DefaultAPIService) GetDatasetStatusExecute(r ApiGetDatasetStatusRequest
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/webrobot/api/datasets/datasets/{datasetId}/status"
+	localVarPath := localBasePath + "/webrobot/api/datasets-legacy/datasets/{datasetId}/status"
 	localVarPath = strings.Replace(localVarPath, "{"+"datasetId"+"}", url.PathEscape(parameterValueToString(r.datasetId, "datasetId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -3341,9 +9585,6 @@ func (a *DefaultAPIService) GetDatasetStatusExecute(r ApiGetDatasetStatusRequest
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -3380,12 +9621,6 @@ type ApiGetDatasetVersionInputFileRequest struct {
 	jobId string
 	versionsetId string
 	datasetId string
-	xRapidAPIUser *string
-}
-
-func (r ApiGetDatasetVersionInputFileRequest) XRapidAPIUser(xRapidAPIUser string) ApiGetDatasetVersionInputFileRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiGetDatasetVersionInputFileRequest) Execute() (*http.Response, error) {
@@ -3426,7 +9661,7 @@ func (a *DefaultAPIService) GetDatasetVersionInputFileExecute(r ApiGetDatasetVer
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/webrobot/api/datasets/{categoryId}/{jobId}/{datasetId}/versions/{versionsetId}/input/url"
+	localVarPath := localBasePath + "/webrobot/api/datasets-legacy/{categoryId}/{jobId}/{datasetId}/versions/{versionsetId}/input/url"
 	localVarPath = strings.Replace(localVarPath, "{"+"categoryId"+"}", url.PathEscape(parameterValueToString(r.categoryId, "categoryId")), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"jobId"+"}", url.PathEscape(parameterValueToString(r.jobId, "jobId")), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"versionsetId"+"}", url.PathEscape(parameterValueToString(r.versionsetId, "versionsetId")), -1)
@@ -3452,9 +9687,6 @@ func (a *DefaultAPIService) GetDatasetVersionInputFileExecute(r ApiGetDatasetVer
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -3493,12 +9725,6 @@ type ApiGetDatasetVersionInputFilePaginationRequest struct {
 	limit int32
 	versionsetId string
 	datasetId string
-	xRapidAPIUser *string
-}
-
-func (r ApiGetDatasetVersionInputFilePaginationRequest) XRapidAPIUser(xRapidAPIUser string) ApiGetDatasetVersionInputFilePaginationRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiGetDatasetVersionInputFilePaginationRequest) Execute() (*http.Response, error) {
@@ -3543,7 +9769,7 @@ func (a *DefaultAPIService) GetDatasetVersionInputFilePaginationExecute(r ApiGet
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/webrobot/api/datasets/{datasetId}/versions/{versionsetId}/input/{offset}/{limit}"
+	localVarPath := localBasePath + "/webrobot/api/datasets-legacy/{datasetId}/versions/{versionsetId}/input/{offset}/{limit}"
 	localVarPath = strings.Replace(localVarPath, "{"+"projectId"+"}", url.PathEscape(parameterValueToString(r.projectId, "projectId")), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"botId"+"}", url.PathEscape(parameterValueToString(r.botId, "botId")), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"offset"+"}", url.PathEscape(parameterValueToString(r.offset, "offset")), -1)
@@ -3572,8 +9798,647 @@ func (a *DefaultAPIService) GetDatasetVersionInputFilePaginationExecute(r ApiGet
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiGetEffectiveEntitlementsRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	organizationId *int32
+}
+
+func (r ApiGetEffectiveEntitlementsRequest) OrganizationId(organizationId int32) ApiGetEffectiveEntitlementsRequest {
+	r.organizationId = &organizationId
+	return r
+}
+
+func (r ApiGetEffectiveEntitlementsRequest) Execute() (*http.Response, error) {
+	return r.ApiService.GetEffectiveEntitlementsExecute(r)
+}
+
+/*
+GetEffectiveEntitlements Method for GetEffectiveEntitlements
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiGetEffectiveEntitlementsRequest
+*/
+func (a *DefaultAPIService) GetEffectiveEntitlements(ctx context.Context) ApiGetEffectiveEntitlementsRequest {
+	return ApiGetEffectiveEntitlementsRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) GetEffectiveEntitlementsExecute(r ApiGetEffectiveEntitlementsRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetEffectiveEntitlements")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/etl/entitlements"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.organizationId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "organizationId", r.organizationId, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiGetExecutionLogsRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	executionId string
+	tail *int32
+	podType *string
+	executorIndex *int32
+}
+
+func (r ApiGetExecutionLogsRequest) Tail(tail int32) ApiGetExecutionLogsRequest {
+	r.tail = &tail
+	return r
+}
+
+func (r ApiGetExecutionLogsRequest) PodType(podType string) ApiGetExecutionLogsRequest {
+	r.podType = &podType
+	return r
+}
+
+func (r ApiGetExecutionLogsRequest) ExecutorIndex(executorIndex int32) ApiGetExecutionLogsRequest {
+	r.executorIndex = &executorIndex
+	return r
+}
+
+func (r ApiGetExecutionLogsRequest) Execute() (*http.Response, error) {
+	return r.ApiService.GetExecutionLogsExecute(r)
+}
+
+/*
+GetExecutionLogs Method for GetExecutionLogs
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param executionId
+ @return ApiGetExecutionLogsRequest
+*/
+func (a *DefaultAPIService) GetExecutionLogs(ctx context.Context, executionId string) ApiGetExecutionLogsRequest {
+	return ApiGetExecutionLogsRequest{
+		ApiService: a,
+		ctx: ctx,
+		executionId: executionId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) GetExecutionLogsExecute(r ApiGetExecutionLogsRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetExecutionLogs")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/demo/executions/{executionId}/logs"
+	localVarPath = strings.Replace(localVarPath, "{"+"executionId"+"}", url.PathEscape(parameterValueToString(r.executionId, "executionId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.tail != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "tail", r.tail, "form", "")
+	}
+	if r.podType != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "podType", r.podType, "form", "")
+	}
+	if r.executorIndex != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "executorIndex", r.executorIndex, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiGetExecutionLogs1Request struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	projectId string
+	jobId string
+	executionId string
+	podType *string
+	executorIndex *int32
+	podName *string
+	tail *int32
+}
+
+func (r ApiGetExecutionLogs1Request) PodType(podType string) ApiGetExecutionLogs1Request {
+	r.podType = &podType
+	return r
+}
+
+func (r ApiGetExecutionLogs1Request) ExecutorIndex(executorIndex int32) ApiGetExecutionLogs1Request {
+	r.executorIndex = &executorIndex
+	return r
+}
+
+func (r ApiGetExecutionLogs1Request) PodName(podName string) ApiGetExecutionLogs1Request {
+	r.podName = &podName
+	return r
+}
+
+func (r ApiGetExecutionLogs1Request) Tail(tail int32) ApiGetExecutionLogs1Request {
+	r.tail = &tail
+	return r
+}
+
+func (r ApiGetExecutionLogs1Request) Execute() (*http.Response, error) {
+	return r.ApiService.GetExecutionLogs1Execute(r)
+}
+
+/*
+GetExecutionLogs1 Method for GetExecutionLogs1
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param projectId
+ @param jobId
+ @param executionId
+ @return ApiGetExecutionLogs1Request
+*/
+func (a *DefaultAPIService) GetExecutionLogs1(ctx context.Context, projectId string, jobId string, executionId string) ApiGetExecutionLogs1Request {
+	return ApiGetExecutionLogs1Request{
+		ApiService: a,
+		ctx: ctx,
+		projectId: projectId,
+		jobId: jobId,
+		executionId: executionId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) GetExecutionLogs1Execute(r ApiGetExecutionLogs1Request) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetExecutionLogs1")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/projects/id/{projectId}/jobs/{jobId}/executions/{executionId}/logs"
+	localVarPath = strings.Replace(localVarPath, "{"+"projectId"+"}", url.PathEscape(parameterValueToString(r.projectId, "projectId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"jobId"+"}", url.PathEscape(parameterValueToString(r.jobId, "jobId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"executionId"+"}", url.PathEscape(parameterValueToString(r.executionId, "executionId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.podType != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "podType", r.podType, "form", "")
+	}
+	if r.executorIndex != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "executorIndex", r.executorIndex, "form", "")
+	}
+	if r.podName != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "podName", r.podName, "form", "")
+	}
+	if r.tail != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "tail", r.tail, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiGetExecutionOutputRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	executionId string
+	limit *int32
+	datasetId *int64
+}
+
+func (r ApiGetExecutionOutputRequest) Limit(limit int32) ApiGetExecutionOutputRequest {
+	r.limit = &limit
+	return r
+}
+
+func (r ApiGetExecutionOutputRequest) DatasetId(datasetId int64) ApiGetExecutionOutputRequest {
+	r.datasetId = &datasetId
+	return r
+}
+
+func (r ApiGetExecutionOutputRequest) Execute() (*http.Response, error) {
+	return r.ApiService.GetExecutionOutputExecute(r)
+}
+
+/*
+GetExecutionOutput Method for GetExecutionOutput
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param executionId
+ @return ApiGetExecutionOutputRequest
+*/
+func (a *DefaultAPIService) GetExecutionOutput(ctx context.Context, executionId string) ApiGetExecutionOutputRequest {
+	return ApiGetExecutionOutputRequest{
+		ApiService: a,
+		ctx: ctx,
+		executionId: executionId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) GetExecutionOutputExecute(r ApiGetExecutionOutputRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetExecutionOutput")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/demo/executions/{executionId}/output"
+	localVarPath = strings.Replace(localVarPath, "{"+"executionId"+"}", url.PathEscape(parameterValueToString(r.executionId, "executionId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.limit != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	}
+	if r.datasetId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "datasetId", r.datasetId, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiGetExecutionStatusRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	executionId string
+}
+
+func (r ApiGetExecutionStatusRequest) Execute() (*http.Response, error) {
+	return r.ApiService.GetExecutionStatusExecute(r)
+}
+
+/*
+GetExecutionStatus Method for GetExecutionStatus
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param executionId
+ @return ApiGetExecutionStatusRequest
+*/
+func (a *DefaultAPIService) GetExecutionStatus(ctx context.Context, executionId string) ApiGetExecutionStatusRequest {
+	return ApiGetExecutionStatusRequest{
+		ApiService: a,
+		ctx: ctx,
+		executionId: executionId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) GetExecutionStatusExecute(r ApiGetExecutionStatusRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetExecutionStatus")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/demo/executions/{executionId}/status"
+	localVarPath = strings.Replace(localVarPath, "{"+"executionId"+"}", url.PathEscape(parameterValueToString(r.executionId, "executionId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiGetExecutionStatus1Request struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	projectId string
+	jobId string
+	executionId string
+}
+
+func (r ApiGetExecutionStatus1Request) Execute() (*http.Response, error) {
+	return r.ApiService.GetExecutionStatus1Execute(r)
+}
+
+/*
+GetExecutionStatus1 Method for GetExecutionStatus1
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param projectId
+ @param jobId
+ @param executionId
+ @return ApiGetExecutionStatus1Request
+*/
+func (a *DefaultAPIService) GetExecutionStatus1(ctx context.Context, projectId string, jobId string, executionId string) ApiGetExecutionStatus1Request {
+	return ApiGetExecutionStatus1Request{
+		ApiService: a,
+		ctx: ctx,
+		projectId: projectId,
+		jobId: jobId,
+		executionId: executionId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) GetExecutionStatus1Execute(r ApiGetExecutionStatus1Request) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetExecutionStatus1")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/projects/id/{projectId}/jobs/{jobId}/executions/{executionId}/status"
+	localVarPath = strings.Replace(localVarPath, "{"+"projectId"+"}", url.PathEscape(parameterValueToString(r.projectId, "projectId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"jobId"+"}", url.PathEscape(parameterValueToString(r.jobId, "jobId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"executionId"+"}", url.PathEscape(parameterValueToString(r.executionId, "executionId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -3783,16 +10648,1652 @@ func (a *DefaultAPIService) GetHtmlExecute(r ApiGetHtmlRequest) (*http.Response,
 	return localVarHTTPResponse, nil
 }
 
+type ApiGetImagesSimplifiedRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	country string
+	organizationCode *string
+	requestBody *map[string]map[string]interface{}
+}
+
+func (r ApiGetImagesSimplifiedRequest) OrganizationCode(organizationCode string) ApiGetImagesSimplifiedRequest {
+	r.organizationCode = &organizationCode
+	return r
+}
+
+func (r ApiGetImagesSimplifiedRequest) RequestBody(requestBody map[string]map[string]interface{}) ApiGetImagesSimplifiedRequest {
+	r.requestBody = &requestBody
+	return r
+}
+
+func (r ApiGetImagesSimplifiedRequest) Execute() (*http.Response, error) {
+	return r.ApiService.GetImagesSimplifiedExecute(r)
+}
+
+/*
+GetImagesSimplified Method for GetImagesSimplified
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param country
+ @return ApiGetImagesSimplifiedRequest
+*/
+func (a *DefaultAPIService) GetImagesSimplified(ctx context.Context, country string) ApiGetImagesSimplifiedRequest {
+	return ApiGetImagesSimplifiedRequest{
+		ApiService: a,
+		ctx: ctx,
+		country: country,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) GetImagesSimplifiedExecute(r ApiGetImagesSimplifiedRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetImagesSimplified")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/ean-image-sourcing/{country}/images"
+	localVarPath = strings.Replace(localVarPath, "{"+"country"+"}", url.PathEscape(parameterValueToString(r.country, "country")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.organizationCode != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "organization_code", r.organizationCode, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.requestBody
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiGetInfoRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+}
+
+func (r ApiGetInfoRequest) Execute() (*http.Response, error) {
+	return r.ApiService.GetInfoExecute(r)
+}
+
+/*
+GetInfo Method for GetInfo
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiGetInfoRequest
+*/
+func (a *DefaultAPIService) GetInfo(ctx context.Context) ApiGetInfoRequest {
+	return ApiGetInfoRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) GetInfoExecute(r ApiGetInfoRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetInfo")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/cloud/spark/info"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiGetInfo1Request struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+}
+
+func (r ApiGetInfo1Request) Execute() (*http.Response, error) {
+	return r.ApiService.GetInfo1Execute(r)
+}
+
+/*
+GetInfo1 Method for GetInfo1
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiGetInfo1Request
+*/
+func (a *DefaultAPIService) GetInfo1(ctx context.Context) ApiGetInfo1Request {
+	return ApiGetInfo1Request{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) GetInfo1Execute(r ApiGetInfo1Request) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetInfo1")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/cloud/training/info"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiGetInstallationByIdRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	id int64
+}
+
+func (r ApiGetInstallationByIdRequest) Execute() (*http.Response, error) {
+	return r.ApiService.GetInstallationByIdExecute(r)
+}
+
+/*
+GetInstallationById Method for GetInstallationById
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id
+ @return ApiGetInstallationByIdRequest
+*/
+func (a *DefaultAPIService) GetInstallationById(ctx context.Context, id int64) ApiGetInstallationByIdRequest {
+	return ApiGetInstallationByIdRequest{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) GetInstallationByIdExecute(r ApiGetInstallationByIdRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetInstallationById")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/admin/plugin-installations/{id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiGetJobRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	projectId string
+	jobId string
+}
+
+func (r ApiGetJobRequest) Execute() (*http.Response, error) {
+	return r.ApiService.GetJobExecute(r)
+}
+
+/*
+GetJob Method for GetJob
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param projectId
+ @param jobId
+ @return ApiGetJobRequest
+*/
+func (a *DefaultAPIService) GetJob(ctx context.Context, projectId string, jobId string) ApiGetJobRequest {
+	return ApiGetJobRequest{
+		ApiService: a,
+		ctx: ctx,
+		projectId: projectId,
+		jobId: jobId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) GetJobExecute(r ApiGetJobRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetJob")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/projects/id/{projectId}/jobs/{jobId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"projectId"+"}", url.PathEscape(parameterValueToString(r.projectId, "projectId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"jobId"+"}", url.PathEscape(parameterValueToString(r.jobId, "jobId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiGetJobLogsRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	projectId string
+	jobId string
+	taskId *int64
+	podType *string
+	executorIndex *int32
+	podName *string
+	tail *int32
+}
+
+func (r ApiGetJobLogsRequest) TaskId(taskId int64) ApiGetJobLogsRequest {
+	r.taskId = &taskId
+	return r
+}
+
+func (r ApiGetJobLogsRequest) PodType(podType string) ApiGetJobLogsRequest {
+	r.podType = &podType
+	return r
+}
+
+func (r ApiGetJobLogsRequest) ExecutorIndex(executorIndex int32) ApiGetJobLogsRequest {
+	r.executorIndex = &executorIndex
+	return r
+}
+
+func (r ApiGetJobLogsRequest) PodName(podName string) ApiGetJobLogsRequest {
+	r.podName = &podName
+	return r
+}
+
+func (r ApiGetJobLogsRequest) Tail(tail int32) ApiGetJobLogsRequest {
+	r.tail = &tail
+	return r
+}
+
+func (r ApiGetJobLogsRequest) Execute() (*http.Response, error) {
+	return r.ApiService.GetJobLogsExecute(r)
+}
+
+/*
+GetJobLogs Method for GetJobLogs
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param projectId
+ @param jobId
+ @return ApiGetJobLogsRequest
+*/
+func (a *DefaultAPIService) GetJobLogs(ctx context.Context, projectId string, jobId string) ApiGetJobLogsRequest {
+	return ApiGetJobLogsRequest{
+		ApiService: a,
+		ctx: ctx,
+		projectId: projectId,
+		jobId: jobId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) GetJobLogsExecute(r ApiGetJobLogsRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetJobLogs")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/projects/id/{projectId}/jobs/{jobId}/logs"
+	localVarPath = strings.Replace(localVarPath, "{"+"projectId"+"}", url.PathEscape(parameterValueToString(r.projectId, "projectId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"jobId"+"}", url.PathEscape(parameterValueToString(r.jobId, "jobId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.taskId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "taskId", r.taskId, "form", "")
+	}
+	if r.podType != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "podType", r.podType, "form", "")
+	}
+	if r.executorIndex != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "executorIndex", r.executorIndex, "form", "")
+	}
+	if r.podName != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "podName", r.podName, "form", "")
+	}
+	if r.tail != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "tail", r.tail, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiGetJobMetricsRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	projectId string
+	jobId string
+	startTime *string
+	endTime *string
+}
+
+func (r ApiGetJobMetricsRequest) StartTime(startTime string) ApiGetJobMetricsRequest {
+	r.startTime = &startTime
+	return r
+}
+
+func (r ApiGetJobMetricsRequest) EndTime(endTime string) ApiGetJobMetricsRequest {
+	r.endTime = &endTime
+	return r
+}
+
+func (r ApiGetJobMetricsRequest) Execute() (*http.Response, error) {
+	return r.ApiService.GetJobMetricsExecute(r)
+}
+
+/*
+GetJobMetrics Method for GetJobMetrics
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param projectId
+ @param jobId
+ @return ApiGetJobMetricsRequest
+*/
+func (a *DefaultAPIService) GetJobMetrics(ctx context.Context, projectId string, jobId string) ApiGetJobMetricsRequest {
+	return ApiGetJobMetricsRequest{
+		ApiService: a,
+		ctx: ctx,
+		projectId: projectId,
+		jobId: jobId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) GetJobMetricsExecute(r ApiGetJobMetricsRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetJobMetrics")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/projects/id/{projectId}/jobs/{jobId}/metrics"
+	localVarPath = strings.Replace(localVarPath, "{"+"projectId"+"}", url.PathEscape(parameterValueToString(r.projectId, "projectId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"jobId"+"}", url.PathEscape(parameterValueToString(r.jobId, "jobId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.startTime != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "startTime", r.startTime, "form", "")
+	}
+	if r.endTime != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "endTime", r.endTime, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiGetOrganizationRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	id string
+}
+
+func (r ApiGetOrganizationRequest) Execute() (*http.Response, error) {
+	return r.ApiService.GetOrganizationExecute(r)
+}
+
+/*
+GetOrganization Method for GetOrganization
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id
+ @return ApiGetOrganizationRequest
+*/
+func (a *DefaultAPIService) GetOrganization(ctx context.Context, id string) ApiGetOrganizationRequest {
+	return ApiGetOrganizationRequest{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) GetOrganizationExecute(r ApiGetOrganizationRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetOrganization")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/auth/organizations/{id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiGetOrganizationPluginsRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	organizationId string
+}
+
+func (r ApiGetOrganizationPluginsRequest) Execute() (*http.Response, error) {
+	return r.ApiService.GetOrganizationPluginsExecute(r)
+}
+
+/*
+GetOrganizationPlugins Method for GetOrganizationPlugins
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param organizationId
+ @return ApiGetOrganizationPluginsRequest
+*/
+func (a *DefaultAPIService) GetOrganizationPlugins(ctx context.Context, organizationId string) ApiGetOrganizationPluginsRequest {
+	return ApiGetOrganizationPluginsRequest{
+		ApiService: a,
+		ctx: ctx,
+		organizationId: organizationId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) GetOrganizationPluginsExecute(r ApiGetOrganizationPluginsRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetOrganizationPlugins")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/admin/plugin-installations/../organizations/{organizationId}/plugin-installations"
+	localVarPath = strings.Replace(localVarPath, "{"+"organizationId"+"}", url.PathEscape(parameterValueToString(r.organizationId, "organizationId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiGetOrganizationUsersRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	id string
+}
+
+func (r ApiGetOrganizationUsersRequest) Execute() (*http.Response, error) {
+	return r.ApiService.GetOrganizationUsersExecute(r)
+}
+
+/*
+GetOrganizationUsers Method for GetOrganizationUsers
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id
+ @return ApiGetOrganizationUsersRequest
+*/
+func (a *DefaultAPIService) GetOrganizationUsers(ctx context.Context, id string) ApiGetOrganizationUsersRequest {
+	return ApiGetOrganizationUsersRequest{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) GetOrganizationUsersExecute(r ApiGetOrganizationUsersRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetOrganizationUsers")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/auth/organizations/{id}/users"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiGetPartnersByTypeRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	type_ string
+}
+
+func (r ApiGetPartnersByTypeRequest) Execute() (*http.Response, error) {
+	return r.ApiService.GetPartnersByTypeExecute(r)
+}
+
+/*
+GetPartnersByType Method for GetPartnersByType
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param type_
+ @return ApiGetPartnersByTypeRequest
+*/
+func (a *DefaultAPIService) GetPartnersByType(ctx context.Context, type_ string) ApiGetPartnersByTypeRequest {
+	return ApiGetPartnersByTypeRequest{
+		ApiService: a,
+		ctx: ctx,
+		type_: type_,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) GetPartnersByTypeExecute(r ApiGetPartnersByTypeRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetPartnersByType")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/auth/partners/{type}"
+	localVarPath = strings.Replace(localVarPath, "{"+"type"+"}", url.PathEscape(parameterValueToString(r.type_, "type_")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiGetPluginInfoRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+}
+
+func (r ApiGetPluginInfoRequest) Execute() (*http.Response, error) {
+	return r.ApiService.GetPluginInfoExecute(r)
+}
+
+/*
+GetPluginInfo Method for GetPluginInfo
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiGetPluginInfoRequest
+*/
+func (a *DefaultAPIService) GetPluginInfo(ctx context.Context) ApiGetPluginInfoRequest {
+	return ApiGetPluginInfoRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) GetPluginInfoExecute(r ApiGetPluginInfoRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetPluginInfo")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/demo/info"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiGetPluginInfo1Request struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+}
+
+func (r ApiGetPluginInfo1Request) Execute() (*http.Response, error) {
+	return r.ApiService.GetPluginInfo1Execute(r)
+}
+
+/*
+GetPluginInfo1 Method for GetPluginInfo1
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiGetPluginInfo1Request
+*/
+func (a *DefaultAPIService) GetPluginInfo1(ctx context.Context) ApiGetPluginInfo1Request {
+	return ApiGetPluginInfo1Request{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) GetPluginInfo1Execute(r ApiGetPluginInfo1Request) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetPluginInfo1")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/ean-image-sourcing/info"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiGetPluginInfo2Request struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+}
+
+func (r ApiGetPluginInfo2Request) Execute() (*http.Response, error) {
+	return r.ApiService.GetPluginInfo2Execute(r)
+}
+
+/*
+GetPluginInfo2 Method for GetPluginInfo2
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiGetPluginInfo2Request
+*/
+func (a *DefaultAPIService) GetPluginInfo2(ctx context.Context) ApiGetPluginInfo2Request {
+	return ApiGetPluginInfo2Request{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) GetPluginInfo2Execute(r ApiGetPluginInfo2Request) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetPluginInfo2")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/python-extensions/info"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiGetPluginOrganizationsRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	pluginInstallationId int64
+}
+
+func (r ApiGetPluginOrganizationsRequest) Execute() (*http.Response, error) {
+	return r.ApiService.GetPluginOrganizationsExecute(r)
+}
+
+/*
+GetPluginOrganizations Method for GetPluginOrganizations
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param pluginInstallationId
+ @return ApiGetPluginOrganizationsRequest
+*/
+func (a *DefaultAPIService) GetPluginOrganizations(ctx context.Context, pluginInstallationId int64) ApiGetPluginOrganizationsRequest {
+	return ApiGetPluginOrganizationsRequest{
+		ApiService: a,
+		ctx: ctx,
+		pluginInstallationId: pluginInstallationId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) GetPluginOrganizationsExecute(r ApiGetPluginOrganizationsRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetPluginOrganizations")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/admin/plugin-installations/{pluginInstallationId}/organizations"
+	localVarPath = strings.Replace(localVarPath, "{"+"pluginInstallationId"+"}", url.PathEscape(parameterValueToString(r.pluginInstallationId, "pluginInstallationId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiGetPluginUsageRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	pluginId string
+	from *string
+	to *string
+	organizationId *string
+	groupBy *string
+}
+
+func (r ApiGetPluginUsageRequest) From(from string) ApiGetPluginUsageRequest {
+	r.from = &from
+	return r
+}
+
+func (r ApiGetPluginUsageRequest) To(to string) ApiGetPluginUsageRequest {
+	r.to = &to
+	return r
+}
+
+func (r ApiGetPluginUsageRequest) OrganizationId(organizationId string) ApiGetPluginUsageRequest {
+	r.organizationId = &organizationId
+	return r
+}
+
+func (r ApiGetPluginUsageRequest) GroupBy(groupBy string) ApiGetPluginUsageRequest {
+	r.groupBy = &groupBy
+	return r
+}
+
+func (r ApiGetPluginUsageRequest) Execute() (*http.Response, error) {
+	return r.ApiService.GetPluginUsageExecute(r)
+}
+
+/*
+GetPluginUsage Method for GetPluginUsage
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param pluginId
+ @return ApiGetPluginUsageRequest
+*/
+func (a *DefaultAPIService) GetPluginUsage(ctx context.Context, pluginId string) ApiGetPluginUsageRequest {
+	return ApiGetPluginUsageRequest{
+		ApiService: a,
+		ctx: ctx,
+		pluginId: pluginId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) GetPluginUsageExecute(r ApiGetPluginUsageRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetPluginUsage")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/admin/plugins/{pluginId}/usage"
+	localVarPath = strings.Replace(localVarPath, "{"+"pluginId"+"}", url.PathEscape(parameterValueToString(r.pluginId, "pluginId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.from != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "from", r.from, "form", "")
+	}
+	if r.to != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "to", r.to, "form", "")
+	}
+	if r.organizationId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "organization_id", r.organizationId, "form", "")
+	}
+	if r.groupBy != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "group_by", r.groupBy, "form", "")
+	} else {
+        var defaultValue string = "stage"
+        parameterAddToHeaderOrQuery(localVarQueryParams, "group_by", defaultValue, "form", "")
+        r.groupBy = &defaultValue
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiGetProfileRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	id int32
+}
+
+func (r ApiGetProfileRequest) Execute() (*http.Response, error) {
+	return r.ApiService.GetProfileExecute(r)
+}
+
+/*
+GetProfile Method for GetProfile
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id
+ @return ApiGetProfileRequest
+*/
+func (a *DefaultAPIService) GetProfile(ctx context.Context, id int32) ApiGetProfileRequest {
+	return ApiGetProfileRequest{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) GetProfileExecute(r ApiGetProfileRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetProfile")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/agentic/profiles/{id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
 type ApiGetProjectRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
 	projectId string
-	xRapidAPIUser *string
-}
-
-func (r ApiGetProjectRequest) XRapidAPIUser(xRapidAPIUser string) ApiGetProjectRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiGetProjectRequest) Execute() (*http.Response, error) {
@@ -3851,9 +12352,6 @@ func (a *DefaultAPIService) GetProjectExecute(r ApiGetProjectRequest) (*http.Res
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
-	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -3886,12 +12384,6 @@ type ApiGetProjectFromNameRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
 	projectName string
-	xRapidAPIUser *string
-}
-
-func (r ApiGetProjectFromNameRequest) XRapidAPIUser(xRapidAPIUser string) ApiGetProjectFromNameRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiGetProjectFromNameRequest) Execute() (*http.Response, error) {
@@ -3950,9 +12442,6 @@ func (a *DefaultAPIService) GetProjectFromNameExecute(r ApiGetProjectFromNameReq
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
-	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -3985,12 +12474,6 @@ type ApiGetProjectJobsRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
 	projectId string
-	xRapidAPIUser *string
-}
-
-func (r ApiGetProjectJobsRequest) XRapidAPIUser(xRapidAPIUser string) ApiGetProjectJobsRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiGetProjectJobsRequest) Execute() (*http.Response, error) {
@@ -4049,8 +12532,113 @@ func (a *DefaultAPIService) GetProjectJobsExecute(r ApiGetProjectJobsRequest) (*
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiGetProjectMetricsRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	projectId string
+	startTime *string
+	endTime *string
+}
+
+func (r ApiGetProjectMetricsRequest) StartTime(startTime string) ApiGetProjectMetricsRequest {
+	r.startTime = &startTime
+	return r
+}
+
+func (r ApiGetProjectMetricsRequest) EndTime(endTime string) ApiGetProjectMetricsRequest {
+	r.endTime = &endTime
+	return r
+}
+
+func (r ApiGetProjectMetricsRequest) Execute() (*http.Response, error) {
+	return r.ApiService.GetProjectMetricsExecute(r)
+}
+
+/*
+GetProjectMetrics Method for GetProjectMetrics
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param projectId
+ @return ApiGetProjectMetricsRequest
+*/
+func (a *DefaultAPIService) GetProjectMetrics(ctx context.Context, projectId string) ApiGetProjectMetricsRequest {
+	return ApiGetProjectMetricsRequest{
+		ApiService: a,
+		ctx: ctx,
+		projectId: projectId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) GetProjectMetricsExecute(r ApiGetProjectMetricsRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetProjectMetrics")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/projects/id/{projectId}/metrics"
+	localVarPath = strings.Replace(localVarPath, "{"+"projectId"+"}", url.PathEscape(parameterValueToString(r.projectId, "projectId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.startTime != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "startTime", r.startTime, "form", "")
+	}
+	if r.endTime != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "endTime", r.endTime, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -4084,12 +12672,6 @@ type ApiGetProjectScheduleRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
 	projectId string
-	xRapidAPIUser *string
-}
-
-func (r ApiGetProjectScheduleRequest) XRapidAPIUser(xRapidAPIUser string) ApiGetProjectScheduleRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiGetProjectScheduleRequest) Execute() (*http.Response, error) {
@@ -4148,8 +12730,271 @@ func (a *DefaultAPIService) GetProjectScheduleExecute(r ApiGetProjectScheduleReq
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiGetStageRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	name string
+}
+
+func (r ApiGetStageRequest) Execute() (*http.Response, error) {
+	return r.ApiService.GetStageExecute(r)
+}
+
+/*
+GetStage Method for GetStage
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param name
+ @return ApiGetStageRequest
+*/
+func (a *DefaultAPIService) GetStage(ctx context.Context, name string) ApiGetStageRequest {
+	return ApiGetStageRequest{
+		ApiService: a,
+		ctx: ctx,
+		name: name,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) GetStageExecute(r ApiGetStageRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetStage")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/manifest/stages/{name}"
+	localVarPath = strings.Replace(localVarPath, "{"+"name"+"}", url.PathEscape(parameterValueToString(r.name, "name")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiGetStatusRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	country string
+}
+
+func (r ApiGetStatusRequest) Execute() (*http.Response, error) {
+	return r.ApiService.GetStatusExecute(r)
+}
+
+/*
+GetStatus Method for GetStatus
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param country
+ @return ApiGetStatusRequest
+*/
+func (a *DefaultAPIService) GetStatus(ctx context.Context, country string) ApiGetStatusRequest {
+	return ApiGetStatusRequest{
+		ApiService: a,
+		ctx: ctx,
+		country: country,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) GetStatusExecute(r ApiGetStatusRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetStatus")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/ean-image-sourcing/{country}/status"
+	localVarPath = strings.Replace(localVarPath, "{"+"country"+"}", url.PathEscape(parameterValueToString(r.country, "country")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiGetSupportedExtensionTypesRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+}
+
+func (r ApiGetSupportedExtensionTypesRequest) Execute() (*http.Response, error) {
+	return r.ApiService.GetSupportedExtensionTypesExecute(r)
+}
+
+/*
+GetSupportedExtensionTypes Method for GetSupportedExtensionTypes
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiGetSupportedExtensionTypesRequest
+*/
+func (a *DefaultAPIService) GetSupportedExtensionTypes(ctx context.Context) ApiGetSupportedExtensionTypesRequest {
+	return ApiGetSupportedExtensionTypesRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) GetSupportedExtensionTypesExecute(r ApiGetSupportedExtensionTypesRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetSupportedExtensionTypes")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/python-extensions/supported-types"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -4183,12 +13028,6 @@ type ApiGetSupportedModelsRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
 	provider string
-	xRapidAPIUser *string
-}
-
-func (r ApiGetSupportedModelsRequest) XRapidAPIUser(xRapidAPIUser string) ApiGetSupportedModelsRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiGetSupportedModelsRequest) Execute() (*http.Response, error) {
@@ -4247,9 +13086,6 @@ func (a *DefaultAPIService) GetSupportedModelsExecute(r ApiGetSupportedModelsReq
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
-	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -4281,12 +13117,6 @@ func (a *DefaultAPIService) GetSupportedModelsExecute(r ApiGetSupportedModelsReq
 type ApiGetSupportedProvidersRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
-	xRapidAPIUser *string
-}
-
-func (r ApiGetSupportedProvidersRequest) XRapidAPIUser(xRapidAPIUser string) ApiGetSupportedProvidersRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiGetSupportedProvidersRequest) Execute() (*http.Response, error) {
@@ -4342,8 +13172,257 @@ func (a *DefaultAPIService) GetSupportedProvidersExecute(r ApiGetSupportedProvid
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiGetSystemLogsRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	service *string
+	level *string
+	tail *int32
+	startTime *int64
+	endTime *int64
+}
+
+func (r ApiGetSystemLogsRequest) Service(service string) ApiGetSystemLogsRequest {
+	r.service = &service
+	return r
+}
+
+func (r ApiGetSystemLogsRequest) Level(level string) ApiGetSystemLogsRequest {
+	r.level = &level
+	return r
+}
+
+func (r ApiGetSystemLogsRequest) Tail(tail int32) ApiGetSystemLogsRequest {
+	r.tail = &tail
+	return r
+}
+
+func (r ApiGetSystemLogsRequest) StartTime(startTime int64) ApiGetSystemLogsRequest {
+	r.startTime = &startTime
+	return r
+}
+
+func (r ApiGetSystemLogsRequest) EndTime(endTime int64) ApiGetSystemLogsRequest {
+	r.endTime = &endTime
+	return r
+}
+
+func (r ApiGetSystemLogsRequest) Execute() (*http.Response, error) {
+	return r.ApiService.GetSystemLogsExecute(r)
+}
+
+/*
+GetSystemLogs Method for GetSystemLogs
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiGetSystemLogsRequest
+*/
+func (a *DefaultAPIService) GetSystemLogs(ctx context.Context) ApiGetSystemLogsRequest {
+	return ApiGetSystemLogsRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) GetSystemLogsExecute(r ApiGetSystemLogsRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetSystemLogs")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/projects/admin/system-logs"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.service != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "service", r.service, "form", "")
+	}
+	if r.level != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "level", r.level, "form", "")
+	}
+	if r.tail != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "tail", r.tail, "form", "")
+	}
+	if r.startTime != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "startTime", r.startTime, "form", "")
+	}
+	if r.endTime != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "endTime", r.endTime, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiGetTableColumnsRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	catalog *string
+	schema *string
+	table *string
+}
+
+func (r ApiGetTableColumnsRequest) Catalog(catalog string) ApiGetTableColumnsRequest {
+	r.catalog = &catalog
+	return r
+}
+
+func (r ApiGetTableColumnsRequest) Schema(schema string) ApiGetTableColumnsRequest {
+	r.schema = &schema
+	return r
+}
+
+func (r ApiGetTableColumnsRequest) Table(table string) ApiGetTableColumnsRequest {
+	r.table = &table
+	return r
+}
+
+func (r ApiGetTableColumnsRequest) Execute() (*http.Response, error) {
+	return r.ApiService.GetTableColumnsExecute(r)
+}
+
+/*
+GetTableColumns Method for GetTableColumns
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiGetTableColumnsRequest
+*/
+func (a *DefaultAPIService) GetTableColumns(ctx context.Context) ApiGetTableColumnsRequest {
+	return ApiGetTableColumnsRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) GetTableColumnsExecute(r ApiGetTableColumnsRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetTableColumns")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/datasets/query/columns"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.catalog != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "catalog", r.catalog, "form", "")
+	} else {
+        var defaultValue string = "minio"
+        parameterAddToHeaderOrQuery(localVarQueryParams, "catalog", defaultValue, "form", "")
+        r.catalog = &defaultValue
+	}
+	if r.schema != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "schema", r.schema, "form", "")
+	} else {
+        var defaultValue string = "default"
+        parameterAddToHeaderOrQuery(localVarQueryParams, "schema", defaultValue, "form", "")
+        r.schema = &defaultValue
+	}
+	if r.table != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "table", r.table, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -4379,12 +13458,6 @@ type ApiGetTaskRequest struct {
 	projectId string
 	jobId string
 	taskId string
-	xRapidAPIUser *string
-}
-
-func (r ApiGetTaskRequest) XRapidAPIUser(xRapidAPIUser string) ApiGetTaskRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiGetTaskRequest) Execute() (*http.Response, error) {
@@ -4449,8 +13522,193 @@ func (a *DefaultAPIService) GetTaskExecute(r ApiGetTaskRequest) (*http.Response,
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiGetTaskByOutputDatasetRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	datasetId string
+}
+
+func (r ApiGetTaskByOutputDatasetRequest) Execute() (*http.Response, error) {
+	return r.ApiService.GetTaskByOutputDatasetExecute(r)
+}
+
+/*
+GetTaskByOutputDataset Method for GetTaskByOutputDataset
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param datasetId
+ @return ApiGetTaskByOutputDatasetRequest
+*/
+func (a *DefaultAPIService) GetTaskByOutputDataset(ctx context.Context, datasetId string) ApiGetTaskByOutputDatasetRequest {
+	return ApiGetTaskByOutputDatasetRequest{
+		ApiService: a,
+		ctx: ctx,
+		datasetId: datasetId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) GetTaskByOutputDatasetExecute(r ApiGetTaskByOutputDatasetRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetTaskByOutputDataset")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/datasets/query/by-dataset/{datasetId}/task"
+	localVarPath = strings.Replace(localVarPath, "{"+"datasetId"+"}", url.PathEscape(parameterValueToString(r.datasetId, "datasetId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiGetTaskMetricsRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	projectId string
+	jobId string
+	taskId string
+}
+
+func (r ApiGetTaskMetricsRequest) Execute() (*http.Response, error) {
+	return r.ApiService.GetTaskMetricsExecute(r)
+}
+
+/*
+GetTaskMetrics Method for GetTaskMetrics
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param projectId
+ @param jobId
+ @param taskId
+ @return ApiGetTaskMetricsRequest
+*/
+func (a *DefaultAPIService) GetTaskMetrics(ctx context.Context, projectId string, jobId string, taskId string) ApiGetTaskMetricsRequest {
+	return ApiGetTaskMetricsRequest{
+		ApiService: a,
+		ctx: ctx,
+		projectId: projectId,
+		jobId: jobId,
+		taskId: taskId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) GetTaskMetricsExecute(r ApiGetTaskMetricsRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetTaskMetrics")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/projects/id/{projectId}/jobs/{jobId}/tasks/{taskId}/metrics"
+	localVarPath = strings.Replace(localVarPath, "{"+"projectId"+"}", url.PathEscape(parameterValueToString(r.projectId, "projectId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"jobId"+"}", url.PathEscape(parameterValueToString(r.jobId, "jobId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"taskId"+"}", url.PathEscape(parameterValueToString(r.taskId, "taskId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -4486,12 +13744,6 @@ type ApiGetTaskStatusRequest struct {
 	projectId string
 	jobId string
 	taskId string
-	xRapidAPIUser *string
-}
-
-func (r ApiGetTaskStatusRequest) XRapidAPIUser(xRapidAPIUser string) ApiGetTaskStatusRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiGetTaskStatusRequest) Execute() (*http.Response, error) {
@@ -4556,9 +13808,6 @@ func (a *DefaultAPIService) GetTaskStatusExecute(r ApiGetTaskStatusRequest) (*ht
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
-	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -4592,12 +13841,6 @@ type ApiGetTrainingLogsRequest struct {
 	ApiService *DefaultAPIService
 	provider string
 	jobId string
-	xRapidAPIUser *string
-}
-
-func (r ApiGetTrainingLogsRequest) XRapidAPIUser(xRapidAPIUser string) ApiGetTrainingLogsRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiGetTrainingLogsRequest) Execute() (*http.Response, error) {
@@ -4659,9 +13902,6 @@ func (a *DefaultAPIService) GetTrainingLogsExecute(r ApiGetTrainingLogsRequest) 
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
-	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -4695,12 +13935,6 @@ type ApiGetTrainingStatusRequest struct {
 	ApiService *DefaultAPIService
 	provider string
 	jobId string
-	xRapidAPIUser *string
-}
-
-func (r ApiGetTrainingStatusRequest) XRapidAPIUser(xRapidAPIUser string) ApiGetTrainingStatusRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiGetTrainingStatusRequest) Execute() (*http.Response, error) {
@@ -4762,8 +13996,109 @@ func (a *DefaultAPIService) GetTrainingStatusExecute(r ApiGetTrainingStatusReque
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiGetUiDefinitionsRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	organizationId *string
+	buildType *string
+}
+
+func (r ApiGetUiDefinitionsRequest) OrganizationId(organizationId string) ApiGetUiDefinitionsRequest {
+	r.organizationId = &organizationId
+	return r
+}
+
+func (r ApiGetUiDefinitionsRequest) BuildType(buildType string) ApiGetUiDefinitionsRequest {
+	r.buildType = &buildType
+	return r
+}
+
+func (r ApiGetUiDefinitionsRequest) Execute() (*http.Response, error) {
+	return r.ApiService.GetUiDefinitionsExecute(r)
+}
+
+/*
+GetUiDefinitions Method for GetUiDefinitions
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiGetUiDefinitionsRequest
+*/
+func (a *DefaultAPIService) GetUiDefinitions(ctx context.Context) ApiGetUiDefinitionsRequest {
+	return ApiGetUiDefinitionsRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) GetUiDefinitionsExecute(r ApiGetUiDefinitionsRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetUiDefinitions")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/admin/plugin-installations/ui-definitions"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.organizationId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "organizationId", r.organizationId, "form", "")
+	}
+	if r.buildType != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "buildType", r.buildType, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -4799,12 +14134,6 @@ type ApiGetUploadFileUrlRequest struct {
 	projectId string
 	botId string
 	attachmentName string
-	xRapidAPIUser *string
-}
-
-func (r ApiGetUploadFileUrlRequest) XRapidAPIUser(xRapidAPIUser string) ApiGetUploadFileUrlRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiGetUploadFileUrlRequest) Execute() (*http.Response, error) {
@@ -4843,7 +14172,7 @@ func (a *DefaultAPIService) GetUploadFileUrlExecute(r ApiGetUploadFileUrlRequest
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/webrobot/api/datasets/{categoryId}/{jobId}/upload/{attachmentName}"
+	localVarPath := localBasePath + "/webrobot/api/datasets-legacy/{categoryId}/{jobId}/upload/{attachmentName}"
 	localVarPath = strings.Replace(localVarPath, "{"+"projectId"+"}", url.PathEscape(parameterValueToString(r.projectId, "projectId")), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"botId"+"}", url.PathEscape(parameterValueToString(r.botId, "botId")), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"attachmentName"+"}", url.PathEscape(parameterValueToString(r.attachmentName, "attachmentName")), -1)
@@ -4868,9 +14197,6 @@ func (a *DefaultAPIService) GetUploadFileUrlExecute(r ApiGetUploadFileUrlRequest
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -4903,12 +14229,6 @@ func (a *DefaultAPIService) GetUploadFileUrlExecute(r ApiGetUploadFileUrlRequest
 type ApiGetUrlDownloadRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
-	xRapidAPIUser *string
-}
-
-func (r ApiGetUrlDownloadRequest) XRapidAPIUser(xRapidAPIUser string) ApiGetUrlDownloadRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiGetUrlDownloadRequest) Execute() (*http.Response, error) {
@@ -4964,9 +14284,6 @@ func (a *DefaultAPIService) GetUrlDownloadExecute(r ApiGetUrlDownloadRequest) (*
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
-	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -4998,12 +14315,6 @@ func (a *DefaultAPIService) GetUrlDownloadExecute(r ApiGetUrlDownloadRequest) (*
 type ApiGetUrlUploadRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
-	xRapidAPIUser *string
-}
-
-func (r ApiGetUrlUploadRequest) XRapidAPIUser(xRapidAPIUser string) ApiGetUrlUploadRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiGetUrlUploadRequest) Execute() (*http.Response, error) {
@@ -5059,8 +14370,275 @@ func (a *DefaultAPIService) GetUrlUploadExecute(r ApiGetUrlUploadRequest) (*http
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiGetUserInvitesRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+}
+
+func (r ApiGetUserInvitesRequest) Execute() (*http.Response, error) {
+	return r.ApiService.GetUserInvitesExecute(r)
+}
+
+/*
+GetUserInvites Method for GetUserInvites
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiGetUserInvitesRequest
+*/
+func (a *DefaultAPIService) GetUserInvites(ctx context.Context) ApiGetUserInvitesRequest {
+	return ApiGetUserInvitesRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) GetUserInvitesExecute(r ApiGetUserInvitesRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetUserInvites")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/auth/user-invites"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiGetVersionByBuildTypeAndBuildNumberRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	buildType string
+	buildNumber int32
+}
+
+func (r ApiGetVersionByBuildTypeAndBuildNumberRequest) Execute() (*http.Response, error) {
+	return r.ApiService.GetVersionByBuildTypeAndBuildNumberExecute(r)
+}
+
+/*
+GetVersionByBuildTypeAndBuildNumber Method for GetVersionByBuildTypeAndBuildNumber
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param buildType
+ @param buildNumber
+ @return ApiGetVersionByBuildTypeAndBuildNumberRequest
+*/
+func (a *DefaultAPIService) GetVersionByBuildTypeAndBuildNumber(ctx context.Context, buildType string, buildNumber int32) ApiGetVersionByBuildTypeAndBuildNumberRequest {
+	return ApiGetVersionByBuildTypeAndBuildNumberRequest{
+		ApiService: a,
+		ctx: ctx,
+		buildType: buildType,
+		buildNumber: buildNumber,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) GetVersionByBuildTypeAndBuildNumberExecute(r ApiGetVersionByBuildTypeAndBuildNumberRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetVersionByBuildTypeAndBuildNumber")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/admin/etl-library-versions/build-type/{buildType}/build-number/{buildNumber}"
+	localVarPath = strings.Replace(localVarPath, "{"+"buildType"+"}", url.PathEscape(parameterValueToString(r.buildType, "buildType")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"buildNumber"+"}", url.PathEscape(parameterValueToString(r.buildNumber, "buildNumber")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiGetVersionByIdRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	id int64
+}
+
+func (r ApiGetVersionByIdRequest) Execute() (*http.Response, error) {
+	return r.ApiService.GetVersionByIdExecute(r)
+}
+
+/*
+GetVersionById Method for GetVersionById
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id
+ @return ApiGetVersionByIdRequest
+*/
+func (a *DefaultAPIService) GetVersionById(ctx context.Context, id int64) ApiGetVersionByIdRequest {
+	return ApiGetVersionByIdRequest{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) GetVersionByIdExecute(r ApiGetVersionByIdRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.GetVersionById")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/admin/etl-library-versions/id/{id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -5094,12 +14672,6 @@ type ApiGetVersionsetRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
 	versionsetId string
-	xRapidAPIUser *string
-}
-
-func (r ApiGetVersionsetRequest) XRapidAPIUser(xRapidAPIUser string) ApiGetVersionsetRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiGetVersionsetRequest) Execute() (*http.Response, error) {
@@ -5134,7 +14706,7 @@ func (a *DefaultAPIService) GetVersionsetExecute(r ApiGetVersionsetRequest) (*ht
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/webrobot/api/datasets/version/id/{versionsetId}"
+	localVarPath := localBasePath + "/webrobot/api/datasets-legacy/version/id/{versionsetId}"
 	localVarPath = strings.Replace(localVarPath, "{"+"versionsetId"+"}", url.PathEscape(parameterValueToString(r.versionsetId, "versionsetId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -5157,9 +14729,6 @@ func (a *DefaultAPIService) GetVersionsetExecute(r ApiGetVersionsetRequest) (*ht
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -5194,13 +14763,7 @@ type ApiGetVersionsetFromVersionRequest struct {
 	ApiService *DefaultAPIService
 	datasetId string
 	version string
-	xRapidAPIUser *string
 	timePeriod *TimePeriod
-}
-
-func (r ApiGetVersionsetFromVersionRequest) XRapidAPIUser(xRapidAPIUser string) ApiGetVersionsetFromVersionRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiGetVersionsetFromVersionRequest) TimePeriod(timePeriod TimePeriod) ApiGetVersionsetFromVersionRequest {
@@ -5242,7 +14805,7 @@ func (a *DefaultAPIService) GetVersionsetFromVersionExecute(r ApiGetVersionsetFr
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/webrobot/api/datasets/{datasetId}/versions/version/{version}"
+	localVarPath := localBasePath + "/webrobot/api/datasets-legacy/{datasetId}/versions/version/{version}"
 	localVarPath = strings.Replace(localVarPath, "{"+"datasetId"+"}", url.PathEscape(parameterValueToString(r.datasetId, "datasetId")), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"version"+"}", url.PathEscape(parameterValueToString(r.version, "version")), -1)
 
@@ -5266,9 +14829,6 @@ func (a *DefaultAPIService) GetVersionsetFromVersionExecute(r ApiGetVersionsetFr
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
 	}
 	// body params
 	localVarPostBody = r.timePeriod
@@ -5305,12 +14865,6 @@ type ApiGetVersionsetFromVersionBaseRequest struct {
 	ApiService *DefaultAPIService
 	datasetId string
 	version string
-	xRapidAPIUser *string
-}
-
-func (r ApiGetVersionsetFromVersionBaseRequest) XRapidAPIUser(xRapidAPIUser string) ApiGetVersionsetFromVersionBaseRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiGetVersionsetFromVersionBaseRequest) Execute() (*http.Response, error) {
@@ -5347,7 +14901,7 @@ func (a *DefaultAPIService) GetVersionsetFromVersionBaseExecute(r ApiGetVersions
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/webrobot/api/datasets/{datasetId}/versions/version/{version}/base"
+	localVarPath := localBasePath + "/webrobot/api/datasets-legacy/{datasetId}/versions/version/{version}/base"
 	localVarPath = strings.Replace(localVarPath, "{"+"datasetId"+"}", url.PathEscape(parameterValueToString(r.datasetId, "datasetId")), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"version"+"}", url.PathEscape(parameterValueToString(r.version, "version")), -1)
 
@@ -5372,9 +14926,362 @@ func (a *DefaultAPIService) GetVersionsetFromVersionBaseExecute(r ApiGetVersions
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
 	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiHealthCheckRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+}
+
+func (r ApiHealthCheckRequest) Execute() (*http.Response, error) {
+	return r.ApiService.HealthCheckExecute(r)
+}
+
+/*
+HealthCheck Method for HealthCheck
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiHealthCheckRequest
+*/
+func (a *DefaultAPIService) HealthCheck(ctx context.Context) ApiHealthCheckRequest {
+	return ApiHealthCheckRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) HealthCheckExecute(r ApiHealthCheckRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.HealthCheck")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/cloud/spark/health"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiHealthCheck1Request struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+}
+
+func (r ApiHealthCheck1Request) Execute() (*http.Response, error) {
+	return r.ApiService.HealthCheck1Execute(r)
+}
+
+/*
+HealthCheck1 Method for HealthCheck1
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiHealthCheck1Request
+*/
+func (a *DefaultAPIService) HealthCheck1(ctx context.Context) ApiHealthCheck1Request {
+	return ApiHealthCheck1Request{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) HealthCheck1Execute(r ApiHealthCheck1Request) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.HealthCheck1")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/cloud/training/health"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiIndexDatasetRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	datasetId string
+}
+
+func (r ApiIndexDatasetRequest) Execute() (*http.Response, error) {
+	return r.ApiService.IndexDatasetExecute(r)
+}
+
+/*
+IndexDataset Method for IndexDataset
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param datasetId
+ @return ApiIndexDatasetRequest
+*/
+func (a *DefaultAPIService) IndexDataset(ctx context.Context, datasetId string) ApiIndexDatasetRequest {
+	return ApiIndexDatasetRequest{
+		ApiService: a,
+		ctx: ctx,
+		datasetId: datasetId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) IndexDatasetExecute(r ApiIndexDatasetRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.IndexDataset")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/datasets/{datasetId}/index"
+	localVarPath = strings.Replace(localVarPath, "{"+"datasetId"+"}", url.PathEscape(parameterValueToString(r.datasetId, "datasetId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiInferRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	inferRequest *InferRequest
+}
+
+func (r ApiInferRequest) InferRequest(inferRequest InferRequest) ApiInferRequest {
+	r.inferRequest = &inferRequest
+	return r
+}
+
+func (r ApiInferRequest) Execute() (*http.Response, error) {
+	return r.ApiService.InferExecute(r)
+}
+
+/*
+Infer Method for Infer
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiInferRequest
+*/
+func (a *DefaultAPIService) Infer(ctx context.Context) ApiInferRequest {
+	return ApiInferRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) InferExecute(r ApiInferRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.Infer")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/llm/infer"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.inferRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -5501,16 +15408,2467 @@ func (a *DefaultAPIService) InsertExecute(r ApiInsertRequest) (*http.Response, e
 	return localVarHTTPResponse, nil
 }
 
+type ApiInstallBundleRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	buildType *string
+	bundle *FormDataContentDisposition
+	buildType2 *string
+	force *bool
+}
+
+func (r ApiInstallBundleRequest) BuildType(buildType string) ApiInstallBundleRequest {
+	r.buildType = &buildType
+	return r
+}
+
+func (r ApiInstallBundleRequest) Bundle(bundle FormDataContentDisposition) ApiInstallBundleRequest {
+	r.bundle = &bundle
+	return r
+}
+
+func (r ApiInstallBundleRequest) BuildType2(buildType2 string) ApiInstallBundleRequest {
+	r.buildType2 = &buildType2
+	return r
+}
+
+func (r ApiInstallBundleRequest) Force(force bool) ApiInstallBundleRequest {
+	r.force = &force
+	return r
+}
+
+func (r ApiInstallBundleRequest) Execute() (*http.Response, error) {
+	return r.ApiService.InstallBundleExecute(r)
+}
+
+/*
+InstallBundle Method for InstallBundle
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiInstallBundleRequest
+*/
+func (a *DefaultAPIService) InstallBundle(ctx context.Context) ApiInstallBundleRequest {
+	return ApiInstallBundleRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) InstallBundleExecute(r ApiInstallBundleRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.InstallBundle")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/admin/bundles/install"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.buildType != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "buildType", r.buildType, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"multipart/form-data"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.bundle != nil {
+		paramJson, err := parameterToJson(*r.bundle)
+		if err != nil {
+			return nil, err
+		}
+		localVarFormParams.Add("bundle", paramJson)
+	}
+	if r.buildType2 != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "buildType", r.buildType2, "", "")
+	}
+	if r.force != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "force", r.force, "", "")
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiJobCompletionWebhookRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	projectId string
+	jobId string
+	jobCompletionWebhookRequest *JobCompletionWebhookRequest
+}
+
+func (r ApiJobCompletionWebhookRequest) JobCompletionWebhookRequest(jobCompletionWebhookRequest JobCompletionWebhookRequest) ApiJobCompletionWebhookRequest {
+	r.jobCompletionWebhookRequest = &jobCompletionWebhookRequest
+	return r
+}
+
+func (r ApiJobCompletionWebhookRequest) Execute() (*http.Response, error) {
+	return r.ApiService.JobCompletionWebhookExecute(r)
+}
+
+/*
+JobCompletionWebhook Method for JobCompletionWebhook
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param projectId
+ @param jobId
+ @return ApiJobCompletionWebhookRequest
+*/
+func (a *DefaultAPIService) JobCompletionWebhook(ctx context.Context, projectId string, jobId string) ApiJobCompletionWebhookRequest {
+	return ApiJobCompletionWebhookRequest{
+		ApiService: a,
+		ctx: ctx,
+		projectId: projectId,
+		jobId: jobId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) JobCompletionWebhookExecute(r ApiJobCompletionWebhookRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.JobCompletionWebhook")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/projects/id/{projectId}/jobs/{jobId}/completion"
+	localVarPath = strings.Replace(localVarPath, "{"+"projectId"+"}", url.PathEscape(parameterValueToString(r.projectId, "projectId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"jobId"+"}", url.PathEscape(parameterValueToString(r.jobId, "jobId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.jobCompletionWebhookRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiListAdaptersRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+}
+
+func (r ApiListAdaptersRequest) Execute() (*http.Response, error) {
+	return r.ApiService.ListAdaptersExecute(r)
+}
+
+/*
+ListAdapters Method for ListAdapters
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiListAdaptersRequest
+*/
+func (a *DefaultAPIService) ListAdapters(ctx context.Context) ApiListAdaptersRequest {
+	return ApiListAdaptersRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) ListAdaptersExecute(r ApiListAdaptersRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.ListAdapters")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/admin/cloud-adapters"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiListApiKeysRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	organization *string
+	organizationCode *string
+}
+
+func (r ApiListApiKeysRequest) Organization(organization string) ApiListApiKeysRequest {
+	r.organization = &organization
+	return r
+}
+
+func (r ApiListApiKeysRequest) OrganizationCode(organizationCode string) ApiListApiKeysRequest {
+	r.organizationCode = &organizationCode
+	return r
+}
+
+func (r ApiListApiKeysRequest) Execute() (*http.Response, error) {
+	return r.ApiService.ListApiKeysExecute(r)
+}
+
+/*
+ListApiKeys Method for ListApiKeys
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiListApiKeysRequest
+*/
+func (a *DefaultAPIService) ListApiKeys(ctx context.Context) ApiListApiKeysRequest {
+	return ApiListApiKeysRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) ListApiKeysExecute(r ApiListApiKeysRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.ListApiKeys")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/auth/api-keys"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.organization != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "organization", r.organization, "form", "")
+	}
+	if r.organizationCode != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "organization_code", r.organizationCode, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiListAvailableRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+}
+
+func (r ApiListAvailableRequest) Execute() (*http.Response, error) {
+	return r.ApiService.ListAvailableExecute(r)
+}
+
+/*
+ListAvailable Method for ListAvailable
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiListAvailableRequest
+*/
+func (a *DefaultAPIService) ListAvailable(ctx context.Context) ApiListAvailableRequest {
+	return ApiListAvailableRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) ListAvailableExecute(r ApiListAvailableRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.ListAvailable")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/admin/cloud-adapters/available"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiListBundlesRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	status *string
+}
+
+func (r ApiListBundlesRequest) Status(status string) ApiListBundlesRequest {
+	r.status = &status
+	return r
+}
+
+func (r ApiListBundlesRequest) Execute() (*http.Response, error) {
+	return r.ApiService.ListBundlesExecute(r)
+}
+
+/*
+ListBundles Method for ListBundles
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiListBundlesRequest
+*/
+func (a *DefaultAPIService) ListBundles(ctx context.Context) ApiListBundlesRequest {
+	return ApiListBundlesRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) ListBundlesExecute(r ApiListBundlesRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.ListBundles")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/admin/bundles"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.status != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "status", r.status, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiListChargesRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	period *string
+}
+
+func (r ApiListChargesRequest) Period(period string) ApiListChargesRequest {
+	r.period = &period
+	return r
+}
+
+func (r ApiListChargesRequest) Execute() (*http.Response, error) {
+	return r.ApiService.ListChargesExecute(r)
+}
+
+/*
+ListCharges Method for ListCharges
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiListChargesRequest
+*/
+func (a *DefaultAPIService) ListCharges(ctx context.Context) ApiListChargesRequest {
+	return ApiListChargesRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) ListChargesExecute(r ApiListChargesRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.ListCharges")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/admin/marketplace-billing/charges"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.period != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "period", r.period, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiListCliPluginsRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+}
+
+func (r ApiListCliPluginsRequest) Execute() (*http.Response, error) {
+	return r.ApiService.ListCliPluginsExecute(r)
+}
+
+/*
+ListCliPlugins Method for ListCliPlugins
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiListCliPluginsRequest
+*/
+func (a *DefaultAPIService) ListCliPlugins(ctx context.Context) ApiListCliPluginsRequest {
+	return ApiListCliPluginsRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) ListCliPluginsExecute(r ApiListCliPluginsRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.ListCliPlugins")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/admin/bundles/cli-plugins-list"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiListCronJobsRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	namespace *string
+}
+
+func (r ApiListCronJobsRequest) Namespace(namespace string) ApiListCronJobsRequest {
+	r.namespace = &namespace
+	return r
+}
+
+func (r ApiListCronJobsRequest) Execute() (*http.Response, error) {
+	return r.ApiService.ListCronJobsExecute(r)
+}
+
+/*
+ListCronJobs Method for ListCronJobs
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiListCronJobsRequest
+*/
+func (a *DefaultAPIService) ListCronJobs(ctx context.Context) ApiListCronJobsRequest {
+	return ApiListCronJobsRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) ListCronJobsExecute(r ApiListCronJobsRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.ListCronJobs")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/cloud/scheduler/cronjobs"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.namespace != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "namespace", r.namespace, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiListDemosRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+}
+
+func (r ApiListDemosRequest) Execute() (*http.Response, error) {
+	return r.ApiService.ListDemosExecute(r)
+}
+
+/*
+ListDemos Method for ListDemos
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiListDemosRequest
+*/
+func (a *DefaultAPIService) ListDemos(ctx context.Context) ApiListDemosRequest {
+	return ApiListDemosRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) ListDemosExecute(r ApiListDemosRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.ListDemos")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/demo/list"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiListExecutionsRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	limit *int32
+	organizationId *string
+}
+
+func (r ApiListExecutionsRequest) Limit(limit int32) ApiListExecutionsRequest {
+	r.limit = &limit
+	return r
+}
+
+func (r ApiListExecutionsRequest) OrganizationId(organizationId string) ApiListExecutionsRequest {
+	r.organizationId = &organizationId
+	return r
+}
+
+func (r ApiListExecutionsRequest) Execute() (*http.Response, error) {
+	return r.ApiService.ListExecutionsExecute(r)
+}
+
+/*
+ListExecutions Method for ListExecutions
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiListExecutionsRequest
+*/
+func (a *DefaultAPIService) ListExecutions(ctx context.Context) ApiListExecutionsRequest {
+	return ApiListExecutionsRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) ListExecutionsExecute(r ApiListExecutionsRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.ListExecutions")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/agentic/executions"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.limit != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+        var defaultValue int32 = 50
+        parameterAddToHeaderOrQuery(localVarQueryParams, "limit", defaultValue, "form", "")
+        r.limit = &defaultValue
+	}
+	if r.organizationId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "organizationId", r.organizationId, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiListMyAdaptersRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+}
+
+func (r ApiListMyAdaptersRequest) Execute() (*http.Response, error) {
+	return r.ApiService.ListMyAdaptersExecute(r)
+}
+
+/*
+ListMyAdapters Method for ListMyAdapters
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiListMyAdaptersRequest
+*/
+func (a *DefaultAPIService) ListMyAdapters(ctx context.Context) ApiListMyAdaptersRequest {
+	return ApiListMyAdaptersRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) ListMyAdaptersExecute(r ApiListMyAdaptersRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.ListMyAdapters")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/admin/cloud-adapters/mine"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiListPayoutsRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	period *string
+}
+
+func (r ApiListPayoutsRequest) Period(period string) ApiListPayoutsRequest {
+	r.period = &period
+	return r
+}
+
+func (r ApiListPayoutsRequest) Execute() (*http.Response, error) {
+	return r.ApiService.ListPayoutsExecute(r)
+}
+
+/*
+ListPayouts Method for ListPayouts
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiListPayoutsRequest
+*/
+func (a *DefaultAPIService) ListPayouts(ctx context.Context) ApiListPayoutsRequest {
+	return ApiListPayoutsRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) ListPayoutsExecute(r ApiListPayoutsRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.ListPayouts")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/admin/marketplace-billing/payouts"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.period != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "period", r.period, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiListPluginsRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	buildType *string
+}
+
+func (r ApiListPluginsRequest) BuildType(buildType string) ApiListPluginsRequest {
+	r.buildType = &buildType
+	return r
+}
+
+func (r ApiListPluginsRequest) Execute() (*http.Response, error) {
+	return r.ApiService.ListPluginsExecute(r)
+}
+
+/*
+ListPlugins Method for ListPlugins
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiListPluginsRequest
+*/
+func (a *DefaultAPIService) ListPlugins(ctx context.Context) ApiListPluginsRequest {
+	return ApiListPluginsRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) ListPluginsExecute(r ApiListPluginsRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.ListPlugins")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/admin/plugins"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.buildType != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "buildType", r.buildType, "form", "")
+	} else {
+        var defaultValue string = "development"
+        parameterAddToHeaderOrQuery(localVarQueryParams, "buildType", defaultValue, "form", "")
+        r.buildType = &defaultValue
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiListProfilesRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	enabledOnly *bool
+	organizationId *string
+}
+
+func (r ApiListProfilesRequest) EnabledOnly(enabledOnly bool) ApiListProfilesRequest {
+	r.enabledOnly = &enabledOnly
+	return r
+}
+
+func (r ApiListProfilesRequest) OrganizationId(organizationId string) ApiListProfilesRequest {
+	r.organizationId = &organizationId
+	return r
+}
+
+func (r ApiListProfilesRequest) Execute() (*http.Response, error) {
+	return r.ApiService.ListProfilesExecute(r)
+}
+
+/*
+ListProfiles Method for ListProfiles
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiListProfilesRequest
+*/
+func (a *DefaultAPIService) ListProfiles(ctx context.Context) ApiListProfilesRequest {
+	return ApiListProfilesRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) ListProfilesExecute(r ApiListProfilesRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.ListProfiles")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/agentic/profiles"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.enabledOnly != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "enabledOnly", r.enabledOnly, "form", "")
+	} else {
+        var defaultValue bool = false
+        parameterAddToHeaderOrQuery(localVarQueryParams, "enabledOnly", defaultValue, "form", "")
+        r.enabledOnly = &defaultValue
+	}
+	if r.organizationId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "organizationId", r.organizationId, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiListProvidersRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+}
+
+func (r ApiListProvidersRequest) Execute() (*http.Response, error) {
+	return r.ApiService.ListProvidersExecute(r)
+}
+
+/*
+ListProviders Method for ListProviders
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiListProvidersRequest
+*/
+func (a *DefaultAPIService) ListProviders(ctx context.Context) ApiListProvidersRequest {
+	return ApiListProvidersRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) ListProvidersExecute(r ApiListProvidersRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.ListProviders")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/llm/providers"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiListRevenueShareRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	period *string
+}
+
+func (r ApiListRevenueShareRequest) Period(period string) ApiListRevenueShareRequest {
+	r.period = &period
+	return r
+}
+
+func (r ApiListRevenueShareRequest) Execute() (*http.Response, error) {
+	return r.ApiService.ListRevenueShareExecute(r)
+}
+
+/*
+ListRevenueShare Method for ListRevenueShare
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiListRevenueShareRequest
+*/
+func (a *DefaultAPIService) ListRevenueShare(ctx context.Context) ApiListRevenueShareRequest {
+	return ApiListRevenueShareRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) ListRevenueShareExecute(r ApiListRevenueShareRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.ListRevenueShare")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/admin/agency-billing/revenue-share"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.period != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "period", r.period, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiListStagesRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	pluginId *string
+	stageName *string
+	pluginType *string
+	scope *string
+}
+
+func (r ApiListStagesRequest) PluginId(pluginId string) ApiListStagesRequest {
+	r.pluginId = &pluginId
+	return r
+}
+
+func (r ApiListStagesRequest) StageName(stageName string) ApiListStagesRequest {
+	r.stageName = &stageName
+	return r
+}
+
+func (r ApiListStagesRequest) PluginType(pluginType string) ApiListStagesRequest {
+	r.pluginType = &pluginType
+	return r
+}
+
+func (r ApiListStagesRequest) Scope(scope string) ApiListStagesRequest {
+	r.scope = &scope
+	return r
+}
+
+func (r ApiListStagesRequest) Execute() (*http.Response, error) {
+	return r.ApiService.ListStagesExecute(r)
+}
+
+/*
+ListStages Method for ListStages
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiListStagesRequest
+*/
+func (a *DefaultAPIService) ListStages(ctx context.Context) ApiListStagesRequest {
+	return ApiListStagesRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) ListStagesExecute(r ApiListStagesRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.ListStages")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/catalog/stages"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.pluginId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "plugin_id", r.pluginId, "form", "")
+	}
+	if r.stageName != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "stage_name", r.stageName, "form", "")
+	}
+	if r.pluginType != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "plugin_type", r.pluginType, "form", "")
+	}
+	if r.scope != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "scope", r.scope, "form", "")
+	} else {
+        var defaultValue string = "org"
+        parameterAddToHeaderOrQuery(localVarQueryParams, "scope", defaultValue, "form", "")
+        r.scope = &defaultValue
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiListStages1Request struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	category *string
+	type_ *string
+	search *string
+}
+
+func (r ApiListStages1Request) Category(category string) ApiListStages1Request {
+	r.category = &category
+	return r
+}
+
+func (r ApiListStages1Request) Type_(type_ string) ApiListStages1Request {
+	r.type_ = &type_
+	return r
+}
+
+func (r ApiListStages1Request) Search(search string) ApiListStages1Request {
+	r.search = &search
+	return r
+}
+
+func (r ApiListStages1Request) Execute() (*http.Response, error) {
+	return r.ApiService.ListStages1Execute(r)
+}
+
+/*
+ListStages1 Method for ListStages1
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiListStages1Request
+*/
+func (a *DefaultAPIService) ListStages1(ctx context.Context) ApiListStages1Request {
+	return ApiListStages1Request{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) ListStages1Execute(r ApiListStages1Request) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.ListStages1")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/manifest/stages"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.category != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "category", r.category, "form", "")
+	}
+	if r.type_ != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "type", r.type_, "form", "")
+	}
+	if r.search != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "search", r.search, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiListTablesRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	catalog *string
+	schema *string
+}
+
+func (r ApiListTablesRequest) Catalog(catalog string) ApiListTablesRequest {
+	r.catalog = &catalog
+	return r
+}
+
+func (r ApiListTablesRequest) Schema(schema string) ApiListTablesRequest {
+	r.schema = &schema
+	return r
+}
+
+func (r ApiListTablesRequest) Execute() (*http.Response, error) {
+	return r.ApiService.ListTablesExecute(r)
+}
+
+/*
+ListTables Method for ListTables
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiListTablesRequest
+*/
+func (a *DefaultAPIService) ListTables(ctx context.Context) ApiListTablesRequest {
+	return ApiListTablesRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) ListTablesExecute(r ApiListTablesRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.ListTables")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/datasets/query/tables"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.catalog != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "catalog", r.catalog, "form", "")
+	} else {
+        var defaultValue string = "minio"
+        parameterAddToHeaderOrQuery(localVarQueryParams, "catalog", defaultValue, "form", "")
+        r.catalog = &defaultValue
+	}
+	if r.schema != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "schema", r.schema, "form", "")
+	} else {
+        var defaultValue string = "default"
+        parameterAddToHeaderOrQuery(localVarQueryParams, "schema", defaultValue, "form", "")
+        r.schema = &defaultValue
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiMarkFailedRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	invoiceId string
+	reason *string
+}
+
+func (r ApiMarkFailedRequest) Reason(reason string) ApiMarkFailedRequest {
+	r.reason = &reason
+	return r
+}
+
+func (r ApiMarkFailedRequest) Execute() (*http.Response, error) {
+	return r.ApiService.MarkFailedExecute(r)
+}
+
+/*
+MarkFailed Method for MarkFailed
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param invoiceId
+ @return ApiMarkFailedRequest
+*/
+func (a *DefaultAPIService) MarkFailed(ctx context.Context, invoiceId string) ApiMarkFailedRequest {
+	return ApiMarkFailedRequest{
+		ApiService: a,
+		ctx: ctx,
+		invoiceId: invoiceId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) MarkFailedExecute(r ApiMarkFailedRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.MarkFailed")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/admin/marketplace-billing/charges/by-invoice/{invoiceId}/mark-failed"
+	localVarPath = strings.Replace(localVarPath, "{"+"invoiceId"+"}", url.PathEscape(parameterValueToString(r.invoiceId, "invoiceId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.reason != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "reason", r.reason, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiMarkPaidRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	invoiceId string
+}
+
+func (r ApiMarkPaidRequest) Execute() (*http.Response, error) {
+	return r.ApiService.MarkPaidExecute(r)
+}
+
+/*
+MarkPaid Method for MarkPaid
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param invoiceId
+ @return ApiMarkPaidRequest
+*/
+func (a *DefaultAPIService) MarkPaid(ctx context.Context, invoiceId string) ApiMarkPaidRequest {
+	return ApiMarkPaidRequest{
+		ApiService: a,
+		ctx: ctx,
+		invoiceId: invoiceId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) MarkPaidExecute(r ApiMarkPaidRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.MarkPaid")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/admin/marketplace-billing/charges/by-invoice/{invoiceId}/mark-paid"
+	localVarPath = strings.Replace(localVarPath, "{"+"invoiceId"+"}", url.PathEscape(parameterValueToString(r.invoiceId, "invoiceId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiMarkZombieTasksRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	timeoutHours *int64
+}
+
+func (r ApiMarkZombieTasksRequest) TimeoutHours(timeoutHours int64) ApiMarkZombieTasksRequest {
+	r.timeoutHours = &timeoutHours
+	return r
+}
+
+func (r ApiMarkZombieTasksRequest) Execute() (*http.Response, error) {
+	return r.ApiService.MarkZombieTasksExecute(r)
+}
+
+/*
+MarkZombieTasks Method for MarkZombieTasks
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiMarkZombieTasksRequest
+*/
+func (a *DefaultAPIService) MarkZombieTasks(ctx context.Context) ApiMarkZombieTasksRequest {
+	return ApiMarkZombieTasksRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) MarkZombieTasksExecute(r ApiMarkZombieTasksRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.MarkZombieTasks")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/projects/admin/tasks/mark-zombies"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.timeoutHours != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "timeoutHours", r.timeoutHours, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiProbeAdapterRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	providerKey string
+}
+
+func (r ApiProbeAdapterRequest) Execute() (*http.Response, error) {
+	return r.ApiService.ProbeAdapterExecute(r)
+}
+
+/*
+ProbeAdapter Method for ProbeAdapter
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param providerKey
+ @return ApiProbeAdapterRequest
+*/
+func (a *DefaultAPIService) ProbeAdapter(ctx context.Context, providerKey string) ApiProbeAdapterRequest {
+	return ApiProbeAdapterRequest{
+		ApiService: a,
+		ctx: ctx,
+		providerKey: providerKey,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) ProbeAdapterExecute(r ApiProbeAdapterRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.ProbeAdapter")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/admin/cloud-adapters/{providerKey}/probe"
+	localVarPath = strings.Replace(localVarPath, "{"+"providerKey"+"}", url.PathEscape(parameterValueToString(r.providerKey, "providerKey")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiProcessYamlExtensionsRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	requestBody *map[string]map[string]interface{}
+}
+
+func (r ApiProcessYamlExtensionsRequest) RequestBody(requestBody map[string]map[string]interface{}) ApiProcessYamlExtensionsRequest {
+	r.requestBody = &requestBody
+	return r
+}
+
+func (r ApiProcessYamlExtensionsRequest) Execute() (*http.Response, error) {
+	return r.ApiService.ProcessYamlExtensionsExecute(r)
+}
+
+/*
+ProcessYamlExtensions Method for ProcessYamlExtensions
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiProcessYamlExtensionsRequest
+*/
+func (a *DefaultAPIService) ProcessYamlExtensions(ctx context.Context) ApiProcessYamlExtensionsRequest {
+	return ApiProcessYamlExtensionsRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) ProcessYamlExtensionsExecute(r ApiProcessYamlExtensionsRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.ProcessYamlExtensions")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/python-extensions/process-yaml"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.requestBody
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
 type ApiPublishModelRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
-	xRapidAPIUser *string
 	modelPublishRequest *ModelPublishRequest
-}
-
-func (r ApiPublishModelRequest) XRapidAPIUser(xRapidAPIUser string) ApiPublishModelRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiPublishModelRequest) ModelPublishRequest(modelPublishRequest ModelPublishRequest) ApiPublishModelRequest {
@@ -5571,11 +17929,865 @@ func (a *DefaultAPIService) PublishModelExecute(r ApiPublishModelRequest) (*http
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
-	}
 	// body params
 	localVarPostBody = r.modelPublishRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiQueryDatasetByTaskRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	taskId string
+	prestoQueryRequest *PrestoQueryRequest
+}
+
+func (r ApiQueryDatasetByTaskRequest) PrestoQueryRequest(prestoQueryRequest PrestoQueryRequest) ApiQueryDatasetByTaskRequest {
+	r.prestoQueryRequest = &prestoQueryRequest
+	return r
+}
+
+func (r ApiQueryDatasetByTaskRequest) Execute() (*http.Response, error) {
+	return r.ApiService.QueryDatasetByTaskExecute(r)
+}
+
+/*
+QueryDatasetByTask Method for QueryDatasetByTask
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param taskId
+ @return ApiQueryDatasetByTaskRequest
+*/
+func (a *DefaultAPIService) QueryDatasetByTask(ctx context.Context, taskId string) ApiQueryDatasetByTaskRequest {
+	return ApiQueryDatasetByTaskRequest{
+		ApiService: a,
+		ctx: ctx,
+		taskId: taskId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) QueryDatasetByTaskExecute(r ApiQueryDatasetByTaskRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.QueryDatasetByTask")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/datasets/query/task/{taskId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"taskId"+"}", url.PathEscape(parameterValueToString(r.taskId, "taskId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.prestoQueryRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiQueryImagesRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	country string
+	organizationCode *string
+	requestBody *map[string]map[string]interface{}
+}
+
+func (r ApiQueryImagesRequest) OrganizationCode(organizationCode string) ApiQueryImagesRequest {
+	r.organizationCode = &organizationCode
+	return r
+}
+
+func (r ApiQueryImagesRequest) RequestBody(requestBody map[string]map[string]interface{}) ApiQueryImagesRequest {
+	r.requestBody = &requestBody
+	return r
+}
+
+func (r ApiQueryImagesRequest) Execute() (*http.Response, error) {
+	return r.ApiService.QueryImagesExecute(r)
+}
+
+/*
+QueryImages Method for QueryImages
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param country
+ @return ApiQueryImagesRequest
+*/
+func (a *DefaultAPIService) QueryImages(ctx context.Context, country string) ApiQueryImagesRequest {
+	return ApiQueryImagesRequest{
+		ApiService: a,
+		ctx: ctx,
+		country: country,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) QueryImagesExecute(r ApiQueryImagesRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.QueryImages")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/ean-image-sourcing/{country}/query"
+	localVarPath = strings.Replace(localVarPath, "{"+"country"+"}", url.PathEscape(parameterValueToString(r.country, "country")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.organizationCode != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "organization_code", r.organizationCode, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.requestBody
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiRefreshOrganizationsBillingStatusRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+}
+
+func (r ApiRefreshOrganizationsBillingStatusRequest) Execute() (*http.Response, error) {
+	return r.ApiService.RefreshOrganizationsBillingStatusExecute(r)
+}
+
+/*
+RefreshOrganizationsBillingStatus Method for RefreshOrganizationsBillingStatus
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiRefreshOrganizationsBillingStatusRequest
+*/
+func (a *DefaultAPIService) RefreshOrganizationsBillingStatus(ctx context.Context) ApiRefreshOrganizationsBillingStatusRequest {
+	return ApiRefreshOrganizationsBillingStatusRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) RefreshOrganizationsBillingStatusExecute(r ApiRefreshOrganizationsBillingStatusRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.RefreshOrganizationsBillingStatus")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/auth/organizations/billing/refresh"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiRefundRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	id int64
+	amountCents *int64
+	reason *string
+}
+
+func (r ApiRefundRequest) AmountCents(amountCents int64) ApiRefundRequest {
+	r.amountCents = &amountCents
+	return r
+}
+
+func (r ApiRefundRequest) Reason(reason string) ApiRefundRequest {
+	r.reason = &reason
+	return r
+}
+
+func (r ApiRefundRequest) Execute() (*http.Response, error) {
+	return r.ApiService.RefundExecute(r)
+}
+
+/*
+Refund Method for Refund
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id
+ @return ApiRefundRequest
+*/
+func (a *DefaultAPIService) Refund(ctx context.Context, id int64) ApiRefundRequest {
+	return ApiRefundRequest{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) RefundExecute(r ApiRefundRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.Refund")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/admin/marketplace-billing/charges/{id}/refund"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.amountCents != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "amountCents", r.amountCents, "form", "")
+	}
+	if r.reason != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "reason", r.reason, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiRegisterPluginRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	pluginInstallation *PluginInstallation
+}
+
+func (r ApiRegisterPluginRequest) PluginInstallation(pluginInstallation PluginInstallation) ApiRegisterPluginRequest {
+	r.pluginInstallation = &pluginInstallation
+	return r
+}
+
+func (r ApiRegisterPluginRequest) Execute() (*http.Response, error) {
+	return r.ApiService.RegisterPluginExecute(r)
+}
+
+/*
+RegisterPlugin Method for RegisterPlugin
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiRegisterPluginRequest
+*/
+func (a *DefaultAPIService) RegisterPlugin(ctx context.Context) ApiRegisterPluginRequest {
+	return ApiRegisterPluginRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) RegisterPluginExecute(r ApiRegisterPluginRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.RegisterPlugin")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/admin/plugin-installations"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.pluginInstallation
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiRegisterPythonExtensionRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	requestBody *map[string]map[string]interface{}
+}
+
+func (r ApiRegisterPythonExtensionRequest) RequestBody(requestBody map[string]map[string]interface{}) ApiRegisterPythonExtensionRequest {
+	r.requestBody = &requestBody
+	return r
+}
+
+func (r ApiRegisterPythonExtensionRequest) Execute() (*http.Response, error) {
+	return r.ApiService.RegisterPythonExtensionExecute(r)
+}
+
+/*
+RegisterPythonExtension Method for RegisterPythonExtension
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiRegisterPythonExtensionRequest
+*/
+func (a *DefaultAPIService) RegisterPythonExtension(ctx context.Context) ApiRegisterPythonExtensionRequest {
+	return ApiRegisterPythonExtensionRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) RegisterPythonExtensionExecute(r ApiRegisterPythonExtensionRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.RegisterPythonExtension")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/python-extensions/python-extensions/register"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.requestBody
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiRejectBundleRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	id int64
+	requestBody *map[string]map[string]interface{}
+}
+
+func (r ApiRejectBundleRequest) RequestBody(requestBody map[string]map[string]interface{}) ApiRejectBundleRequest {
+	r.requestBody = &requestBody
+	return r
+}
+
+func (r ApiRejectBundleRequest) Execute() (*http.Response, error) {
+	return r.ApiService.RejectBundleExecute(r)
+}
+
+/*
+RejectBundle Method for RejectBundle
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id
+ @return ApiRejectBundleRequest
+*/
+func (a *DefaultAPIService) RejectBundle(ctx context.Context, id int64) ApiRejectBundleRequest {
+	return ApiRejectBundleRequest{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) RejectBundleExecute(r ApiRejectBundleRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.RejectBundle")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/admin/bundles/{id}/reject"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.requestBody
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiReloadPipelinesRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+}
+
+func (r ApiReloadPipelinesRequest) Execute() (*http.Response, error) {
+	return r.ApiService.ReloadPipelinesExecute(r)
+}
+
+/*
+ReloadPipelines Method for ReloadPipelines
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiReloadPipelinesRequest
+*/
+func (a *DefaultAPIService) ReloadPipelines(ctx context.Context) ApiReloadPipelinesRequest {
+	return ApiReloadPipelinesRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) ReloadPipelinesExecute(r ApiReloadPipelinesRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.ReloadPipelines")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/demo/reload-pipelines"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiReloadPluginsRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+}
+
+func (r ApiReloadPluginsRequest) Execute() (*http.Response, error) {
+	return r.ApiService.ReloadPluginsExecute(r)
+}
+
+/*
+ReloadPlugins Method for ReloadPlugins
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiReloadPluginsRequest
+*/
+func (a *DefaultAPIService) ReloadPlugins(ctx context.Context) ApiReloadPluginsRequest {
+	return ApiReloadPluginsRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) ReloadPluginsExecute(r ApiReloadPluginsRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.ReloadPlugins")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/admin/plugin-installations/reload"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -5609,12 +18821,6 @@ type ApiRemoveJobFromProjectRequest struct {
 	ApiService *DefaultAPIService
 	projectId string
 	jobId string
-	xRapidAPIUser *string
-}
-
-func (r ApiRemoveJobFromProjectRequest) XRapidAPIUser(xRapidAPIUser string) ApiRemoveJobFromProjectRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiRemoveJobFromProjectRequest) Execute() (*http.Response, error) {
@@ -5676,8 +18882,1286 @@ func (a *DefaultAPIService) RemoveJobFromProjectExecute(r ApiRemoveJobFromProjec
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiReportHealthRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	providerKey string
+	requestBody *map[string]map[string]interface{}
+}
+
+func (r ApiReportHealthRequest) RequestBody(requestBody map[string]map[string]interface{}) ApiReportHealthRequest {
+	r.requestBody = &requestBody
+	return r
+}
+
+func (r ApiReportHealthRequest) Execute() (*http.Response, error) {
+	return r.ApiService.ReportHealthExecute(r)
+}
+
+/*
+ReportHealth Method for ReportHealth
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param providerKey
+ @return ApiReportHealthRequest
+*/
+func (a *DefaultAPIService) ReportHealth(ctx context.Context, providerKey string) ApiReportHealthRequest {
+	return ApiReportHealthRequest{
+		ApiService: a,
+		ctx: ctx,
+		providerKey: providerKey,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) ReportHealthExecute(r ApiReportHealthRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.ReportHealth")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/admin/cloud-adapters/{providerKey}/health"
+	localVarPath = strings.Replace(localVarPath, "{"+"providerKey"+"}", url.PathEscape(parameterValueToString(r.providerKey, "providerKey")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.requestBody
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiRescheduleEventsRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	rescheduleEventsRequest *RescheduleEventsRequest
+}
+
+func (r ApiRescheduleEventsRequest) RescheduleEventsRequest(rescheduleEventsRequest RescheduleEventsRequest) ApiRescheduleEventsRequest {
+	r.rescheduleEventsRequest = &rescheduleEventsRequest
+	return r
+}
+
+func (r ApiRescheduleEventsRequest) Execute() (*http.Response, error) {
+	return r.ApiService.RescheduleEventsExecute(r)
+}
+
+/*
+RescheduleEvents Method for RescheduleEvents
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiRescheduleEventsRequest
+*/
+func (a *DefaultAPIService) RescheduleEvents(ctx context.Context) ApiRescheduleEventsRequest {
+	return ApiRescheduleEventsRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) RescheduleEventsExecute(r ApiRescheduleEventsRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.RescheduleEvents")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/streaming/reschedule-events"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.rescheduleEventsRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiRollupRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	day *string
+}
+
+func (r ApiRollupRequest) Day(day string) ApiRollupRequest {
+	r.day = &day
+	return r
+}
+
+func (r ApiRollupRequest) Execute() (*http.Response, error) {
+	return r.ApiService.RollupExecute(r)
+}
+
+/*
+Rollup Method for Rollup
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiRollupRequest
+*/
+func (a *DefaultAPIService) Rollup(ctx context.Context) ApiRollupRequest {
+	return ApiRollupRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) RollupExecute(r ApiRollupRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.Rollup")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/admin/stage-usage/rollup"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.day != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "day", r.day, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiRunChargesRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	period *string
+	dryRun *bool
+}
+
+func (r ApiRunChargesRequest) Period(period string) ApiRunChargesRequest {
+	r.period = &period
+	return r
+}
+
+func (r ApiRunChargesRequest) DryRun(dryRun bool) ApiRunChargesRequest {
+	r.dryRun = &dryRun
+	return r
+}
+
+func (r ApiRunChargesRequest) Execute() (*http.Response, error) {
+	return r.ApiService.RunChargesExecute(r)
+}
+
+/*
+RunCharges Method for RunCharges
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiRunChargesRequest
+*/
+func (a *DefaultAPIService) RunCharges(ctx context.Context) ApiRunChargesRequest {
+	return ApiRunChargesRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) RunChargesExecute(r ApiRunChargesRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.RunCharges")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/admin/marketplace-billing/run-charges"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.period != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "period", r.period, "form", "")
+	}
+	if r.dryRun != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "dryRun", r.dryRun, "form", "")
+	} else {
+        var defaultValue bool = false
+        parameterAddToHeaderOrQuery(localVarQueryParams, "dryRun", defaultValue, "form", "")
+        r.dryRun = &defaultValue
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiRunHealthCheckRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+}
+
+func (r ApiRunHealthCheckRequest) Execute() (*http.Response, error) {
+	return r.ApiService.RunHealthCheckExecute(r)
+}
+
+/*
+RunHealthCheck Method for RunHealthCheck
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiRunHealthCheckRequest
+*/
+func (a *DefaultAPIService) RunHealthCheck(ctx context.Context) ApiRunHealthCheckRequest {
+	return ApiRunHealthCheckRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) RunHealthCheckExecute(r ApiRunHealthCheckRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.RunHealthCheck")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/admin/cloud-adapters/run-health-check"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiRunOrchestrationChargesRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	period *string
+	dryRun *bool
+}
+
+func (r ApiRunOrchestrationChargesRequest) Period(period string) ApiRunOrchestrationChargesRequest {
+	r.period = &period
+	return r
+}
+
+func (r ApiRunOrchestrationChargesRequest) DryRun(dryRun bool) ApiRunOrchestrationChargesRequest {
+	r.dryRun = &dryRun
+	return r
+}
+
+func (r ApiRunOrchestrationChargesRequest) Execute() (*http.Response, error) {
+	return r.ApiService.RunOrchestrationChargesExecute(r)
+}
+
+/*
+RunOrchestrationCharges Method for RunOrchestrationCharges
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiRunOrchestrationChargesRequest
+*/
+func (a *DefaultAPIService) RunOrchestrationCharges(ctx context.Context) ApiRunOrchestrationChargesRequest {
+	return ApiRunOrchestrationChargesRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) RunOrchestrationChargesExecute(r ApiRunOrchestrationChargesRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.RunOrchestrationCharges")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/admin/marketplace-billing/run-orchestration-charges"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.period != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "period", r.period, "form", "")
+	}
+	if r.dryRun != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "dryRun", r.dryRun, "form", "")
+	} else {
+        var defaultValue bool = false
+        parameterAddToHeaderOrQuery(localVarQueryParams, "dryRun", defaultValue, "form", "")
+        r.dryRun = &defaultValue
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiRunPayoutsRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	period *string
+	dryRun *bool
+}
+
+func (r ApiRunPayoutsRequest) Period(period string) ApiRunPayoutsRequest {
+	r.period = &period
+	return r
+}
+
+func (r ApiRunPayoutsRequest) DryRun(dryRun bool) ApiRunPayoutsRequest {
+	r.dryRun = &dryRun
+	return r
+}
+
+func (r ApiRunPayoutsRequest) Execute() (*http.Response, error) {
+	return r.ApiService.RunPayoutsExecute(r)
+}
+
+/*
+RunPayouts Method for RunPayouts
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiRunPayoutsRequest
+*/
+func (a *DefaultAPIService) RunPayouts(ctx context.Context) ApiRunPayoutsRequest {
+	return ApiRunPayoutsRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) RunPayoutsExecute(r ApiRunPayoutsRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.RunPayouts")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/admin/marketplace-billing/run-payouts"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.period != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "period", r.period, "form", "")
+	}
+	if r.dryRun != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "dryRun", r.dryRun, "form", "")
+	} else {
+        var defaultValue bool = false
+        parameterAddToHeaderOrQuery(localVarQueryParams, "dryRun", defaultValue, "form", "")
+        r.dryRun = &defaultValue
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiRunProviderEndpointChargesRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	period *string
+	dryRun *bool
+}
+
+func (r ApiRunProviderEndpointChargesRequest) Period(period string) ApiRunProviderEndpointChargesRequest {
+	r.period = &period
+	return r
+}
+
+func (r ApiRunProviderEndpointChargesRequest) DryRun(dryRun bool) ApiRunProviderEndpointChargesRequest {
+	r.dryRun = &dryRun
+	return r
+}
+
+func (r ApiRunProviderEndpointChargesRequest) Execute() (*http.Response, error) {
+	return r.ApiService.RunProviderEndpointChargesExecute(r)
+}
+
+/*
+RunProviderEndpointCharges Method for RunProviderEndpointCharges
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiRunProviderEndpointChargesRequest
+*/
+func (a *DefaultAPIService) RunProviderEndpointCharges(ctx context.Context) ApiRunProviderEndpointChargesRequest {
+	return ApiRunProviderEndpointChargesRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) RunProviderEndpointChargesExecute(r ApiRunProviderEndpointChargesRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.RunProviderEndpointCharges")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/admin/marketplace-billing/run-provider-endpoint-charges"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.period != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "period", r.period, "form", "")
+	}
+	if r.dryRun != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "dryRun", r.dryRun, "form", "")
+	} else {
+        var defaultValue bool = false
+        parameterAddToHeaderOrQuery(localVarQueryParams, "dryRun", defaultValue, "form", "")
+        r.dryRun = &defaultValue
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiRunRevenueShareRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	period *string
+	dryRun *bool
+}
+
+func (r ApiRunRevenueShareRequest) Period(period string) ApiRunRevenueShareRequest {
+	r.period = &period
+	return r
+}
+
+func (r ApiRunRevenueShareRequest) DryRun(dryRun bool) ApiRunRevenueShareRequest {
+	r.dryRun = &dryRun
+	return r
+}
+
+func (r ApiRunRevenueShareRequest) Execute() (*http.Response, error) {
+	return r.ApiService.RunRevenueShareExecute(r)
+}
+
+/*
+RunRevenueShare Method for RunRevenueShare
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiRunRevenueShareRequest
+*/
+func (a *DefaultAPIService) RunRevenueShare(ctx context.Context) ApiRunRevenueShareRequest {
+	return ApiRunRevenueShareRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) RunRevenueShareExecute(r ApiRunRevenueShareRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.RunRevenueShare")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/admin/agency-billing/run-revenue-share"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.period != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "period", r.period, "form", "")
+	}
+	if r.dryRun != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "dryRun", r.dryRun, "form", "")
+	} else {
+        var defaultValue bool = false
+        parameterAddToHeaderOrQuery(localVarQueryParams, "dryRun", defaultValue, "form", "")
+        r.dryRun = &defaultValue
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiSaveGeneratedPipelineRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	requestBody *map[string]map[string]interface{}
+}
+
+func (r ApiSaveGeneratedPipelineRequest) RequestBody(requestBody map[string]map[string]interface{}) ApiSaveGeneratedPipelineRequest {
+	r.requestBody = &requestBody
+	return r
+}
+
+func (r ApiSaveGeneratedPipelineRequest) Execute() (*http.Response, error) {
+	return r.ApiService.SaveGeneratedPipelineExecute(r)
+}
+
+/*
+SaveGeneratedPipeline Method for SaveGeneratedPipeline
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiSaveGeneratedPipelineRequest
+*/
+func (a *DefaultAPIService) SaveGeneratedPipeline(ctx context.Context) ApiSaveGeneratedPipelineRequest {
+	return ApiSaveGeneratedPipelineRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) SaveGeneratedPipelineExecute(r ApiSaveGeneratedPipelineRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.SaveGeneratedPipeline")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/demo/save-generated-pipeline"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.requestBody
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiScheduleJobRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	country string
+	requestBody *map[string]map[string]interface{}
+}
+
+func (r ApiScheduleJobRequest) RequestBody(requestBody map[string]map[string]interface{}) ApiScheduleJobRequest {
+	r.requestBody = &requestBody
+	return r
+}
+
+func (r ApiScheduleJobRequest) Execute() (*http.Response, error) {
+	return r.ApiService.ScheduleJobExecute(r)
+}
+
+/*
+ScheduleJob Method for ScheduleJob
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param country
+ @return ApiScheduleJobRequest
+*/
+func (a *DefaultAPIService) ScheduleJob(ctx context.Context, country string) ApiScheduleJobRequest {
+	return ApiScheduleJobRequest{
+		ApiService: a,
+		ctx: ctx,
+		country: country,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) ScheduleJobExecute(r ApiScheduleJobRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.ScheduleJob")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/ean-image-sourcing/{country}/schedule"
+	localVarPath = strings.Replace(localVarPath, "{"+"country"+"}", url.PathEscape(parameterValueToString(r.country, "country")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.requestBody
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiServeDemoAppRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+}
+
+func (r ApiServeDemoAppRequest) Execute() (*http.Response, error) {
+	return r.ApiService.ServeDemoAppExecute(r)
+}
+
+/*
+ServeDemoApp Method for ServeDemoApp
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiServeDemoAppRequest
+*/
+func (a *DefaultAPIService) ServeDemoApp(ctx context.Context) ApiServeDemoAppRequest {
+	return ApiServeDemoAppRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) ServeDemoAppExecute(r ApiServeDemoAppRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.ServeDemoApp")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/demo/app"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiServeStaticFileRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	filename string
+}
+
+func (r ApiServeStaticFileRequest) Execute() (*http.Response, error) {
+	return r.ApiService.ServeStaticFileExecute(r)
+}
+
+/*
+ServeStaticFile Method for ServeStaticFile
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param filename
+ @return ApiServeStaticFileRequest
+*/
+func (a *DefaultAPIService) ServeStaticFile(ctx context.Context, filename string) ApiServeStaticFileRequest {
+	return ApiServeStaticFileRequest{
+		ApiService: a,
+		ctx: ctx,
+		filename: filename,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) ServeStaticFileExecute(r ApiServeStaticFileRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.ServeStaticFile")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/demo/app/{filename}"
+	localVarPath = strings.Replace(localVarPath, "{"+"filename"+"}", url.PathEscape(parameterValueToString(r.filename, "filename")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -5711,13 +20195,7 @@ type ApiSetProjectScheduleRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
 	projectId string
-	xRapidAPIUser *string
 	projectScheduleRequest *ProjectScheduleRequest
-}
-
-func (r ApiSetProjectScheduleRequest) XRapidAPIUser(xRapidAPIUser string) ApiSetProjectScheduleRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiSetProjectScheduleRequest) ProjectScheduleRequest(projectScheduleRequest ProjectScheduleRequest) ApiSetProjectScheduleRequest {
@@ -5781,11 +20259,102 @@ func (a *DefaultAPIService) SetProjectScheduleExecute(r ApiSetProjectScheduleReq
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
-	}
 	// body params
 	localVarPostBody = r.projectScheduleRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiStartRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	startRequest *StartRequest
+}
+
+func (r ApiStartRequest) StartRequest(startRequest StartRequest) ApiStartRequest {
+	r.startRequest = &startRequest
+	return r
+}
+
+func (r ApiStartRequest) Execute() (*http.Response, error) {
+	return r.ApiService.StartExecute(r)
+}
+
+/*
+Start Method for Start
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiStartRequest
+*/
+func (a *DefaultAPIService) Start(ctx context.Context) ApiStartRequest {
+	return ApiStartRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) StartExecute(r ApiStartRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.Start")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/agentic/start"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.startRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -5817,12 +20386,6 @@ func (a *DefaultAPIService) SetProjectScheduleExecute(r ApiSetProjectScheduleReq
 type ApiStartExportAllRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
-	xRapidAPIUser *string
-}
-
-func (r ApiStartExportAllRequest) XRapidAPIUser(xRapidAPIUser string) ApiStartExportAllRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiStartExportAllRequest) Execute() (*http.Response, error) {
@@ -5878,9 +20441,194 @@ func (a *DefaultAPIService) StartExportAllExecute(r ApiStartExportAllRequest) (*
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
 	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiStartExportOrganizationRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	organizationId string
+}
+
+func (r ApiStartExportOrganizationRequest) Execute() (*http.Response, error) {
+	return r.ApiService.StartExportOrganizationExecute(r)
+}
+
+/*
+StartExportOrganization Method for StartExportOrganization
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param organizationId
+ @return ApiStartExportOrganizationRequest
+*/
+func (a *DefaultAPIService) StartExportOrganization(ctx context.Context, organizationId string) ApiStartExportOrganizationRequest {
+	return ApiStartExportOrganizationRequest{
+		ApiService: a,
+		ctx: ctx,
+		organizationId: organizationId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) StartExportOrganizationExecute(r ApiStartExportOrganizationRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.StartExportOrganization")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/package/export/organization/{organizationId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"organizationId"+"}", url.PathEscape(parameterValueToString(r.organizationId, "organizationId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiStartExportOrganizationWithOptionsRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	organizationId string
+	exportOptionsDto *ExportOptionsDto
+}
+
+func (r ApiStartExportOrganizationWithOptionsRequest) ExportOptionsDto(exportOptionsDto ExportOptionsDto) ApiStartExportOrganizationWithOptionsRequest {
+	r.exportOptionsDto = &exportOptionsDto
+	return r
+}
+
+func (r ApiStartExportOrganizationWithOptionsRequest) Execute() (*http.Response, error) {
+	return r.ApiService.StartExportOrganizationWithOptionsExecute(r)
+}
+
+/*
+StartExportOrganizationWithOptions Method for StartExportOrganizationWithOptions
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param organizationId
+ @return ApiStartExportOrganizationWithOptionsRequest
+*/
+func (a *DefaultAPIService) StartExportOrganizationWithOptions(ctx context.Context, organizationId string) ApiStartExportOrganizationWithOptionsRequest {
+	return ApiStartExportOrganizationWithOptionsRequest{
+		ApiService: a,
+		ctx: ctx,
+		organizationId: organizationId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) StartExportOrganizationWithOptionsExecute(r ApiStartExportOrganizationWithOptionsRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.StartExportOrganizationWithOptions")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/package/export/organization/{organizationId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"organizationId"+"}", url.PathEscape(parameterValueToString(r.organizationId, "organizationId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.exportOptionsDto
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -5913,12 +20661,6 @@ type ApiStartExportProjectRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
 	projectId string
-	xRapidAPIUser *string
-}
-
-func (r ApiStartExportProjectRequest) XRapidAPIUser(xRapidAPIUser string) ApiStartExportProjectRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiStartExportProjectRequest) Execute() (*http.Response, error) {
@@ -5977,9 +20719,6 @@ func (a *DefaultAPIService) StartExportProjectExecute(r ApiStartExportProjectReq
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
-	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -6011,12 +20750,6 @@ func (a *DefaultAPIService) StartExportProjectExecute(r ApiStartExportProjectReq
 type ApiStartImportAllRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
-	xRapidAPIUser *string
-}
-
-func (r ApiStartImportAllRequest) XRapidAPIUser(xRapidAPIUser string) ApiStartImportAllRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiStartImportAllRequest) Execute() (*http.Response, error) {
@@ -6072,9 +20805,297 @@ func (a *DefaultAPIService) StartImportAllExecute(r ApiStartImportAllRequest) (*
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
 	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiStartImportAllWithOptionsRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	importOptionsDto *ImportOptionsDto
+}
+
+func (r ApiStartImportAllWithOptionsRequest) ImportOptionsDto(importOptionsDto ImportOptionsDto) ApiStartImportAllWithOptionsRequest {
+	r.importOptionsDto = &importOptionsDto
+	return r
+}
+
+func (r ApiStartImportAllWithOptionsRequest) Execute() (*http.Response, error) {
+	return r.ApiService.StartImportAllWithOptionsExecute(r)
+}
+
+/*
+StartImportAllWithOptions Method for StartImportAllWithOptions
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiStartImportAllWithOptionsRequest
+*/
+func (a *DefaultAPIService) StartImportAllWithOptions(ctx context.Context) ApiStartImportAllWithOptionsRequest {
+	return ApiStartImportAllWithOptionsRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) StartImportAllWithOptionsExecute(r ApiStartImportAllWithOptionsRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.StartImportAllWithOptions")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/package/import/all"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.importOptionsDto
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiStartImportOrganizationRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	organizationId string
+}
+
+func (r ApiStartImportOrganizationRequest) Execute() (*http.Response, error) {
+	return r.ApiService.StartImportOrganizationExecute(r)
+}
+
+/*
+StartImportOrganization Method for StartImportOrganization
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param organizationId
+ @return ApiStartImportOrganizationRequest
+*/
+func (a *DefaultAPIService) StartImportOrganization(ctx context.Context, organizationId string) ApiStartImportOrganizationRequest {
+	return ApiStartImportOrganizationRequest{
+		ApiService: a,
+		ctx: ctx,
+		organizationId: organizationId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) StartImportOrganizationExecute(r ApiStartImportOrganizationRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.StartImportOrganization")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/package/import/organization/{organizationId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"organizationId"+"}", url.PathEscape(parameterValueToString(r.organizationId, "organizationId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiStartImportOrganizationWithOptionsRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	organizationId string
+	filename *string
+	importOptionsDto *ImportOptionsDto
+}
+
+func (r ApiStartImportOrganizationWithOptionsRequest) Filename(filename string) ApiStartImportOrganizationWithOptionsRequest {
+	r.filename = &filename
+	return r
+}
+
+func (r ApiStartImportOrganizationWithOptionsRequest) ImportOptionsDto(importOptionsDto ImportOptionsDto) ApiStartImportOrganizationWithOptionsRequest {
+	r.importOptionsDto = &importOptionsDto
+	return r
+}
+
+func (r ApiStartImportOrganizationWithOptionsRequest) Execute() (*http.Response, error) {
+	return r.ApiService.StartImportOrganizationWithOptionsExecute(r)
+}
+
+/*
+StartImportOrganizationWithOptions Method for StartImportOrganizationWithOptions
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param organizationId
+ @return ApiStartImportOrganizationWithOptionsRequest
+*/
+func (a *DefaultAPIService) StartImportOrganizationWithOptions(ctx context.Context, organizationId string) ApiStartImportOrganizationWithOptionsRequest {
+	return ApiStartImportOrganizationWithOptionsRequest{
+		ApiService: a,
+		ctx: ctx,
+		organizationId: organizationId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) StartImportOrganizationWithOptionsExecute(r ApiStartImportOrganizationWithOptionsRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.StartImportOrganizationWithOptions")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/package/import/organization/{organizationId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"organizationId"+"}", url.PathEscape(parameterValueToString(r.organizationId, "organizationId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.filename != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filename", r.filename, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.importOptionsDto
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -6107,12 +21128,6 @@ type ApiStartImportProjectRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
 	projectId string
-	xRapidAPIUser *string
-}
-
-func (r ApiStartImportProjectRequest) XRapidAPIUser(xRapidAPIUser string) ApiStartImportProjectRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiStartImportProjectRequest) Execute() (*http.Response, error) {
@@ -6171,9 +21186,113 @@ func (a *DefaultAPIService) StartImportProjectExecute(r ApiStartImportProjectReq
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
 	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiStartImportProjectWithOptionsRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	projectId string
+	filename *string
+	importOptionsDto *ImportOptionsDto
+}
+
+func (r ApiStartImportProjectWithOptionsRequest) Filename(filename string) ApiStartImportProjectWithOptionsRequest {
+	r.filename = &filename
+	return r
+}
+
+func (r ApiStartImportProjectWithOptionsRequest) ImportOptionsDto(importOptionsDto ImportOptionsDto) ApiStartImportProjectWithOptionsRequest {
+	r.importOptionsDto = &importOptionsDto
+	return r
+}
+
+func (r ApiStartImportProjectWithOptionsRequest) Execute() (*http.Response, error) {
+	return r.ApiService.StartImportProjectWithOptionsExecute(r)
+}
+
+/*
+StartImportProjectWithOptions Method for StartImportProjectWithOptions
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param projectId
+ @return ApiStartImportProjectWithOptionsRequest
+*/
+func (a *DefaultAPIService) StartImportProjectWithOptions(ctx context.Context, projectId string) ApiStartImportProjectWithOptionsRequest {
+	return ApiStartImportProjectWithOptionsRequest{
+		ApiService: a,
+		ctx: ctx,
+		projectId: projectId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) StartImportProjectWithOptionsExecute(r ApiStartImportProjectWithOptionsRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.StartImportProjectWithOptions")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/package/import/id/{projectId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"projectId"+"}", url.PathEscape(parameterValueToString(r.projectId, "projectId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.filename != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filename", r.filename, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.importOptionsDto
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -6208,12 +21327,6 @@ type ApiStartTaskRequest struct {
 	projectId string
 	jobId string
 	taskId string
-	xRapidAPIUser *string
-}
-
-func (r ApiStartTaskRequest) XRapidAPIUser(xRapidAPIUser string) ApiStartTaskRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiStartTaskRequest) Execute() (*http.Response, error) {
@@ -6278,9 +21391,6 @@ func (a *DefaultAPIService) StartTaskExecute(r ApiStartTaskRequest) (*http.Respo
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
-	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -6313,13 +21423,7 @@ type ApiStartTrainingRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
 	provider string
-	xRapidAPIUser *string
 	trainingRequestBean *TrainingRequestBean
-}
-
-func (r ApiStartTrainingRequest) XRapidAPIUser(xRapidAPIUser string) ApiStartTrainingRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiStartTrainingRequest) TrainingRequestBean(trainingRequestBean TrainingRequestBean) ApiStartTrainingRequest {
@@ -6383,11 +21487,192 @@ func (a *DefaultAPIService) StartTrainingExecute(r ApiStartTrainingRequest) (*ht
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
-	}
 	// body params
 	localVarPostBody = r.trainingRequestBean
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiStatusRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	eid string
+}
+
+func (r ApiStatusRequest) Execute() (*http.Response, error) {
+	return r.ApiService.StatusExecute(r)
+}
+
+/*
+Status Method for Status
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param eid
+ @return ApiStatusRequest
+*/
+func (a *DefaultAPIService) Status(ctx context.Context, eid string) ApiStatusRequest {
+	return ApiStatusRequest{
+		ApiService: a,
+		ctx: ctx,
+		eid: eid,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) StatusExecute(r ApiStatusRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.Status")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/agentic/{eid}"
+	localVarPath = strings.Replace(localVarPath, "{"+"eid"+"}", url.PathEscape(parameterValueToString(r.eid, "eid")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiStopJobRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	projectId string
+	jobId string
+}
+
+func (r ApiStopJobRequest) Execute() (*http.Response, error) {
+	return r.ApiService.StopJobExecute(r)
+}
+
+/*
+StopJob Method for StopJob
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param projectId
+ @param jobId
+ @return ApiStopJobRequest
+*/
+func (a *DefaultAPIService) StopJob(ctx context.Context, projectId string, jobId string) ApiStopJobRequest {
+	return ApiStopJobRequest{
+		ApiService: a,
+		ctx: ctx,
+		projectId: projectId,
+		jobId: jobId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) StopJobExecute(r ApiStopJobRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.StopJob")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/projects/id/{projectId}/jobs/{jobId}/stop"
+	localVarPath = strings.Replace(localVarPath, "{"+"projectId"+"}", url.PathEscape(parameterValueToString(r.projectId, "projectId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"jobId"+"}", url.PathEscape(parameterValueToString(r.jobId, "jobId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -6422,12 +21707,6 @@ type ApiStopTaskRequest struct {
 	projectId string
 	jobId string
 	taskId string
-	xRapidAPIUser *string
-}
-
-func (r ApiStopTaskRequest) XRapidAPIUser(xRapidAPIUser string) ApiStopTaskRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiStopTaskRequest) Execute() (*http.Response, error) {
@@ -6492,9 +21771,100 @@ func (a *DefaultAPIService) StopTaskExecute(r ApiStopTaskRequest) (*http.Respons
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
 	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiSuggestStagesRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	requestBody *map[string]map[string]interface{}
+}
+
+func (r ApiSuggestStagesRequest) RequestBody(requestBody map[string]map[string]interface{}) ApiSuggestStagesRequest {
+	r.requestBody = &requestBody
+	return r
+}
+
+func (r ApiSuggestStagesRequest) Execute() (*http.Response, error) {
+	return r.ApiService.SuggestStagesExecute(r)
+}
+
+/*
+SuggestStages Method for SuggestStages
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiSuggestStagesRequest
+*/
+func (a *DefaultAPIService) SuggestStages(ctx context.Context) ApiSuggestStagesRequest {
+	return ApiSuggestStagesRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) SuggestStagesExecute(r ApiSuggestStagesRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.SuggestStages")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/demo/wizard/suggest"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.requestBody
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -6695,6 +22065,100 @@ func (a *DefaultAPIService) Test1Execute(r ApiTest1Request) (*http.Response, err
 	return localVarHTTPResponse, nil
 }
 
+type ApiTestCloudCredentialRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	requestBody *map[string]map[string]interface{}
+}
+
+func (r ApiTestCloudCredentialRequest) RequestBody(requestBody map[string]map[string]interface{}) ApiTestCloudCredentialRequest {
+	r.requestBody = &requestBody
+	return r
+}
+
+func (r ApiTestCloudCredentialRequest) Execute() (*http.Response, error) {
+	return r.ApiService.TestCloudCredentialExecute(r)
+}
+
+/*
+TestCloudCredential Method for TestCloudCredential
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiTestCloudCredentialRequest
+*/
+func (a *DefaultAPIService) TestCloudCredential(ctx context.Context) ApiTestCloudCredentialRequest {
+	return ApiTestCloudCredentialRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) TestCloudCredentialExecute(r ApiTestCloudCredentialRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.TestCloudCredential")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/cloud-credentials/test"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.requestBody
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
 type ApiUpdateRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
@@ -6797,18 +22261,110 @@ func (a *DefaultAPIService) UpdateExecute(r ApiUpdateRequest) (*http.Response, e
 	return localVarHTTPResponse, nil
 }
 
+type ApiUpdateAdapterRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	providerKey string
+	requestBody *map[string]map[string]interface{}
+}
+
+func (r ApiUpdateAdapterRequest) RequestBody(requestBody map[string]map[string]interface{}) ApiUpdateAdapterRequest {
+	r.requestBody = &requestBody
+	return r
+}
+
+func (r ApiUpdateAdapterRequest) Execute() (*http.Response, error) {
+	return r.ApiService.UpdateAdapterExecute(r)
+}
+
+/*
+UpdateAdapter Method for UpdateAdapter
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param providerKey
+ @return ApiUpdateAdapterRequest
+*/
+func (a *DefaultAPIService) UpdateAdapter(ctx context.Context, providerKey string) ApiUpdateAdapterRequest {
+	return ApiUpdateAdapterRequest{
+		ApiService: a,
+		ctx: ctx,
+		providerKey: providerKey,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) UpdateAdapterExecute(r ApiUpdateAdapterRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPut
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.UpdateAdapter")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/admin/cloud-adapters/{providerKey}"
+	localVarPath = strings.Replace(localVarPath, "{"+"providerKey"+"}", url.PathEscape(parameterValueToString(r.providerKey, "providerKey")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.requestBody
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
 type ApiUpdateAgentRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
 	categoryId string
 	agentId string
-	xRapidAPIUser *string
 	agentDto *AgentDto
-}
-
-func (r ApiUpdateAgentRequest) XRapidAPIUser(xRapidAPIUser string) ApiUpdateAgentRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiUpdateAgentRequest) AgentDto(agentDto AgentDto) ApiUpdateAgentRequest {
@@ -6875,11 +22431,204 @@ func (a *DefaultAPIService) UpdateAgentExecute(r ApiUpdateAgentRequest) (*http.R
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
-	}
 	// body params
 	localVarPostBody = r.agentDto
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiUpdateAgentPythonExtensionsRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	agentId string
+	requestBody *map[string]map[string]interface{}
+}
+
+func (r ApiUpdateAgentPythonExtensionsRequest) RequestBody(requestBody map[string]map[string]interface{}) ApiUpdateAgentPythonExtensionsRequest {
+	r.requestBody = &requestBody
+	return r
+}
+
+func (r ApiUpdateAgentPythonExtensionsRequest) Execute() (*http.Response, error) {
+	return r.ApiService.UpdateAgentPythonExtensionsExecute(r)
+}
+
+/*
+UpdateAgentPythonExtensions Method for UpdateAgentPythonExtensions
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param agentId
+ @return ApiUpdateAgentPythonExtensionsRequest
+*/
+func (a *DefaultAPIService) UpdateAgentPythonExtensions(ctx context.Context, agentId string) ApiUpdateAgentPythonExtensionsRequest {
+	return ApiUpdateAgentPythonExtensionsRequest{
+		ApiService: a,
+		ctx: ctx,
+		agentId: agentId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) UpdateAgentPythonExtensionsExecute(r ApiUpdateAgentPythonExtensionsRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.UpdateAgentPythonExtensions")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/python-extensions/agents/{agentId}/python-extensions"
+	localVarPath = strings.Replace(localVarPath, "{"+"agentId"+"}", url.PathEscape(parameterValueToString(r.agentId, "agentId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.requestBody
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiUpdateBillingPlanRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	id int32
+	requestBody *map[string]map[string]interface{}
+}
+
+func (r ApiUpdateBillingPlanRequest) RequestBody(requestBody map[string]map[string]interface{}) ApiUpdateBillingPlanRequest {
+	r.requestBody = &requestBody
+	return r
+}
+
+func (r ApiUpdateBillingPlanRequest) Execute() (*http.Response, error) {
+	return r.ApiService.UpdateBillingPlanExecute(r)
+}
+
+/*
+UpdateBillingPlan Method for UpdateBillingPlan
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id
+ @return ApiUpdateBillingPlanRequest
+*/
+func (a *DefaultAPIService) UpdateBillingPlan(ctx context.Context, id int32) ApiUpdateBillingPlanRequest {
+	return ApiUpdateBillingPlanRequest{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) UpdateBillingPlanExecute(r ApiUpdateBillingPlanRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPut
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.UpdateBillingPlan")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/billing/plans/{id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.requestBody
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -6912,13 +22661,7 @@ type ApiUpdateCategoryRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
 	categoryId string
-	xRapidAPIUser *string
 	jobCategoryDto *JobCategoryDto
-}
-
-func (r ApiUpdateCategoryRequest) XRapidAPIUser(xRapidAPIUser string) ApiUpdateCategoryRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiUpdateCategoryRequest) JobCategoryDto(jobCategoryDto JobCategoryDto) ApiUpdateCategoryRequest {
@@ -6982,11 +22725,600 @@ func (a *DefaultAPIService) UpdateCategoryExecute(r ApiUpdateCategoryRequest) (*
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
-	}
 	// body params
 	localVarPostBody = r.jobCategoryDto
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiUpdateCloudCredentialRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	credentialId string
+	cloudCredential *CloudCredential
+}
+
+func (r ApiUpdateCloudCredentialRequest) CloudCredential(cloudCredential CloudCredential) ApiUpdateCloudCredentialRequest {
+	r.cloudCredential = &cloudCredential
+	return r
+}
+
+func (r ApiUpdateCloudCredentialRequest) Execute() (*http.Response, error) {
+	return r.ApiService.UpdateCloudCredentialExecute(r)
+}
+
+/*
+UpdateCloudCredential Method for UpdateCloudCredential
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param credentialId
+ @return ApiUpdateCloudCredentialRequest
+*/
+func (a *DefaultAPIService) UpdateCloudCredential(ctx context.Context, credentialId string) ApiUpdateCloudCredentialRequest {
+	return ApiUpdateCloudCredentialRequest{
+		ApiService: a,
+		ctx: ctx,
+		credentialId: credentialId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) UpdateCloudCredentialExecute(r ApiUpdateCloudCredentialRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPut
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.UpdateCloudCredential")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/cloud-credentials/id/{credentialId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"credentialId"+"}", url.PathEscape(parameterValueToString(r.credentialId, "credentialId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.cloudCredential
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiUpdateDatasetRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	datasetId string
+	datasetDto *DatasetDto
+}
+
+func (r ApiUpdateDatasetRequest) DatasetDto(datasetDto DatasetDto) ApiUpdateDatasetRequest {
+	r.datasetDto = &datasetDto
+	return r
+}
+
+func (r ApiUpdateDatasetRequest) Execute() (*http.Response, error) {
+	return r.ApiService.UpdateDatasetExecute(r)
+}
+
+/*
+UpdateDataset Method for UpdateDataset
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param datasetId
+ @return ApiUpdateDatasetRequest
+*/
+func (a *DefaultAPIService) UpdateDataset(ctx context.Context, datasetId string) ApiUpdateDatasetRequest {
+	return ApiUpdateDatasetRequest{
+		ApiService: a,
+		ctx: ctx,
+		datasetId: datasetId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) UpdateDatasetExecute(r ApiUpdateDatasetRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPut
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.UpdateDataset")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/datasets/{datasetId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"datasetId"+"}", url.PathEscape(parameterValueToString(r.datasetId, "datasetId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.datasetDto
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiUpdateInstallationRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	id int64
+	pluginInstallation *PluginInstallation
+}
+
+func (r ApiUpdateInstallationRequest) PluginInstallation(pluginInstallation PluginInstallation) ApiUpdateInstallationRequest {
+	r.pluginInstallation = &pluginInstallation
+	return r
+}
+
+func (r ApiUpdateInstallationRequest) Execute() (*http.Response, error) {
+	return r.ApiService.UpdateInstallationExecute(r)
+}
+
+/*
+UpdateInstallation Method for UpdateInstallation
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id
+ @return ApiUpdateInstallationRequest
+*/
+func (a *DefaultAPIService) UpdateInstallation(ctx context.Context, id int64) ApiUpdateInstallationRequest {
+	return ApiUpdateInstallationRequest{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) UpdateInstallationExecute(r ApiUpdateInstallationRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPut
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.UpdateInstallation")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/admin/plugin-installations/{id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.pluginInstallation
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiUpdateJobRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	projectId string
+	jobId string
+	jobDto *JobDto
+}
+
+func (r ApiUpdateJobRequest) JobDto(jobDto JobDto) ApiUpdateJobRequest {
+	r.jobDto = &jobDto
+	return r
+}
+
+func (r ApiUpdateJobRequest) Execute() (*http.Response, error) {
+	return r.ApiService.UpdateJobExecute(r)
+}
+
+/*
+UpdateJob Method for UpdateJob
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param projectId
+ @param jobId
+ @return ApiUpdateJobRequest
+*/
+func (a *DefaultAPIService) UpdateJob(ctx context.Context, projectId string, jobId string) ApiUpdateJobRequest {
+	return ApiUpdateJobRequest{
+		ApiService: a,
+		ctx: ctx,
+		projectId: projectId,
+		jobId: jobId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) UpdateJobExecute(r ApiUpdateJobRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPut
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.UpdateJob")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/projects/id/{projectId}/jobs/{jobId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"projectId"+"}", url.PathEscape(parameterValueToString(r.projectId, "projectId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"jobId"+"}", url.PathEscape(parameterValueToString(r.jobId, "jobId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.jobDto
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiUpdateOrganizationRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	id string
+	requestBody *map[string]map[string]interface{}
+}
+
+func (r ApiUpdateOrganizationRequest) RequestBody(requestBody map[string]map[string]interface{}) ApiUpdateOrganizationRequest {
+	r.requestBody = &requestBody
+	return r
+}
+
+func (r ApiUpdateOrganizationRequest) Execute() (*http.Response, error) {
+	return r.ApiService.UpdateOrganizationExecute(r)
+}
+
+/*
+UpdateOrganization Method for UpdateOrganization
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id
+ @return ApiUpdateOrganizationRequest
+*/
+func (a *DefaultAPIService) UpdateOrganization(ctx context.Context, id string) ApiUpdateOrganizationRequest {
+	return ApiUpdateOrganizationRequest{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) UpdateOrganizationExecute(r ApiUpdateOrganizationRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPut
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.UpdateOrganization")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/auth/organizations/{id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.requestBody
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiUpdateProfileRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	id int32
+	agenticProfile *AgenticProfile
+}
+
+func (r ApiUpdateProfileRequest) AgenticProfile(agenticProfile AgenticProfile) ApiUpdateProfileRequest {
+	r.agenticProfile = &agenticProfile
+	return r
+}
+
+func (r ApiUpdateProfileRequest) Execute() (*http.Response, error) {
+	return r.ApiService.UpdateProfileExecute(r)
+}
+
+/*
+UpdateProfile Method for UpdateProfile
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id
+ @return ApiUpdateProfileRequest
+*/
+func (a *DefaultAPIService) UpdateProfile(ctx context.Context, id int32) ApiUpdateProfileRequest {
+	return ApiUpdateProfileRequest{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) UpdateProfileExecute(r ApiUpdateProfileRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPut
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.UpdateProfile")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/agentic/profiles/{id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.agenticProfile
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -7019,13 +23351,7 @@ type ApiUpdateProjectRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
 	projectId string
-	xRapidAPIUser *string
 	jobProjectDto *JobProjectDto
-}
-
-func (r ApiUpdateProjectRequest) XRapidAPIUser(xRapidAPIUser string) ApiUpdateProjectRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiUpdateProjectRequest) JobProjectDto(jobProjectDto JobProjectDto) ApiUpdateProjectRequest {
@@ -7089,11 +23415,106 @@ func (a *DefaultAPIService) UpdateProjectExecute(r ApiUpdateProjectRequest) (*ht
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
-	}
 	// body params
 	localVarPostBody = r.jobProjectDto
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiUpdatePythonExtensionRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	extensionId string
+	requestBody *map[string]map[string]interface{}
+}
+
+func (r ApiUpdatePythonExtensionRequest) RequestBody(requestBody map[string]map[string]interface{}) ApiUpdatePythonExtensionRequest {
+	r.requestBody = &requestBody
+	return r
+}
+
+func (r ApiUpdatePythonExtensionRequest) Execute() (*http.Response, error) {
+	return r.ApiService.UpdatePythonExtensionExecute(r)
+}
+
+/*
+UpdatePythonExtension Method for UpdatePythonExtension
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param extensionId
+ @return ApiUpdatePythonExtensionRequest
+*/
+func (a *DefaultAPIService) UpdatePythonExtension(ctx context.Context, extensionId string) ApiUpdatePythonExtensionRequest {
+	return ApiUpdatePythonExtensionRequest{
+		ApiService: a,
+		ctx: ctx,
+		extensionId: extensionId,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) UpdatePythonExtensionExecute(r ApiUpdatePythonExtensionRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPut
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.UpdatePythonExtension")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/python-extensions/python-extensions/{extensionId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"extensionId"+"}", url.PathEscape(parameterValueToString(r.extensionId, "extensionId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.requestBody
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -7128,13 +23549,7 @@ type ApiUpdateTaskRequest struct {
 	projectId string
 	jobId string
 	taskId string
-	xRapidAPIUser *string
 	taskDto *TaskDto
-}
-
-func (r ApiUpdateTaskRequest) XRapidAPIUser(xRapidAPIUser string) ApiUpdateTaskRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
 }
 
 func (r ApiUpdateTaskRequest) TaskDto(taskDto TaskDto) ApiUpdateTaskRequest {
@@ -7204,11 +23619,307 @@ func (a *DefaultAPIService) UpdateTaskExecute(r ApiUpdateTaskRequest) (*http.Res
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
-	}
 	// body params
 	localVarPostBody = r.taskDto
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiUpdateVersionRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	id int64
+	etlLibraryVersionApiDto *EtlLibraryVersionApiDto
+}
+
+func (r ApiUpdateVersionRequest) EtlLibraryVersionApiDto(etlLibraryVersionApiDto EtlLibraryVersionApiDto) ApiUpdateVersionRequest {
+	r.etlLibraryVersionApiDto = &etlLibraryVersionApiDto
+	return r
+}
+
+func (r ApiUpdateVersionRequest) Execute() (*http.Response, error) {
+	return r.ApiService.UpdateVersionExecute(r)
+}
+
+/*
+UpdateVersion Method for UpdateVersion
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id
+ @return ApiUpdateVersionRequest
+*/
+func (a *DefaultAPIService) UpdateVersion(ctx context.Context, id int64) ApiUpdateVersionRequest {
+	return ApiUpdateVersionRequest{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) UpdateVersionExecute(r ApiUpdateVersionRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPut
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.UpdateVersion")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/admin/etl-library-versions/id/{id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.etlLibraryVersionApiDto
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiUploadCsvRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	country string
+	organizationCode *string
+	contentDisposition *ContentDisposition
+	entity *map[string]interface{}
+	headers *map[string][]string
+	mediaType *BodyPartMediaType
+	messageBodyWorkers *map[string]interface{}
+	parent *MultiPart
+	providers *map[string]interface{}
+	bodyParts *[]BodyPart
+	fields *map[string][]FormDataBodyPart
+	parameterizedHeaders *map[string][]ParameterizedHeader
+}
+
+func (r ApiUploadCsvRequest) OrganizationCode(organizationCode string) ApiUploadCsvRequest {
+	r.organizationCode = &organizationCode
+	return r
+}
+
+func (r ApiUploadCsvRequest) ContentDisposition(contentDisposition ContentDisposition) ApiUploadCsvRequest {
+	r.contentDisposition = &contentDisposition
+	return r
+}
+
+func (r ApiUploadCsvRequest) Entity(entity map[string]interface{}) ApiUploadCsvRequest {
+	r.entity = &entity
+	return r
+}
+
+func (r ApiUploadCsvRequest) Headers(headers map[string][]string) ApiUploadCsvRequest {
+	r.headers = &headers
+	return r
+}
+
+func (r ApiUploadCsvRequest) MediaType(mediaType BodyPartMediaType) ApiUploadCsvRequest {
+	r.mediaType = &mediaType
+	return r
+}
+
+func (r ApiUploadCsvRequest) MessageBodyWorkers(messageBodyWorkers map[string]interface{}) ApiUploadCsvRequest {
+	r.messageBodyWorkers = &messageBodyWorkers
+	return r
+}
+
+func (r ApiUploadCsvRequest) Parent(parent MultiPart) ApiUploadCsvRequest {
+	r.parent = &parent
+	return r
+}
+
+func (r ApiUploadCsvRequest) Providers(providers map[string]interface{}) ApiUploadCsvRequest {
+	r.providers = &providers
+	return r
+}
+
+func (r ApiUploadCsvRequest) BodyParts(bodyParts []BodyPart) ApiUploadCsvRequest {
+	r.bodyParts = &bodyParts
+	return r
+}
+
+func (r ApiUploadCsvRequest) Fields(fields map[string][]FormDataBodyPart) ApiUploadCsvRequest {
+	r.fields = &fields
+	return r
+}
+
+func (r ApiUploadCsvRequest) ParameterizedHeaders(parameterizedHeaders map[string][]ParameterizedHeader) ApiUploadCsvRequest {
+	r.parameterizedHeaders = &parameterizedHeaders
+	return r
+}
+
+func (r ApiUploadCsvRequest) Execute() (*http.Response, error) {
+	return r.ApiService.UploadCsvExecute(r)
+}
+
+/*
+UploadCsv Method for UploadCsv
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param country
+ @return ApiUploadCsvRequest
+*/
+func (a *DefaultAPIService) UploadCsv(ctx context.Context, country string) ApiUploadCsvRequest {
+	return ApiUploadCsvRequest{
+		ApiService: a,
+		ctx: ctx,
+		country: country,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) UploadCsvExecute(r ApiUploadCsvRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.UploadCsv")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/ean-image-sourcing/{country}/upload"
+	localVarPath = strings.Replace(localVarPath, "{"+"country"+"}", url.PathEscape(parameterValueToString(r.country, "country")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.organizationCode != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "organization_code", r.organizationCode, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"multipart/form-data"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.contentDisposition != nil {
+		paramJson, err := parameterToJson(*r.contentDisposition)
+		if err != nil {
+			return nil, err
+		}
+		localVarFormParams.Add("contentDisposition", paramJson)
+	}
+	if r.entity != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "entity", r.entity, "", "")
+	}
+	if r.headers != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "headers", r.headers, "", "")
+	}
+	if r.mediaType != nil {
+		paramJson, err := parameterToJson(*r.mediaType)
+		if err != nil {
+			return nil, err
+		}
+		localVarFormParams.Add("mediaType", paramJson)
+	}
+	if r.messageBodyWorkers != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "messageBodyWorkers", r.messageBodyWorkers, "", "")
+	}
+	if r.parent != nil {
+		paramJson, err := parameterToJson(*r.parent)
+		if err != nil {
+			return nil, err
+		}
+		localVarFormParams.Add("parent", paramJson)
+	}
+	if r.providers != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "providers", r.providers, "", "")
+	}
+	if r.bodyParts != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "bodyParts", r.bodyParts, "", "csv")
+	}
+	if r.fields != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "fields", r.fields, "", "")
+	}
+	if r.parameterizedHeaders != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "parameterizedHeaders", r.parameterizedHeaders, "", "")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -7240,18 +23951,66 @@ func (a *DefaultAPIService) UpdateTaskExecute(r ApiUpdateTaskRequest) (*http.Res
 type ApiUploadDatasetRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
-	provider string
-	xRapidAPIUser *string
-	datasetUploadRequest *DatasetUploadRequest
+	pipelineName string
+	contentDisposition *ContentDisposition
+	entity *map[string]interface{}
+	headers *map[string][]string
+	mediaType *BodyPartMediaType
+	messageBodyWorkers *map[string]interface{}
+	parent *MultiPart
+	providers *map[string]interface{}
+	bodyParts *[]BodyPart
+	fields *map[string][]FormDataBodyPart
+	parameterizedHeaders *map[string][]ParameterizedHeader
 }
 
-func (r ApiUploadDatasetRequest) XRapidAPIUser(xRapidAPIUser string) ApiUploadDatasetRequest {
-	r.xRapidAPIUser = &xRapidAPIUser
+func (r ApiUploadDatasetRequest) ContentDisposition(contentDisposition ContentDisposition) ApiUploadDatasetRequest {
+	r.contentDisposition = &contentDisposition
 	return r
 }
 
-func (r ApiUploadDatasetRequest) DatasetUploadRequest(datasetUploadRequest DatasetUploadRequest) ApiUploadDatasetRequest {
-	r.datasetUploadRequest = &datasetUploadRequest
+func (r ApiUploadDatasetRequest) Entity(entity map[string]interface{}) ApiUploadDatasetRequest {
+	r.entity = &entity
+	return r
+}
+
+func (r ApiUploadDatasetRequest) Headers(headers map[string][]string) ApiUploadDatasetRequest {
+	r.headers = &headers
+	return r
+}
+
+func (r ApiUploadDatasetRequest) MediaType(mediaType BodyPartMediaType) ApiUploadDatasetRequest {
+	r.mediaType = &mediaType
+	return r
+}
+
+func (r ApiUploadDatasetRequest) MessageBodyWorkers(messageBodyWorkers map[string]interface{}) ApiUploadDatasetRequest {
+	r.messageBodyWorkers = &messageBodyWorkers
+	return r
+}
+
+func (r ApiUploadDatasetRequest) Parent(parent MultiPart) ApiUploadDatasetRequest {
+	r.parent = &parent
+	return r
+}
+
+func (r ApiUploadDatasetRequest) Providers(providers map[string]interface{}) ApiUploadDatasetRequest {
+	r.providers = &providers
+	return r
+}
+
+func (r ApiUploadDatasetRequest) BodyParts(bodyParts []BodyPart) ApiUploadDatasetRequest {
+	r.bodyParts = &bodyParts
+	return r
+}
+
+func (r ApiUploadDatasetRequest) Fields(fields map[string][]FormDataBodyPart) ApiUploadDatasetRequest {
+	r.fields = &fields
+	return r
+}
+
+func (r ApiUploadDatasetRequest) ParameterizedHeaders(parameterizedHeaders map[string][]ParameterizedHeader) ApiUploadDatasetRequest {
+	r.parameterizedHeaders = &parameterizedHeaders
 	return r
 }
 
@@ -7263,14 +24022,14 @@ func (r ApiUploadDatasetRequest) Execute() (*http.Response, error) {
 UploadDataset Method for UploadDataset
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param provider
+ @param pipelineName
  @return ApiUploadDatasetRequest
 */
-func (a *DefaultAPIService) UploadDataset(ctx context.Context, provider string) ApiUploadDatasetRequest {
+func (a *DefaultAPIService) UploadDataset(ctx context.Context, pipelineName string) ApiUploadDatasetRequest {
 	return ApiUploadDatasetRequest{
 		ApiService: a,
 		ctx: ctx,
-		provider: provider,
+		pipelineName: pipelineName,
 	}
 }
 
@@ -7287,15 +24046,15 @@ func (a *DefaultAPIService) UploadDatasetExecute(r ApiUploadDatasetRequest) (*ht
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/webrobot/api/ai-providers/providers/{provider}/datasets"
-	localVarPath = strings.Replace(localVarPath, "{"+"provider"+"}", url.PathEscape(parameterValueToString(r.provider, "provider")), -1)
+	localVarPath := localBasePath + "/webrobot/api/demo/upload-dataset/{pipeline-name}"
+	localVarPath = strings.Replace(localVarPath, "{"+"pipeline-name"+"}", url.PathEscape(parameterValueToString(r.pipelineName, "pipelineName")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json"}
+	localVarHTTPContentTypes := []string{"multipart/form-data"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -7311,11 +24070,48 @@ func (a *DefaultAPIService) UploadDatasetExecute(r ApiUploadDatasetRequest) (*ht
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
+	if r.contentDisposition != nil {
+		paramJson, err := parameterToJson(*r.contentDisposition)
+		if err != nil {
+			return nil, err
+		}
+		localVarFormParams.Add("contentDisposition", paramJson)
 	}
-	// body params
-	localVarPostBody = r.datasetUploadRequest
+	if r.entity != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "entity", r.entity, "", "")
+	}
+	if r.headers != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "headers", r.headers, "", "")
+	}
+	if r.mediaType != nil {
+		paramJson, err := parameterToJson(*r.mediaType)
+		if err != nil {
+			return nil, err
+		}
+		localVarFormParams.Add("mediaType", paramJson)
+	}
+	if r.messageBodyWorkers != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "messageBodyWorkers", r.messageBodyWorkers, "", "")
+	}
+	if r.parent != nil {
+		paramJson, err := parameterToJson(*r.parent)
+		if err != nil {
+			return nil, err
+		}
+		localVarFormParams.Add("parent", paramJson)
+	}
+	if r.providers != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "providers", r.providers, "", "")
+	}
+	if r.bodyParts != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "bodyParts", r.bodyParts, "", "csv")
+	}
+	if r.fields != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "fields", r.fields, "", "")
+	}
+	if r.parameterizedHeaders != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "parameterizedHeaders", r.parameterizedHeaders, "", "")
+	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
@@ -7347,17 +24143,12 @@ func (a *DefaultAPIService) UploadDatasetExecute(r ApiUploadDatasetRequest) (*ht
 type ApiUploadDataset1Request struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
-	xRapidAPIUser *string
-	datasetUploadApiDto *DatasetUploadApiDto
+	provider string
+	datasetUploadRequest *DatasetUploadRequest
 }
 
-func (r ApiUploadDataset1Request) XRapidAPIUser(xRapidAPIUser string) ApiUploadDataset1Request {
-	r.xRapidAPIUser = &xRapidAPIUser
-	return r
-}
-
-func (r ApiUploadDataset1Request) DatasetUploadApiDto(datasetUploadApiDto DatasetUploadApiDto) ApiUploadDataset1Request {
-	r.datasetUploadApiDto = &datasetUploadApiDto
+func (r ApiUploadDataset1Request) DatasetUploadRequest(datasetUploadRequest DatasetUploadRequest) ApiUploadDataset1Request {
+	r.datasetUploadRequest = &datasetUploadRequest
 	return r
 }
 
@@ -7369,12 +24160,14 @@ func (r ApiUploadDataset1Request) Execute() (*http.Response, error) {
 UploadDataset1 Method for UploadDataset1
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param provider
  @return ApiUploadDataset1Request
 */
-func (a *DefaultAPIService) UploadDataset1(ctx context.Context) ApiUploadDataset1Request {
+func (a *DefaultAPIService) UploadDataset1(ctx context.Context, provider string) ApiUploadDataset1Request {
 	return ApiUploadDataset1Request{
 		ApiService: a,
 		ctx: ctx,
+		provider: provider,
 	}
 }
 
@@ -7391,7 +24184,8 @@ func (a *DefaultAPIService) UploadDataset1Execute(r ApiUploadDataset1Request) (*
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/webrobot/api/datasets/{projectId}/{botId}"
+	localVarPath := localBasePath + "/webrobot/api/ai-providers/providers/{provider}/datasets"
+	localVarPath = strings.Replace(localVarPath, "{"+"provider"+"}", url.PathEscape(parameterValueToString(r.provider, "provider")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -7414,11 +24208,1389 @@ func (a *DefaultAPIService) UploadDataset1Execute(r ApiUploadDataset1Request) (*
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.xRapidAPIUser != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-RapidAPI-User", r.xRapidAPIUser, "simple", "")
+	// body params
+	localVarPostBody = r.datasetUploadRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiUploadDataset2Request struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	datasetUploadApiDto *DatasetUploadApiDto
+}
+
+func (r ApiUploadDataset2Request) DatasetUploadApiDto(datasetUploadApiDto DatasetUploadApiDto) ApiUploadDataset2Request {
+	r.datasetUploadApiDto = &datasetUploadApiDto
+	return r
+}
+
+func (r ApiUploadDataset2Request) Execute() (*http.Response, error) {
+	return r.ApiService.UploadDataset2Execute(r)
+}
+
+/*
+UploadDataset2 Method for UploadDataset2
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiUploadDataset2Request
+*/
+func (a *DefaultAPIService) UploadDataset2(ctx context.Context) ApiUploadDataset2Request {
+	return ApiUploadDataset2Request{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) UploadDataset2Execute(r ApiUploadDataset2Request) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.UploadDataset2")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/datasets-legacy/{projectId}/{botId}"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
 	localVarPostBody = r.datasetUploadApiDto
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiUploadDatasetFileRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	contentDisposition *ContentDisposition
+	entity *map[string]interface{}
+	headers *map[string][]string
+	mediaType *BodyPartMediaType
+	messageBodyWorkers *map[string]interface{}
+	parent *MultiPart
+	providers *map[string]interface{}
+	bodyParts *[]BodyPart
+	fields *map[string][]FormDataBodyPart
+	parameterizedHeaders *map[string][]ParameterizedHeader
+}
+
+func (r ApiUploadDatasetFileRequest) ContentDisposition(contentDisposition ContentDisposition) ApiUploadDatasetFileRequest {
+	r.contentDisposition = &contentDisposition
+	return r
+}
+
+func (r ApiUploadDatasetFileRequest) Entity(entity map[string]interface{}) ApiUploadDatasetFileRequest {
+	r.entity = &entity
+	return r
+}
+
+func (r ApiUploadDatasetFileRequest) Headers(headers map[string][]string) ApiUploadDatasetFileRequest {
+	r.headers = &headers
+	return r
+}
+
+func (r ApiUploadDatasetFileRequest) MediaType(mediaType BodyPartMediaType) ApiUploadDatasetFileRequest {
+	r.mediaType = &mediaType
+	return r
+}
+
+func (r ApiUploadDatasetFileRequest) MessageBodyWorkers(messageBodyWorkers map[string]interface{}) ApiUploadDatasetFileRequest {
+	r.messageBodyWorkers = &messageBodyWorkers
+	return r
+}
+
+func (r ApiUploadDatasetFileRequest) Parent(parent MultiPart) ApiUploadDatasetFileRequest {
+	r.parent = &parent
+	return r
+}
+
+func (r ApiUploadDatasetFileRequest) Providers(providers map[string]interface{}) ApiUploadDatasetFileRequest {
+	r.providers = &providers
+	return r
+}
+
+func (r ApiUploadDatasetFileRequest) BodyParts(bodyParts []BodyPart) ApiUploadDatasetFileRequest {
+	r.bodyParts = &bodyParts
+	return r
+}
+
+func (r ApiUploadDatasetFileRequest) Fields(fields map[string][]FormDataBodyPart) ApiUploadDatasetFileRequest {
+	r.fields = &fields
+	return r
+}
+
+func (r ApiUploadDatasetFileRequest) ParameterizedHeaders(parameterizedHeaders map[string][]ParameterizedHeader) ApiUploadDatasetFileRequest {
+	r.parameterizedHeaders = &parameterizedHeaders
+	return r
+}
+
+func (r ApiUploadDatasetFileRequest) Execute() (*http.Response, error) {
+	return r.ApiService.UploadDatasetFileExecute(r)
+}
+
+/*
+UploadDatasetFile Method for UploadDatasetFile
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiUploadDatasetFileRequest
+*/
+func (a *DefaultAPIService) UploadDatasetFile(ctx context.Context) ApiUploadDatasetFileRequest {
+	return ApiUploadDatasetFileRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) UploadDatasetFileExecute(r ApiUploadDatasetFileRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.UploadDatasetFile")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/datasets/upload"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"multipart/form-data"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.contentDisposition != nil {
+		paramJson, err := parameterToJson(*r.contentDisposition)
+		if err != nil {
+			return nil, err
+		}
+		localVarFormParams.Add("contentDisposition", paramJson)
+	}
+	if r.entity != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "entity", r.entity, "", "")
+	}
+	if r.headers != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "headers", r.headers, "", "")
+	}
+	if r.mediaType != nil {
+		paramJson, err := parameterToJson(*r.mediaType)
+		if err != nil {
+			return nil, err
+		}
+		localVarFormParams.Add("mediaType", paramJson)
+	}
+	if r.messageBodyWorkers != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "messageBodyWorkers", r.messageBodyWorkers, "", "")
+	}
+	if r.parent != nil {
+		paramJson, err := parameterToJson(*r.parent)
+		if err != nil {
+			return nil, err
+		}
+		localVarFormParams.Add("parent", paramJson)
+	}
+	if r.providers != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "providers", r.providers, "", "")
+	}
+	if r.bodyParts != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "bodyParts", r.bodyParts, "", "csv")
+	}
+	if r.fields != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "fields", r.fields, "", "")
+	}
+	if r.parameterizedHeaders != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "parameterizedHeaders", r.parameterizedHeaders, "", "")
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiUploadFileRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	file *FormDataContentDisposition
+}
+
+func (r ApiUploadFileRequest) File(file FormDataContentDisposition) ApiUploadFileRequest {
+	r.file = &file
+	return r
+}
+
+func (r ApiUploadFileRequest) Execute() (*http.Response, error) {
+	return r.ApiService.UploadFileExecute(r)
+}
+
+/*
+UploadFile Method for UploadFile
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiUploadFileRequest
+*/
+func (a *DefaultAPIService) UploadFile(ctx context.Context) ApiUploadFileRequest {
+	return ApiUploadFileRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) UploadFileExecute(r ApiUploadFileRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.UploadFile")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/package/upload"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"multipart/form-data"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.file != nil {
+		paramJson, err := parameterToJson(*r.file)
+		if err != nil {
+			return nil, err
+		}
+		localVarFormParams.Add("file", paramJson)
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiUploadPluginRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	file *FormDataContentDisposition
+	pluginId *string
+	pluginType *string
+	buildType *string
+	buildNumber *int32
+	organizationIds *string
+}
+
+func (r ApiUploadPluginRequest) File(file FormDataContentDisposition) ApiUploadPluginRequest {
+	r.file = &file
+	return r
+}
+
+func (r ApiUploadPluginRequest) PluginId(pluginId string) ApiUploadPluginRequest {
+	r.pluginId = &pluginId
+	return r
+}
+
+func (r ApiUploadPluginRequest) PluginType(pluginType string) ApiUploadPluginRequest {
+	r.pluginType = &pluginType
+	return r
+}
+
+func (r ApiUploadPluginRequest) BuildType(buildType string) ApiUploadPluginRequest {
+	r.buildType = &buildType
+	return r
+}
+
+func (r ApiUploadPluginRequest) BuildNumber(buildNumber int32) ApiUploadPluginRequest {
+	r.buildNumber = &buildNumber
+	return r
+}
+
+func (r ApiUploadPluginRequest) OrganizationIds(organizationIds string) ApiUploadPluginRequest {
+	r.organizationIds = &organizationIds
+	return r
+}
+
+func (r ApiUploadPluginRequest) Execute() (*http.Response, error) {
+	return r.ApiService.UploadPluginExecute(r)
+}
+
+/*
+UploadPlugin Method for UploadPlugin
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiUploadPluginRequest
+*/
+func (a *DefaultAPIService) UploadPlugin(ctx context.Context) ApiUploadPluginRequest {
+	return ApiUploadPluginRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) UploadPluginExecute(r ApiUploadPluginRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.UploadPlugin")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/admin/plugins/upload"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"multipart/form-data"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.file != nil {
+		paramJson, err := parameterToJson(*r.file)
+		if err != nil {
+			return nil, err
+		}
+		localVarFormParams.Add("file", paramJson)
+	}
+	if r.pluginId != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "pluginId", r.pluginId, "", "")
+	}
+	if r.pluginType != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "pluginType", r.pluginType, "", "")
+	}
+	if r.buildType != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "buildType", r.buildType, "", "")
+	}
+	if r.buildNumber != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "buildNumber", r.buildNumber, "", "")
+	}
+	if r.organizationIds != nil {
+		parameterAddToHeaderOrQuery(localVarFormParams, "organizationIds", r.organizationIds, "", "")
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiValidateRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	requestBody *map[string]map[string]interface{}
+}
+
+func (r ApiValidateRequest) RequestBody(requestBody map[string]map[string]interface{}) ApiValidateRequest {
+	r.requestBody = &requestBody
+	return r
+}
+
+func (r ApiValidateRequest) Execute() (*http.Response, error) {
+	return r.ApiService.ValidateExecute(r)
+}
+
+/*
+Validate Method for Validate
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiValidateRequest
+*/
+func (a *DefaultAPIService) Validate(ctx context.Context) ApiValidateRequest {
+	return ApiValidateRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) ValidateExecute(r ApiValidateRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.Validate")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/manifest/validate"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.requestBody
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiValidatePythonExtensionRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	requestBody *map[string]map[string]interface{}
+}
+
+func (r ApiValidatePythonExtensionRequest) RequestBody(requestBody map[string]map[string]interface{}) ApiValidatePythonExtensionRequest {
+	r.requestBody = &requestBody
+	return r
+}
+
+func (r ApiValidatePythonExtensionRequest) Execute() (*http.Response, error) {
+	return r.ApiService.ValidatePythonExtensionExecute(r)
+}
+
+/*
+ValidatePythonExtension Method for ValidatePythonExtension
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiValidatePythonExtensionRequest
+*/
+func (a *DefaultAPIService) ValidatePythonExtension(ctx context.Context) ApiValidatePythonExtensionRequest {
+	return ApiValidatePythonExtensionRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) ValidatePythonExtensionExecute(r ApiValidatePythonExtensionRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.ValidatePythonExtension")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/python-extensions/validate"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.requestBody
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiWizardInferActionsRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	requestBody *map[string]map[string]interface{}
+}
+
+func (r ApiWizardInferActionsRequest) RequestBody(requestBody map[string]map[string]interface{}) ApiWizardInferActionsRequest {
+	r.requestBody = &requestBody
+	return r
+}
+
+func (r ApiWizardInferActionsRequest) Execute() (*http.Response, error) {
+	return r.ApiService.WizardInferActionsExecute(r)
+}
+
+/*
+WizardInferActions Method for WizardInferActions
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiWizardInferActionsRequest
+*/
+func (a *DefaultAPIService) WizardInferActions(ctx context.Context) ApiWizardInferActionsRequest {
+	return ApiWizardInferActionsRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) WizardInferActionsExecute(r ApiWizardInferActionsRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.WizardInferActions")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/demo/wizard/infer-actions"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.requestBody
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiWizardInferFieldsRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	requestBody *map[string]map[string]interface{}
+}
+
+func (r ApiWizardInferFieldsRequest) RequestBody(requestBody map[string]map[string]interface{}) ApiWizardInferFieldsRequest {
+	r.requestBody = &requestBody
+	return r
+}
+
+func (r ApiWizardInferFieldsRequest) Execute() (*http.Response, error) {
+	return r.ApiService.WizardInferFieldsExecute(r)
+}
+
+/*
+WizardInferFields Method for WizardInferFields
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiWizardInferFieldsRequest
+*/
+func (a *DefaultAPIService) WizardInferFields(ctx context.Context) ApiWizardInferFieldsRequest {
+	return ApiWizardInferFieldsRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) WizardInferFieldsExecute(r ApiWizardInferFieldsRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.WizardInferFields")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/demo/wizard/infer-fields"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.requestBody
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiWizardInferSegmentRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	requestBody *map[string]map[string]interface{}
+}
+
+func (r ApiWizardInferSegmentRequest) RequestBody(requestBody map[string]map[string]interface{}) ApiWizardInferSegmentRequest {
+	r.requestBody = &requestBody
+	return r
+}
+
+func (r ApiWizardInferSegmentRequest) Execute() (*http.Response, error) {
+	return r.ApiService.WizardInferSegmentExecute(r)
+}
+
+/*
+WizardInferSegment Method for WizardInferSegment
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiWizardInferSegmentRequest
+*/
+func (a *DefaultAPIService) WizardInferSegment(ctx context.Context) ApiWizardInferSegmentRequest {
+	return ApiWizardInferSegmentRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) WizardInferSegmentExecute(r ApiWizardInferSegmentRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.WizardInferSegment")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/demo/wizard/infer-segment"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.requestBody
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiWizardInferSelectorRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	requestBody *map[string]map[string]interface{}
+}
+
+func (r ApiWizardInferSelectorRequest) RequestBody(requestBody map[string]map[string]interface{}) ApiWizardInferSelectorRequest {
+	r.requestBody = &requestBody
+	return r
+}
+
+func (r ApiWizardInferSelectorRequest) Execute() (*http.Response, error) {
+	return r.ApiService.WizardInferSelectorExecute(r)
+}
+
+/*
+WizardInferSelector Method for WizardInferSelector
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiWizardInferSelectorRequest
+*/
+func (a *DefaultAPIService) WizardInferSelector(ctx context.Context) ApiWizardInferSelectorRequest {
+	return ApiWizardInferSelectorRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) WizardInferSelectorExecute(r ApiWizardInferSelectorRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.WizardInferSelector")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/demo/wizard/infer-selector"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.requestBody
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiWizardProxyRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	url *string
+	strategy *string
+}
+
+func (r ApiWizardProxyRequest) Url(url string) ApiWizardProxyRequest {
+	r.url = &url
+	return r
+}
+
+func (r ApiWizardProxyRequest) Strategy(strategy string) ApiWizardProxyRequest {
+	r.strategy = &strategy
+	return r
+}
+
+func (r ApiWizardProxyRequest) Execute() (*http.Response, error) {
+	return r.ApiService.WizardProxyExecute(r)
+}
+
+/*
+WizardProxy Method for WizardProxy
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiWizardProxyRequest
+*/
+func (a *DefaultAPIService) WizardProxy(ctx context.Context) ApiWizardProxyRequest {
+	return ApiWizardProxyRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) WizardProxyExecute(r ApiWizardProxyRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.WizardProxy")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/demo/wizard/proxy"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.url != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "url", r.url, "form", "")
+	}
+	if r.strategy != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "strategy", r.strategy, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"text/html"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiWizardSuggestFieldNamesRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	requestBody *map[string]map[string]interface{}
+}
+
+func (r ApiWizardSuggestFieldNamesRequest) RequestBody(requestBody map[string]map[string]interface{}) ApiWizardSuggestFieldNamesRequest {
+	r.requestBody = &requestBody
+	return r
+}
+
+func (r ApiWizardSuggestFieldNamesRequest) Execute() (*http.Response, error) {
+	return r.ApiService.WizardSuggestFieldNamesExecute(r)
+}
+
+/*
+WizardSuggestFieldNames Method for WizardSuggestFieldNames
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiWizardSuggestFieldNamesRequest
+*/
+func (a *DefaultAPIService) WizardSuggestFieldNames(ctx context.Context) ApiWizardSuggestFieldNamesRequest {
+	return ApiWizardSuggestFieldNamesRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) WizardSuggestFieldNamesExecute(r ApiWizardSuggestFieldNamesRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.WizardSuggestFieldNames")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/demo/wizard/suggest-field-names"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.requestBody
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiWizardValidateRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	requestBody *map[string]map[string]interface{}
+}
+
+func (r ApiWizardValidateRequest) RequestBody(requestBody map[string]map[string]interface{}) ApiWizardValidateRequest {
+	r.requestBody = &requestBody
+	return r
+}
+
+func (r ApiWizardValidateRequest) Execute() (*http.Response, error) {
+	return r.ApiService.WizardValidateExecute(r)
+}
+
+/*
+WizardValidate Method for WizardValidate
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiWizardValidateRequest
+*/
+func (a *DefaultAPIService) WizardValidate(ctx context.Context) ApiWizardValidateRequest {
+	return ApiWizardValidateRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+func (a *DefaultAPIService) WizardValidateExecute(r ApiWizardValidateRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.WizardValidate")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/webrobot/api/demo/wizard/validate"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.requestBody
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err

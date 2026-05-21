@@ -22,6 +22,8 @@ type ProjectScheduleRequest struct {
 	CronSchedule *string `json:"cronSchedule,omitempty"`
 	Enabled *bool `json:"enabled,omitempty"`
 	Timezone *string `json:"timezone,omitempty"`
+	JobId *string `json:"jobId,omitempty"`
+	ExecutionRequestJson *string `json:"executionRequestJson,omitempty"`
 }
 
 // NewProjectScheduleRequest instantiates a new ProjectScheduleRequest object
@@ -137,6 +139,70 @@ func (o *ProjectScheduleRequest) SetTimezone(v string) {
 	o.Timezone = &v
 }
 
+// GetJobId returns the JobId field value if set, zero value otherwise.
+func (o *ProjectScheduleRequest) GetJobId() string {
+	if o == nil || IsNil(o.JobId) {
+		var ret string
+		return ret
+	}
+	return *o.JobId
+}
+
+// GetJobIdOk returns a tuple with the JobId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ProjectScheduleRequest) GetJobIdOk() (*string, bool) {
+	if o == nil || IsNil(o.JobId) {
+		return nil, false
+	}
+	return o.JobId, true
+}
+
+// HasJobId returns a boolean if a field has been set.
+func (o *ProjectScheduleRequest) HasJobId() bool {
+	if o != nil && !IsNil(o.JobId) {
+		return true
+	}
+
+	return false
+}
+
+// SetJobId gets a reference to the given string and assigns it to the JobId field.
+func (o *ProjectScheduleRequest) SetJobId(v string) {
+	o.JobId = &v
+}
+
+// GetExecutionRequestJson returns the ExecutionRequestJson field value if set, zero value otherwise.
+func (o *ProjectScheduleRequest) GetExecutionRequestJson() string {
+	if o == nil || IsNil(o.ExecutionRequestJson) {
+		var ret string
+		return ret
+	}
+	return *o.ExecutionRequestJson
+}
+
+// GetExecutionRequestJsonOk returns a tuple with the ExecutionRequestJson field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ProjectScheduleRequest) GetExecutionRequestJsonOk() (*string, bool) {
+	if o == nil || IsNil(o.ExecutionRequestJson) {
+		return nil, false
+	}
+	return o.ExecutionRequestJson, true
+}
+
+// HasExecutionRequestJson returns a boolean if a field has been set.
+func (o *ProjectScheduleRequest) HasExecutionRequestJson() bool {
+	if o != nil && !IsNil(o.ExecutionRequestJson) {
+		return true
+	}
+
+	return false
+}
+
+// SetExecutionRequestJson gets a reference to the given string and assigns it to the ExecutionRequestJson field.
+func (o *ProjectScheduleRequest) SetExecutionRequestJson(v string) {
+	o.ExecutionRequestJson = &v
+}
+
 func (o ProjectScheduleRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -155,6 +221,12 @@ func (o ProjectScheduleRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Timezone) {
 		toSerialize["timezone"] = o.Timezone
+	}
+	if !IsNil(o.JobId) {
+		toSerialize["jobId"] = o.JobId
+	}
+	if !IsNil(o.ExecutionRequestJson) {
+		toSerialize["executionRequestJson"] = o.ExecutionRequestJson
 	}
 	return toSerialize, nil
 }

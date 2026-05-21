@@ -43,7 +43,7 @@ class TestTaskDto(unittest.TestCase):
                 output_dataset_id = '',
                 task_type = 'SPARK',
                 execution_reference_id = '',
-                execution_status = 'PENDING',
+                execution_status = 'CREATED',
                 execution_log = '',
                 scheduled_time = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
                 execution_mode = 'MANUAL',

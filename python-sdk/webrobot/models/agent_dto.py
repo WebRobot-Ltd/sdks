@@ -44,11 +44,12 @@ class AgentDto(BaseModel):
     code_type_id: Optional[StrictStr] = Field(default=None, alias="codeTypeId")
     pyspark_code: Optional[StrictStr] = Field(default=None, alias="pysparkCode")
     python_extensions: Optional[StrictStr] = Field(default=None, alias="pythonExtensions")
+    stack_type: Optional[StrictStr] = Field(default=None, alias="stackType")
     generated_at: Optional[datetime] = Field(default=None, alias="generatedAt")
     tool_ids: Optional[List[StrictStr]] = Field(default=None, alias="toolIds")
     created_at: Optional[datetime] = Field(default=None, alias="createdAt")
     updated_at: Optional[datetime] = Field(default=None, alias="updatedAt")
-    __properties: ClassVar[List[str]] = ["id", "name", "description", "enabled", "apiEndpoint", "executionMode", "categoryId", "type", "role", "backstory", "defaultPrompt", "prompts", "config", "code", "codeTypeId", "pysparkCode", "pythonExtensions", "generatedAt", "toolIds", "createdAt", "updatedAt"]
+    __properties: ClassVar[List[str]] = ["id", "name", "description", "enabled", "apiEndpoint", "executionMode", "categoryId", "type", "role", "backstory", "defaultPrompt", "prompts", "config", "code", "codeTypeId", "pysparkCode", "pythonExtensions", "stackType", "generatedAt", "toolIds", "createdAt", "updatedAt"]
 
     @field_validator('execution_mode')
     def execution_mode_validate_enum(cls, value):
@@ -138,6 +139,7 @@ class AgentDto(BaseModel):
             "codeTypeId": obj.get("codeTypeId"),
             "pysparkCode": obj.get("pysparkCode"),
             "pythonExtensions": obj.get("pythonExtensions"),
+            "stackType": obj.get("stackType"),
             "generatedAt": obj.get("generatedAt"),
             "toolIds": obj.get("toolIds"),
             "createdAt": obj.get("createdAt"),
